@@ -1,13 +1,16 @@
 import {useState, useEffect} from 'react';
 
 function App() {
-	const [users] = useState(false);
+	const [users, setUsers] = useState(false);
 
 	function getUsers(){
 		fetch("http://localhost:3001")
-		.then(response => {
+			.then(response => {
 				return response.text();
-		})
+			})
+			.then(data => {
+				setUsers(data);
+			})
 	}
 
 	useEffect(() => {
@@ -15,7 +18,9 @@ function App() {
 	}, [])
 	return (
 		<div>
-			{users ? users : "There are no users"};
+			<button>
+			{users ? users : "There are no users"}
+			</button>
 		</div>
 	)
 }
