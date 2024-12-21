@@ -13,6 +13,26 @@ function App() {
 			})
 	}
 
+	function maintainSector(){
+		let name = prompt('Enter sector name');
+		let image = prompt('Enter sector image');
+
+		fetch('http://localhost:3001/sector-maintain', {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json',
+			},
+			body: JSON.stringify({name, image})
+		})
+		.then(response => {
+				return response.text();
+			})
+		.then(data => {
+				alert(data);
+				maintainSector();
+			});
+
+	}
 	useEffect(() => {
 		getUsers();
 	}, [])
@@ -21,6 +41,8 @@ function App() {
 			<button>
 			{users ? users : "There are no users"}
 			</button>
+			<br />
+			<button	  onClick={maintainSector}> Add sector </button>
 		</div>
 	)
 }
