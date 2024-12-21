@@ -1,0 +1,14 @@
+.usach_div {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: 100%; /* Para que ocupe todo el ancho del padre (se supone) */
+  background-color: #00a499;
+  padding: 15px;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+.logo_usach {
+  width: 150px;
+}

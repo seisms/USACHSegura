@@ -1,0 +1,60 @@
+.fondo {
+  position: absolute;
+  top: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff; /* Color de fondo */
+}
+
+.f_doble {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  width: 55%;
+  justify-content: space-between;
+}
+
+.f_formulario {
+  display: flex;
+  align-items: center;
+  width: 45%;
+  max-width: 400px;
+  text-align: center;
+  padding: 10px;
+  color: #333f48;
+}
+
+.f_formulario input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: transparent;
+  border-color: #00a499;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  margin-top: 15px;
+  color: #333f48;
+}
+
+.f_formulario button {
+  width: 80%;
+  margin-top: 50px;
+  background-color: #00a499;
+}
+
+.f_formulario a {
+  color: #333f48;
+}
+
+.f_logo_segura {
+  display: flex;
+  max-width: 350px;
+  align-items: center;
+}
+
+.logo_segura {
+  width: 100%;
+}
