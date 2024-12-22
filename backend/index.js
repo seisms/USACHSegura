@@ -22,8 +22,9 @@ app.get('/', (req, res) => {
 	})
 })
 
-app.post('/sector-maintain', async (req, res) => {
-	list.maintainSector(req.body)
+app.post('/sector-maintain/:op', async (req, res) => {
+	const op = req.params.op
+	list.maintainSector(op,req.body)
 	.then(response => {
 			res.status(200).send(response);
 		})

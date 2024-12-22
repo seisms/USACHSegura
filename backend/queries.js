@@ -27,7 +27,34 @@ const getUsers = async () => {
 	}
 };
 
-const maintainSector = (body) => {
+
+// BEGIN: Acceso (control y registro)
+
+const accessControl(body) => {
+	const {username, pass} = body;
+	let userpass = pool.query("SELECT US_Contrasenya FROM USUARIO WHERE US_Correo = $1 RETURNING US_Contrasenya", []);
+};
+
+// END: Acceso
+
+// BEGIN: Mantención de tablas básicas.
+
+// **** BEGIN: Mantención de SECTOR.
+const maintainSector = (op, body) => {
+	if (op === "c") {
+		return createSector(body);
+	}
+
+	if (op === "m") {
+		return modifySector(body);
+	}
+
+	if (op === "d") {
+		return deleteSector(body);
+	}
+};
+
+const createSector = (body) => {
 	return new Promise(function(resolve, reject) {
 		const {name, image} = body;
 		pool.query(
@@ -37,23 +64,61 @@ const maintainSector = (body) => {
 				if (error) {
 					reject(error);
 				}
-
 				if (results && results.rows) {
-					resolve(
-						`Nuevo sector: ${JSON.stringify(results.rows[0])}`
-					);
+					resolve(`Nuevo sector creado con éxito!`);
 				} else {
 					reject(new Error("No results found"));
 				}
 			}
 		);
 	});
-};
+}
 
+const modifySector = (body) => {
+	return new Promise(function(resolve, reject) {
+		const {name, image} = body;
+		pool.query(
+			"UPDATE SECTOR\
+			 SET SEC_Img = $1\
+			 WHERE SEC_Nombre = $2",
+			 [image, name],
+			 (error, results) => {
+				if(error) {
+					reject(error);
+				}
+				if(results && results.rows) {
+					resolve(`Sector actualizado con éxito!`);
+				} else {
+					reject(new Error("No se pudo modificar el sector"));
+				}
+			 }
+		);
+	});
+}
+
+const deleteSector = (body) => {
+	return new Promise(function(resolve, reject) {
+		const {name, image} = body;
+		pool.query("DELETE FROM SECTOR WHERE SEC_Nombre = $1",
+		[name],
+		(error, results) => {
+				if(error){
+					reject(error);
+				}
+				if(results && results.row) {
+					resolve(`Sector eliminado con éxito!`);
+				} else {
+					reject(new Error("No se pudo eliminar el sector"));
+				}
+			}
+		);
+	});
+}
+// **** END: Mantención de SECTOR
+
+// END: Mantención de tablas Básicas.
 
 module.exports = {
 	getUsers,
 	maintainSector
 };
-
-// Mantenedor de sectores

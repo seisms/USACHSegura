@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-//import InicioSesion from "./components/InicioSesion.jsx"
+import InicioSesion from "./components/InicioSesion.jsx"
 
 function App() {
   const [users, setUsers] = useState(false);
@@ -17,8 +17,9 @@ function App() {
   function maintainSector() {
     let name = prompt("Enter sector name");
     let image = prompt("Enter sector image");
+	let op = prompt("Operation {c|m|d}");
 
-    fetch("http://localhost:3001/sector-maintain", {
+    fetch(`http://localhost:3001/sector-maintain/${op}`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
