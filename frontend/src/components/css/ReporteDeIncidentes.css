@@ -1,0 +1,109 @@
+/* Estilo general para el contenedor del formulario */
+.incident-report-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  color: #fff;
+  padding: 20px;
+}
+
+/* Título del formulario */
+.report-form h2 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Secciones del formulario */
+.report-form section {
+  margin-bottom: 15px;
+}
+
+/* Estilo para las etiquetas */
+.report-form label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+/* Contenedores de opciones (radio/checkbox) */
+.scrollable-container {
+  max-height: 100px;
+  overflow-y: auto;
+  background-color: #2a2a2a;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Opciones de radio y checkbox */
+.scrollable-container div {
+  margin-bottom: 5px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Contenedores de fecha y hora */
+.fecha-hora-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.fecha-container, .hora-container {
+  flex: 1;
+}
+
+/* Campos de fecha y hora */
+input[type="date"], input[type="time"] {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background-color: #2a2a2a;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* Contenedor de botones */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Botones */
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.cancel-button {
+  background-color: #555;
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background-color: #777;
+}
+
+.submit-button {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}

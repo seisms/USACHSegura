@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import InicioSesion from "./components/InicioSesion.jsx"
+//import InicioSesion from "./components/InicioSesion.jsx"
+import PaginaPrincipal from "./components/PagP.jsx"
 
 function App() {
   const [users, setUsers] = useState(false);
@@ -17,7 +18,7 @@ function App() {
   function maintainSector() {
     let name = prompt("Enter sector name");
     let image = prompt("Enter sector image");
-	let op = prompt("Operation {c|m|d}");
+    let op = prompt("Operation {c|m|d}");
 
     fetch(`http://localhost:3001/sector-maintain/${op}`, {
       method: "POST",
@@ -46,4 +47,5 @@ function App() {
   );
 }
 //export default InicioSesion;
-export default App;
+//export default App;
+export default PaginaPrincipal;
