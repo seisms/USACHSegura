@@ -50,10 +50,31 @@ const maintainSector = (body) => {
 	});
 };
 
+const addReporte = (body) => {
+	return new Promise(function(resolve, reject) {
+		const {correo, sector, tipo, fecha, hora} = body;
+		pool.query(
+			"INSERT INTO REPORTE (rep_correo, rep_sector, rep_tipo, rep_fecha, rep_hora) VALUES ($1, $2, $3, $4, $5) RETURNING rep_id",
+			[correo, sector, tipo, fecha, hora],
+			(error, results) => {
+				if (error) {
+					reject(error);
+				}
+				if (results && results.rows) {
+					resolve(results.rows[0].rep_id); //Retorno unicamente el dato de la tabla rep_id
+				} else {
+					reject(new Error("No results found"));
+				}
+			}
+		);
+	});
+};
+
 
 module.exports = {
 	getUsers,
-	maintainSector
+	maintainSector,
+	addReporte
 };
 
 // Mantenedor de sectores

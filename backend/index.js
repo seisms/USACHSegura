@@ -32,6 +32,16 @@ app.post('/sector-maintain', async (req, res) => {
 		})
 })
 
+app.post('/registrar-reporte', async (req, res) => {
+	try{
+		const result = await list.addReporte(req.body); //Guardo el resultado la funcion addReporte (id del nuevo reporte)
+		console.log(result);
+		res.status(200).json({ rep_id: result }); //Se envia el dato como un unico elemento, ya que enviar solo 'result' produce un objeto json
+	} catch{
+		res.status(500).send("No results found");
+	}
+})
+
 app.listen(port, () => {
 	console.log(`App running on port ${port}.`)
 })
