@@ -25,12 +25,13 @@ function App() {
   }
   useEffect(() => {
   }, []);
-  
+
   return (
     <div>
-      {<PaginaPrincipal/>}
+      {<PaginaPrincipal />}
     </div>
   );
 }
-
-export default App;
+//export default InicioSesion;
+//export default App;
+export default PaginaPrincipal;
