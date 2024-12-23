@@ -97,6 +97,28 @@ app.post('/report', async (req, res) => {
 	}
 })
 
+app.put('/pertenencias', async (req, res) => {
+	try {
+		const response = await list.listar_pertenencias(req.body);
+		if(response) {
+			res.status(200).json({
+				success: true,
+				data: response
+			})
+		} else {
+			res.status(401).json({
+				success: false,
+				message: "No se pudo listar las pertenencias."
+			})
+		}
+	} catch(err) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor."
+		})
+	}
+})
+
 
 app.listen(port, () => {
 	console.log(`App running on port ${port}.`)

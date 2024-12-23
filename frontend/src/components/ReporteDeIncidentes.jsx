@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../userContext.jsx'
 import './css/ReporteDeIncidentes.css';
 
 const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 	const [tincidentes, setTIncidentes] = useState([]);
 	const [sectores, setSectores] = useState([]);
+	const [pertenencias, setPertencias] =  useState([]);
+	const { user } = useContext(UserContext);
+	const { email, userType } = user;
+	console.log(email, userType);
 
 	//Solicito los tipos de incidentes existentes en la base
 	function getTIncidentes() {
@@ -17,6 +22,30 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 			});
 	}
 
+	function getPertenencias() {
+		fetch('http://localhost:3001/pertenencias',
+			{
+				method: "PUT",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					email,
+				}),
+			})
+		.then((response) => {
+				return response.json();
+			})
+		.then((data) => {
+				if(data.success) {
+					setPertencias(data.data);
+				} else {
+					console.error("Fallo listado pertenencias");
+				}
+			})
+	}
+
+
 	//solitico los sectores existentes en la base
 	function getSectores() {
 		fetch('http://localhost:3001/sectores')
@@ -29,13 +58,15 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 			});
 	}
 
+
+
 	function generar_reporte() {
 		const type = selectedOptions.tipo;
 		const sector = selectedOptions.sector;
 		const date = selectedOptions.fecha;
 		const hour = selectedOptions.hora;
 		const pusurpada = selectedOptions.perts;
-		const reporte = JSON.stringify({type, sector, date, hour});
+		const reporte = JSON.stringify({email, type, sector, date, hour});
 		const list_pusurpada = JSON.stringify({pusurpada});
 		fetch('http://localhost:3001/report',
 			{
@@ -90,7 +121,6 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 		onClose();
 	};
 
-<<<<<<< HEAD
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		onSubmit(selectedOptions);
@@ -100,7 +130,8 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 	useEffect(() => {
 		getTIncidentes();
 		getSectores();
-	}, []);
+		getPertenencias();
+	},[]);
 
 
 	return (
@@ -128,15 +159,15 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 				<section>
 					<h3>Pertenencia Perdida</h3>
 					<div className="scrollable-container pertenencia-perdida">
-						{['Pertenencia 1', 'Pertenencia 2', 'Pertenencia 3', 'Pertenencia 4', 'Pertenencia 5'].map((option) => (
-							<div key={option}>
+						{pertenencias.map((item) => (
+							<div key={item.per_id}>
 								<label>
 									<input
 										type="checkbox"
-										checked={selectedOptions.perts.includes(option)}
-										onChange={() => handleCheckboxChange('perts', option)}
+										checked={selectedOptions.perts.includes(item)}
+										onChange={() => handleCheckboxChange('perts', item)}
 									/>
-									{option}
+									{item.per_nombre}
 								</label>
 							</div>
 						))}

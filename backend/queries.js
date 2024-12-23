@@ -27,6 +27,24 @@ const listar_sectores = async () => {
 	}
 };
 
+const listar_pertenencias = async (body) => {
+	try {
+		console.log("PERT BODY:", body);
+		const { email } = body;
+		console.log("PERT EMAIL:", email);
+		const result = await pool.query("SELECT * FROM PERTENENCIA WHERE PER_Correo = $1", [email]);
+		if (result && result.rows) {
+			console.log(result.rows);
+			return result.rows;
+		} else {
+			throw new Error("No hay pertenencias/No existe el usuario", email);
+		}
+	} catch(err) {
+		console.log("Error al ejecutar la consulta");
+		return null;
+	}
+}
+
 const getSectores = async () => {
 	try {
 		return await new Promise(function(resolve, reject) {
@@ -95,7 +113,7 @@ const registrar_reporte = async (reporte) => {
 		reporte = JSON.parse(reporte);
 	}
 	console.log(reporte);
-	const {type, sector, date, hour} = reporte;
+	const {email, type, sector, date, hour} = reporte;
 	try {
 		const result = await pool.query("INSERT INTO REPORTE (REP_Correo, REP_Sector, REP_Tipo, REP_Fecha, REP_Hora) VALUES ($1, $2, $3, $4, $5) RETURNING REP_ID",
 			[email, sector, type, date, hour]);
@@ -247,6 +265,7 @@ const borrar_sector = (body) => {
 module.exports = {
 	getSectores,
 	getTIncidentes,
+	listar_pertenencias,
 	listar_sectores,
 	mantener_sector,
 	control_de_acceso,

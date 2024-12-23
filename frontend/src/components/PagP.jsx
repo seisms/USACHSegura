@@ -51,9 +51,9 @@ export default function PagP() {
                             X
                         </button>
                         <h2>Reporte Generado</h2>
-                        <p><strong>Tipo De Incidente:</strong> {submittedReport.tipoDeIncidente || 'Ninguno'}</p>
-                        <p><strong>Pertenencia Perdida:</strong> {submittedReport.pertenenciaPerdida.join(', ') || 'Ninguna'}</p>
-                        <p><strong>Sector Del Incidente:</strong> {submittedReport.sectorDelIncidente || 'Ninguno'}</p>
+                        <p><strong>Tipo De Incidente:</strong> {submittedReport.tipo|| 'Ninguno'}</p>
+                        <p><strong>Pertenencia Perdida:</strong> {submittedReport.perts.join(', ') || 'Ninguna'}</p>
+                        <p><strong>Sector Del Incidente:</strong> {submittedReport.sector || 'Ninguno'}</p>
                         <p><strong>Fecha:</strong> {formatDate(submittedReport.fecha) || 'No especificada'}</p>
                         <p><strong>Hora:</strong> {submittedReport.hora || 'No especificada'}</p>
                     </div>

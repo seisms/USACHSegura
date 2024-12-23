@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Cabecera from "./Cabecera.jsx";
+import { UserContext } from '../userContext.jsx';
 import "./css/InicioSesion.css";
 import seguraLogo from "../assets/LogoSF.png";
 
@@ -8,7 +9,7 @@ export default function InicioSesion() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
-
+	const { setUser } = useContext(UserContext);
 	// Función para manejar el control de acceso
 	function control_de_acceso(event) {
 		// Evita que el formulario realice su acción predeterminada (recargar la página)
@@ -28,8 +29,9 @@ export default function InicioSesion() {
 					const { query_ustype, email } = data.data;
 					alert(`Bienvenido ${email}. Tipo de usuario: ${query_ustype}`);
 
-					// Redirige según el tipo de usuario
-					if (query_ustype === 'admin') {
+					setUser({ userType: query_ustype, email });
+					console.log("User set in context:", { userType: query_ustype, email });
+					if (query_ustype === 'Administrador') {
 						// Si es administrador, navega a la página de mantenimiento de tablas
 						navigate('/adminspacework');
 					} else {
