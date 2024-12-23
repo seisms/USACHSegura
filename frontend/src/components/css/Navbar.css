@@ -1,79 +1,101 @@
-/* Estilos generales para el navbar */
-.navbar {
-  height: 100%;
+.menu-toggle {
+  background-color: #5ff1e0;
+  border: none;
+  color: #050505;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px 15px;
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  background-color: #001529;
-  color: #fff;
+  top: 10px;
+  left: 10px;
+  z-index: 1100;
+  /* Asegura que el botón esté por encima del menú */
+  transition: left 0.3s ease;
+  /* Transición suave para mover el botón */
 }
 
-.menu-wrapper {
+.menu-toggle.open {
+  left: 260px;
+  /* Ajusta la posición cuando el menú está abierto */
+}
+
+.navbar {
+  width: 250px;
+  background-color: #e5fcfa;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: -300px;
+  /* Esconde el navbar fuera de la vista */
+  transition: left 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
-  transition: width 0.3s;
-  width: 250px;
+  padding: 20px 0;
+  z-index: 1000;
+  /* Asegura que el menú esté por encima de otros elementos */
 }
 
-.menu-wrapper.collapsed {
-  width: 80px;
+.navbar.open {
+  left: 0;
+  /* Muestra el navbar */
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  background-color: #002140;
-}
-
-.logo-image {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-}
-
-.logo-text {
-  color: #fff;
-  font-size: 20px;
+.navbar ul {
+  list-style-type: none;
+  padding: 0;
   margin: 0;
 }
 
-.logo-text.collapsed {
-  display: none;
+.navbar ul li {
+  padding: 15px 20px;
+  color: #1b1e1f;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
 }
 
-.ant-menu-dark .ant-menu-inline.ant-menu-sub {
-  background: #001529;
+.navbar ul li:hover {
+  background-color: #5ff1e0;
 }
 
-.footer-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Ajuste específico para el logo en la parte inferior del navbar */
+.navbar-logo {
+  text-align: center;
   padding: 20px;
-  background-color: #002140;
+  position: relative;
+  /* Permite ajustar la posición del logo */
 }
 
-.footer-logo img {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 10px;
+.navbar-logo img {
+  width: 240px;
+  height: auto;
+  /* Ajuste adicional para la posición del logo */
+  position: absolute;
+  /* Permite un control preciso de la posición */
+  bottom: 100px;
+  /* Mueve el logo hacia arriba o abajo */
+  right: 20px;
+  /* Mueve el logo hacia la izquierda o derecha */
+  left: 5px;
 }
 
-.footer-logo p {
-  color: #fff;
-  margin: 0;
-}
+/* Estilos responsivos para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  .navbar {
+    width: 100%;
+    /* Asegura que el navbar ocupe todo el ancho en pantallas pequeñas */
+    left: -100%;
+    /* Esconde el navbar fuera de la vista en pantallas pequeñas */
+  }
 
-.collapse-button {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 1100;
-  background-color: #002140;
-  border: none;
-  color: #fff;
+  .navbar.open {
+    left: 0;
+    /* Muestra el navbar en pantallas pequeñas */
+  }
+
+  .menu-toggle.open {
+    left: calc(100% - 40px);
+    /* Ajusta la posición cuando el menú está abierto en pantallas pequeñas */
+  }
 }

@@ -84,3 +84,18 @@
     height: 60px;
     border-radius: 50%;
 }
+
+.map-container {
+    display: flex;
+    justify-content: center;
+    /* Centra el mapa horizontalmente */
+}
+
+.map-image {
+    width: 115%;
+    /* Ajusta el ancho del mapa */
+    max-width: 2000px;
+    /* Ajusta el tamaño máximo del mapa */
+    height: auto;
+    /* Mantiene la proporción del mapa */
+}

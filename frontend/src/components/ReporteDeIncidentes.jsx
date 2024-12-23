@@ -1,38 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './css/ReporteDeIncidentes.css';
 
 const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
-  const [tincidentes, setTIncidentes] = useState([]);
-  const [sectores, setSectores] = useState([]);
-
-  //Solicito los tipos de incidentes existentes en la base
-  function getTIncidentes() {
-    fetch('http://localhost:3001/tipo-incidentes')
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const mapped = data.map((item) => item.tin_tnombre); //mapeo los datos, ya que vienen en formato json
-        setTIncidentes(mapped); // guardo el arreglo de tipos en 'tincidentes'
-      });
-  }
-
-  //solitico los sectores existentes en la base
-  function getSectores() {
-    fetch('http://localhost:3001/sectores')
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const mapped = data.map((item) => item.sec_nombre); //mapeo los datos, ya que vienen en formato json
-        setSectores(mapped); //guardo el arreglo de sectores en 'sectores'
-      });
-  }
-
   const [selectedOptions, setSelectedOptions] = useState({
-    tipo: '',
-    perts: [],
-    sector: '',
+    tipoDeIncidente: '',
+    pertenenciaPerdida: [],
+    sectorDelIncidente: '',
     fecha: '',
     hora: '',
   });
@@ -72,27 +45,21 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
     onSubmit(selectedOptions);
   };
 
-  useEffect(() => {
-    getTIncidentes();
-    getSectores();
-  }, []);
-
-
   return (
-    <div className="incident-report-modal">\
+    <div className="incident-report-modal">
       <form className="report-form" onSubmit={handleSubmit}>
         <h2>Reporte de Incidentes</h2>
         <section>
           <h3>Tipo De Incidente</h3>
           <div className="scrollable-container tipo-de-incidente">
-            {tincidentes.map((option) => (
+            {['Robo', 'Asalto', 'Hurto', 'Frustrado'].map((option) => (
               <div key={option}>
                 <label>
                   <input
                     type="radio"
-                    name="tipo"
-                    checked={selectedOptions.tipo === option}
-                    onChange={() => handleRadioChange('tipo', option)}
+                    name="tipoDeIncidente"
+                    checked={selectedOptions.tipoDeIncidente === option}
+                    onChange={() => handleRadioChange('tipoDeIncidente', option)}
                   />
                   {option}
                 </label>
@@ -108,8 +75,8 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
                 <label>
                   <input
                     type="checkbox"
-                    checked={selectedOptions.perts.includes(option)}
-                    onChange={() => handleCheckboxChange('perts', option)}
+                    checked={selectedOptions.pertenenciaPerdida.includes(option)}
+                    onChange={() => handleCheckboxChange('pertenenciaPerdida', option)}
                   />
                   {option}
                 </label>
@@ -120,14 +87,14 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
         <section>
           <h3>Sector Del Incidente</h3>
           <div className="scrollable-container sector-del-incidente">
-            {sectores.map((option) => (
+            {['EAO', 'Casino', 'Patio de los naranjos', 'Metalurgia'].map((option) => (
               <div key={option}>
                 <label>
                   <input
                     type="radio"
-                    name="sector"
-                    checked={selectedOptions.sector === option}
-                    onChange={() => handleRadioChange('sector', option)}
+                    name="sectorDelIncidente"
+                    checked={selectedOptions.sectorDelIncidente === option}
+                    onChange={() => handleRadioChange('sectorDelIncidente', option)}
                   />
                   {option}
                 </label>

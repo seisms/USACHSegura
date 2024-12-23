@@ -1,9 +1,10 @@
 .fondo {
   position: absolute;
-  top: 0px;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
-  background-color: #ffffff; /* Color de fondo */
+  background-color: #ffffff;
 }
 
 .f_doble {
@@ -24,6 +25,12 @@
   text-align: center;
   padding: 10px;
   color: #333f48;
+  background-color: #f0f0f0;
+  /* Añadido para mejorar la visibilidad */
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  /* Añadido para el efecto de sombra */
+  border-radius: 10px;
+  /* Añadido para esquinas redondeadas */
 }
 
 .f_formulario input {
@@ -31,10 +38,10 @@
   box-sizing: border-box;
   padding: 10px;
   background-color: transparent;
-  border-color: #00a499;
-  border-left: 0;
-  border-right: 0;
-  border-top: 0;
+  border: 1px solid #00a499;
+  /* Ajustado para el borde */
+  border-radius: 5px;
+  /* Añadido para esquinas redondeadas */
   margin-top: 15px;
   color: #333f48;
 }
@@ -43,10 +50,25 @@
   width: 80%;
   margin-top: 50px;
   background-color: #00a499;
+  color: white;
+  /* Añadido para el color del texto */
+  border: none;
+  /* Añadido para quitar el borde */
+  padding: 10px;
+  /* Añadido para el padding */
+  cursor: pointer;
+  /* Añadido para el cursor */
+}
+
+.f_formulario button:hover {
+  background-color: #009688;
+  /* Añadido para el efecto hover */
 }
 
 .f_formulario a {
   color: #333f48;
+  margin-top: 15px;
+  /* Añadido para el espacio */
 }
 
 .f_logo_segura {
