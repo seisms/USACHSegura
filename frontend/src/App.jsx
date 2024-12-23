@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-//import InicioSesion from "./components/InicioSesion.jsx"
 import PaginaPrincipal from "./components/PagP.jsx"
+import InicioSesion from "./components/InicioSesion.jsx"
 
 function App() {
   const [users, setUsers] = useState(false);
@@ -38,14 +38,12 @@ function App() {
   useEffect(() => {
     getUsers();
   }, []);
+  
   return (
     <div>
-      <button>{users ? users : "There are no users"}</button>
-      <br />
-      <button onClick={maintainSector}> Add sector </button>
+      {<PaginaPrincipal/>}
     </div>
   );
 }
-//export default InicioSesion;
-//export default App;
-export default PaginaPrincipal;
+
+export default App;

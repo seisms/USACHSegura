@@ -27,13 +27,50 @@ const getUsers = async () => {
 	}
 };
 
+// Obtener tipo de incidentes
+
+const getTIncidentes = async () => {
+	try {
+		return await new Promise(function(resolve, reject) {
+			pool.query("SELECT tin_tnombre FROM TINCIDENTE", (error, results) => {
+				if (error) {
+					reject(error);
+				}
+				if (results && results.rows) {
+					resolve(results.rows);
+				} else{
+					reject(new Error("No results found"));
+				}
+			});
+		});
+	} catch (error_1) {
+		console.error(error_1);
+		throw new Error("Internal server error");
+	}
+};
+
+const getSectores = async () => {
+	try {
+		return await new Promise(function(resolve, reject) {
+			pool.query("SELECT sec_nombre FROM SECTOR", (error, results) => {
+				if (error) {
+					reject(error);
+				}
+				if (results && results.rows) {
+					resolve(results.rows);
+				} else{
+					reject(new Error("No results found"));
+				}
+			});
+		});
+	} catch (error_1) {
+		console.error(error_1);
+		throw new Error("Internal server error");
+	}
+};
+
 
 // BEGIN: Acceso (control y registro)
-
-const accessControl(body) => {
-	const {username, pass} = body;
-	let userpass = pool.query("SELECT US_Contrasenya FROM USUARIO WHERE US_Correo = $1 RETURNING US_Contrasenya", []);
-};
 
 // END: Acceso
 
@@ -120,5 +157,7 @@ const deleteSector = (body) => {
 
 module.exports = {
 	getUsers,
+	getTIncidentes,
+	getSectores,
 	maintainSector
 };

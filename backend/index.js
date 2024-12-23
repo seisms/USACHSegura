@@ -18,8 +18,28 @@ app.get('/', (req, res) => {
 		res.status(200).send(response);
 	})
 	.catch(error =>	{
-			res.status(500).send(error);
+		res.status(500).send(error);
 	})
+})
+
+app.get('/tipo-incidentes', (req, res) => {
+	list.getTIncidentes()
+	  .then((response) => {
+		res.status(200).send(response); // Enviar el arreglo como JSON
+	  })
+	  .catch((error) => {
+		res.status(500).send(error);
+	  });
+  })
+
+app.get('/sectores', (req, res) => {
+	list.getSectores()
+	  .then((response) => {
+		res.status(200).send(response); // Enviar el arreglo como JSON
+	  })
+	  .catch((error) => {
+		res.status(500).send(error);
+	  });
 })
 
 app.post('/sector-maintain/:op', async (req, res) => {

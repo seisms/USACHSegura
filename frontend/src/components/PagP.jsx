@@ -8,19 +8,25 @@ import Report from '../assets/Re.jpg'
 
 const App = () => {
     const [showReportForm, setShowReportForm] = useState(false);
-    const [submittedReport, setSubmittedReport] = useState(null);
+    const [nvReporte, setnvReporte] = useState({
+        tipo: '',
+        perts: [],
+        sector: '',
+        fecha: '',
+        hora: '',
+    });
 
     const toggleReportForm = () => {
         setShowReportForm(!showReportForm);
     };
 
     const handleReportSubmit = (reportData) => {
-        setSubmittedReport(reportData);
+        setnvReporte(reportData);
         setShowReportForm(false);
     };
 
     const closeReportPopup = () => {
-        setSubmittedReport(null);
+        setnvReporte(null);
     };
 
     return (
@@ -39,17 +45,17 @@ const App = () => {
                 <button className="report-button" onClick={toggleReportForm}>
                     <img src={Report} alt="Reporte" className="report-icon" />
                 </button>
-                {submittedReport && (
+                {nvReporte && (
                     <div className="report-popup">
                         <button className="close-popup" onClick={closeReportPopup}>
                             X
                         </button>
                         <h2>Reporte Generado</h2>
-                        <p><strong>Tipo De Incidente:</strong> {submittedReport.tipoDeIncidente || 'Ninguno'}</p>
-                        <p><strong>Pertenencia Perdida:</strong> {submittedReport.pertenenciaPerdida.join(', ') || 'Ninguna'}</p>
-                        <p><strong>Sector Del Incidente:</strong> {submittedReport.sectorDelIncidente || 'Ninguno'}</p>
-                        <p><strong>Fecha:</strong> {submittedReport.fecha || 'No especificada'}</p>
-                        <p><strong>Hora:</strong> {submittedReport.hora || 'No especificada'}</p>
+                        <p><strong>Tipo De Incidente:</strong> {nvReporte.tipo || 'Ninguno'}</p>
+                        <p><strong>Pertenencia Perdida:</strong> {nvReporte.perts.join(', ') || 'Ninguna'}</p>
+                        <p><strong>Sector Del Incidente:</strong> {nvReporte.sector || 'Ninguno'}</p>
+                        <p><strong>Fecha:</strong> {nvReporte.fecha || 'No especificada'}</p>
+                        <p><strong>Hora:</strong> {nvReporte.hora || 'No especificada'}</p>
                     </div>
                 )}
             </div>
