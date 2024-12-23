@@ -1,8 +1,4 @@
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
-=======
-import InicioSesion from "./components/InicioSesion.jsx"
->>>>>>> 9b836ff7b2fb66d4094aa46f055e4b1c807d79c6
 import PaginaPrincipal from "./components/PagP.jsx"
 import InicioSesion from "./components/InicioSesion.jsx"
 
