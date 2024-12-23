@@ -189,14 +189,7 @@ const borrar_sector = (body) => {
 // END: Mantención de tablas Básicas.
 
 module.exports = {
-<<<<<<< HEAD
-	getUsers,
-	getTIncidentes,
-	getSectores,
-	maintainSector
-=======
 	listar_sectores,
 	mantener_sector,
 	control_de_acceso
->>>>>>> 9b836ff7b2fb66d4094aa46f055e4b1c807d79c6
 };
