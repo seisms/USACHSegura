@@ -176,79 +176,69 @@ const control_de_acceso = async (body) => {
 // BEGIN: Mantención de tablas básicas.
 
 // **** BEGIN: Mantención de SECTOR.
-const mantener_sector = (op, body) => {
-	if (op === "c") {
-		return createSector(body);
+const mantener_sector = async (op, body) => {
+	if (op === "a") {
+		const result = await crear_sector(body);
+		console.log(result);
+		return result;
 	}
 
 	if (op === "m") {
-		return modifySector(body);
+		const result = await modifySector(body);
+		return result;
 	}
 
-	if (op === "d") {
-		return deleteSector(body);
+	if (op === "e") {
+		const result = await borrar_sector(body);
+		return result;
 	}
 };
 
-const crear_sector = (body) => {
-	return new Promise(function(resolve, reject) {
-		const {name, image} = body;
-		pool.query(
-			"INSERT INTO SECTOR (SEC_Nombre, SEC_Img, SEC_Seguridad) VALUES ($1, $2, 1) RETURNING *",
-			[name, image],
-			(error, results) => {
-				if (error) {
-					reject(error);
-				}
-				if (results && results.rows) {
-					resolve(`Nuevo sector creado con éxito!`);
-				} else {
-					reject(new Error("No results found"));
-				}
-			}
-		);
-	});
+const crear_sector =  async (body) => {
+	const {name, image} = body;
+	console.log("ESTOY AGREGANDO!")
+	try {
+		const result = await pool.query("INSERT INTO SECTOR VALUES ($1, $2, 1) RETURNING *", [name, image]);
+		if (result && result.rows.length > 0) {
+			console.log(result.rows);
+			return `Sector agregado con éxito`;
+		} else {
+			return `Sector ${name} no se pudo agregar`;
+		}
+	} catch(err) {
+		return `Hubo un error inesperado`;
+	}
 }
 
-const modifySector = (body) => {
-	return new Promise(function(resolve, reject) {
-		const {name, image} = body;
-		pool.query(
-			"UPDATE SECTOR\
-			SET SEC_Img = $1\
-			WHERE SEC_Nombre = $2",
-			[image, name],
-			(error, results) => {
-				if(error) {
-					reject(error);
-				}
-				if(results && results.rows) {
-					resolve(`Sector actualizado con éxito!`);
-				} else {
-					reject(new Error("No se pudo modificar el sector"));
-				}
-			}
-		);
-	});
+const modifySector = async (body) => {
+	const {name, image} = body;
+	try {
+		const result = await pool.query("UPDATE SECTOR SET SEC_Img = $1 WHERE SEC_Nombre = $2 RETURNING *", [image, name]);
+		if (result && result.rows.length > 0) {
+			console.log(result.rows);
+			return `Sector modificado con éxito`;
+		} else {
+			return `Sector ${name} no existe`;
+		}
+	} catch(err) {
+		console.log(err);
+		return `Hubo un error inesperado`;
+	}
 }
 
-const borrar_sector = (body) => {
-	return new Promise(function(resolve, reject) {
-		const {name, image} = body;
-		pool.query("DELETE FROM SECTOR WHERE SEC_Nombre = $1",
-			[name],
-			(error, results) => {
-				if(error){
-					reject(error);
-				}
-				if(results && results.row) {
-					resolve(`Sector eliminado con éxito!`);
-				} else {
-					reject(new Error("No se pudo eliminar el sector"));
-				}
-			}
-		);
-	});
+const borrar_sector = async (body) => {
+	const {name} = body;
+	try {
+		const result = await pool.query("DELETE FROM SECTOR WHERE SEC_Nombre = $1 RETURNING *", [name]);
+		if (result && result.rows.length > 0) {
+			console.log(result.rows);
+			return `Sector eliminado con éxito`;
+		} else {
+			return `Sector ${name} no existe`;
+		}
+	} catch (err) {
+		return err;
+	}
 }
 // **** END: Mantención de SECTOR
 

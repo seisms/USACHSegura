@@ -8,14 +8,9 @@ import seguraLogo from "../assets/LogoSF.png";
 export default function InicioSesion() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-<<<<<<< HEAD
 	const [error, setError] = useState("");
-  const navigate = useNavigate(); // no me funciono ami
-
-=======
 	const navigate = useNavigate();
 	const { setUser } = useContext(UserContext);
->>>>>>> 42cb22757081f5fc6a371fa0f90544c88c04d646
 	// Función para manejar el control de acceso
 	function control_de_acceso(event) {
 		// Evita que el formulario realice su acción predeterminada (recargar la página)
