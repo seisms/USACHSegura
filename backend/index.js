@@ -22,14 +22,26 @@ app.get('/listar-sector', (req, res) => {
 		})
 })
 
-app.get('/tipo-incidentes', (req, res) => {
-	list.getTIncidentes()
-	  .then((response) => {
-		res.status(200).send(response); // Enviar el arreglo como JSON
-	  })
-	  .catch((error) => {
-		res.status(500).send(error);
-	  });
+app.get('/tipo-incidentes', async (req, res) => {
+	try {
+		const response = await list.getTIncidentes();
+		if(response) {
+			res.status(200).json({
+				success: true,
+				data: response
+			})
+		} else {
+			res.status(401).json({
+				success: false,
+				message: "No se pudo listar los tipos de incidentes."
+			})
+		}
+	} catch(err) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor."
+		})
+	}
   })
 
 app.get('/sectores', (req, res) => {
@@ -93,6 +105,28 @@ app.post('/report', async (req, res) => {
 		res.status(500).json({
 			success: false,
 			message: "Error interno del servidor"
+		})
+	}
+})
+
+app.put('/pertenencias', async (req, res) => {
+	try {
+		const response = await list.listar_pertenencias(req.body);
+		if(response) {
+			res.status(200).json({
+				success: true,
+				data: response
+			})
+		} else {
+			res.status(401).json({
+				success: false,
+				message: "No se pudo listar las pertenencias."
+			})
+		}
+	} catch(err) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor."
 		})
 	}
 })

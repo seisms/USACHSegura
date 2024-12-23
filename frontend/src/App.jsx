@@ -5,6 +5,7 @@ import PagP from './components/PagP';
 import Adminspacework from './components/Adminspacework';
 import Sectores from './components/tablasAdmin/Sectores';
 
+
 function App() {
 
   return (

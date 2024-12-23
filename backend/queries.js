@@ -27,6 +27,24 @@ const listar_sectores = async () => {
 	}
 };
 
+const listar_pertenencias = async (body) => {
+	try {
+		console.log("PERT BODY:", body);
+		const { email } = body;
+		console.log("PERT EMAIL:", email);
+		const result = await pool.query("SELECT * FROM PERTENENCIA WHERE PER_Correo = $1", [email]);
+		if (result && result.rows) {
+			console.log(result.rows);
+			return result.rows;
+		} else {
+			throw new Error("No hay pertenencias/No existe el usuario", email);
+		}
+	} catch(err) {
+		console.log("Error al ejecutar la consulta");
+		return null;
+	}
+}
+
 const getSectores = async () => {
 	try {
 		return await new Promise(function(resolve, reject) {
@@ -51,21 +69,14 @@ const getSectores = async () => {
 
 const getTIncidentes = async () => {
 	try {
-		return await new Promise(function(resolve, reject) {
-			pool.query("SELECT * FROM TINCIDENTE", (error, results) => {
-				if (error) {
-					reject(error);
-				}
-				if (results && results.rows) {
-					resolve(results.rows);
-				} else{
-					reject(new Error("No results found"));
-				}
-			});
-		});
-	} catch (error_1) {
-		console.error(error_1);
-		throw new Error("Internal server error");
+		const result = await pool.query("SELECT * FROM TINCIDENTE");
+		if(result && result.rows) {
+			return result.rows;
+		} else {
+			throw new Error("No hay tipos de incidente");
+		}
+	} catch (err) {
+		console.log("Error al ejecutar consulta LISTAR_TINCIDENTES");
 	}
 };
 
@@ -95,7 +106,7 @@ const registrar_reporte = async (reporte) => {
 		reporte = JSON.parse(reporte);
 	}
 	console.log(reporte);
-	const {type, sector, date, hour} = reporte;
+	const {email, type, sector, date, hour} = reporte;
 	try {
 		const result = await pool.query("INSERT INTO REPORTE (REP_Correo, REP_Sector, REP_Tipo, REP_Fecha, REP_Hora) VALUES ($1, $2, $3, $4, $5) RETURNING REP_ID",
 			[email, sector, type, date, hour]);
@@ -109,10 +120,9 @@ const registrar_reporte = async (reporte) => {
 const agregar_pertencia_reporte = async (list_pusurpada, rid) => {
 	try {
 		if (typeof list_pusurpada === "string") {
-			reporte = JSON.parse(reporte);
+			list_pusurpada = JSON.parse(list_pusurpada);
 		}
-		console.log(list_pusurpada);
-		for (const pid of list_pusurpada) {
+		for (const pid of list_pusurpada.pusurpada) {
 			await pool.query("INSERT INTO PUSURPADA (PU_RID, PU_PID) VALUES ($1, $2)", [rid, pid]);
 		}
 		console.log("Pertenencias agregadas correctamente");
@@ -247,6 +257,7 @@ const borrar_sector = (body) => {
 module.exports = {
 	getSectores,
 	getTIncidentes,
+	listar_pertenencias,
 	listar_sectores,
 	mantener_sector,
 	control_de_acceso,

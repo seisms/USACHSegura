@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../userContext.jsx'
 import './css/ReporteDeIncidentes.css';
 
 const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 	const [tincidentes, setTIncidentes] = useState([]);
 	const [sectores, setSectores] = useState([]);
+	const [pertenencias, setPertencias] =  useState([]);
+	const { user } = useContext(UserContext);
+	const { email, userType } = user;
 
 	//Solicito los tipos de incidentes existentes en la base
 	function getTIncidentes() {
@@ -12,10 +16,37 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 				return response.json();
 			})
 			.then((data) => {
-				const mapped = data.map((item) => item.tin_tnombre); //mapeo los datos, ya que vienen en formato json
-				setTIncidentes(mapped); // guardo el arreglo de tipos en 'tincidentes'
+				if(data.success) {
+					setTIncidentes(data.data)
+				} else {
+					console.error(data.message)
+				};
 			});
 	}
+
+	function getPertenencias() {
+		fetch('http://localhost:3001/pertenencias',
+			{
+				method: "PUT",
+				headers: {
+					"content-type": "application/json",
+				},
+				body: JSON.stringify({
+					email,
+				}),
+			})
+		.then((response) => {
+				return response.json();
+			})
+		.then((data) => {
+				if(data.success) {
+					setPertencias(data.data);
+				} else {
+					console.error(data.message);
+				}
+			})
+	}
+
 
 	//solitico los sectores existentes en la base
 	function getSectores() {
@@ -29,13 +60,15 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 			});
 	}
 
+
+
 	function generar_reporte() {
 		const type = selectedOptions.tipo;
 		const sector = selectedOptions.sector;
 		const date = selectedOptions.fecha;
 		const hour = selectedOptions.hora;
 		const pusurpada = selectedOptions.perts;
-		const reporte = JSON.stringify({type, sector, date, hour});
+		const reporte = JSON.stringify({email, type, sector, date, hour});
 		const list_pusurpada = JSON.stringify({pusurpada});
 		fetch('http://localhost:3001/report',
 			{
@@ -45,25 +78,20 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 				},
 				body: JSON.stringify({ reporte, list_pusurpada }),
 			})
-		console.log(list_pusurpada);
-		console.log(reporte);
 	}
 
 	const [selectedOptions, setSelectedOptions] = useState({
-		tipo: {
-			tid: 0,
-			tnombre: '',
-		},
+		tipo: [],
 		perts: [],
 		sector: '',
 		fecha: '',
 		hora: '',
 	});
 
-	const handleRadioChange = (category, option) => {
+	const handleRadioChange = (field, value) => {
 		setSelectedOptions((prevState) => ({
 			...prevState,
-			[category]: option,
+			[field]: value,
 		}));
 	};
 
@@ -90,7 +118,6 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 		onClose();
 	};
 
-<<<<<<< HEAD
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		onSubmit(selectedOptions);
@@ -100,7 +127,8 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 	useEffect(() => {
 		getTIncidentes();
 		getSectores();
-	}, []);
+		getPertenencias();
+	},[]);
 
 
 	return (
@@ -110,16 +138,16 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 				<section>
 					<h3>Tipo De Incidente</h3>
 					<div className="scrollable-container tipo-de-incidente">
-						{tincidentes.map((option) => (
-							<div key={option}>
+						{tincidentes.map((item) => (
+							<div key={item.tin_tid}>
 								<label>
 									<input
 										type="radio"
 										name="tipo"
-										checked={selectedOptions.tipo === option}
-										onChange={() => handleRadioChange('tipo', option)}
+										checked={selectedOptions.tipo === item.tin_tid}
+										onChange={() => handleRadioChange('tipo', item.tin_tid)}
 									/>
-									{option}
+									{item.tin_tnombre}
 								</label>
 							</div>
 						))}
@@ -128,15 +156,15 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 				<section>
 					<h3>Pertenencia Perdida</h3>
 					<div className="scrollable-container pertenencia-perdida">
-						{['Pertenencia 1', 'Pertenencia 2', 'Pertenencia 3', 'Pertenencia 4', 'Pertenencia 5'].map((option) => (
-							<div key={option}>
+						{pertenencias.map((item) => (
+							<div key={item.per_id}>
 								<label>
 									<input
 										type="checkbox"
-										checked={selectedOptions.perts.includes(option)}
-										onChange={() => handleCheckboxChange('perts', option)}
+										checked={selectedOptions.perts.includes(item.per_id)}
+										onChange={() => handleCheckboxChange('perts', item.per_id)}
 									/>
-									{option}
+									{item.per_nombre}
 								</label>
 							</div>
 						))}
