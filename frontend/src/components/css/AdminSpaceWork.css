@@ -1,0 +1,43 @@
+.fondo {
+  background-color: #242424;
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo {
+  display: flex;
+  justify-content: center;
+}
+
+.opciones {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.botones {
+  background-color: #00a499;
+  padding: 25px;
+  display: flex;
+}
+
+.botones h2 {
+  margin: 0;
+}
+
+.datos_tabla {
+  display: flex;
+  justify-content: center;
+}
+
+.datos_tabla {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.f_form {
+  display: flex;
+  flex-direction: column;
+}
