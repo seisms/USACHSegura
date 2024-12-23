@@ -1,19 +1,12 @@
 import { useState, useEffect } from "react";
+<<<<<<< HEAD
+=======
+import InicioSesion from "./components/InicioSesion.jsx"
+>>>>>>> 9b836ff7b2fb66d4094aa46f055e4b1c807d79c6
 import PaginaPrincipal from "./components/PagP.jsx"
 import InicioSesion from "./components/InicioSesion.jsx"
 
 function App() {
-  const [users, setUsers] = useState(false);
-
-  function getUsers() {
-    fetch("http://localhost:3001")
-      .then((response) => {
-        return response.text();
-      })
-      .then((data) => {
-        setUsers(data);
-      });
-  }
 
   function maintainSector() {
     let name = prompt("Enter sector name");
@@ -32,11 +25,9 @@ function App() {
       })
       .then((data) => {
         alert(data);
-        maintainSector();
       });
   }
   useEffect(() => {
-    getUsers();
   }, []);
   
   return (

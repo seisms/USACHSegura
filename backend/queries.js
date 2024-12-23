@@ -7,10 +7,10 @@ const pool = new Pool({
 	port: 5432
 })
 
-const getUsers = async () => {
+const listar_sectores = async () => {
 	try {
 		return await new Promise(function(resolve, reject) {
-			pool.query("SELECT * FROM USUARIO", (error, results) => {
+			pool.query("SELECT * FROM SECTOR", (error, results) => {
 				if (error) {
 					reject(error);
 				}
@@ -72,12 +72,45 @@ const getSectores = async () => {
 
 // BEGIN: Acceso (control y registro)
 
+const control_de_acceso = async (body) => {
+	const {email, password} = body;
+
+	try {
+		let result = await pool.query("SELECT US_Contrasenya FROM USUARIO WHERE US_Correo = $1",
+		[email]);
+
+		if (result.rows.length > 0){
+			const query_password = result.rows[0].us_contrasenya
+
+			if (query_password === password) {
+				result = await pool.query("SELECT TU_TNombre " +
+					"FROM USUARIO, RUSUARIO, TUSUARIO " + 
+					"WHERE US_Correo = $1 " + 
+					"AND TU_TID = RU_Tipo " + 
+					"AND RU_Correo = US_Correo ",
+					[email]);
+				const query_ustype = result.rows[0].tu_tnombre;
+				return {query_ustype, email};
+			} else {
+				console.log("wrong password")
+				return null;
+			}
+		} else {
+			console.log("No results...")
+			return null;
+		}
+	} catch (err) {
+		console.error('Error al ejecutar la consulta:', err);
+		return null;
+	}
+}
+
 // END: Acceso
 
 // BEGIN: Mantención de tablas básicas.
 
 // **** BEGIN: Mantención de SECTOR.
-const maintainSector = (op, body) => {
+const mantener_sector = (op, body) => {
 	if (op === "c") {
 		return createSector(body);
 	}
@@ -91,7 +124,7 @@ const maintainSector = (op, body) => {
 	}
 };
 
-const createSector = (body) => {
+const crear_sector = (body) => {
 	return new Promise(function(resolve, reject) {
 		const {name, image} = body;
 		pool.query(
@@ -133,7 +166,7 @@ const modifySector = (body) => {
 	});
 }
 
-const deleteSector = (body) => {
+const borrar_sector = (body) => {
 	return new Promise(function(resolve, reject) {
 		const {name, image} = body;
 		pool.query("DELETE FROM SECTOR WHERE SEC_Nombre = $1",
@@ -156,8 +189,14 @@ const deleteSector = (body) => {
 // END: Mantención de tablas Básicas.
 
 module.exports = {
+<<<<<<< HEAD
 	getUsers,
 	getTIncidentes,
 	getSectores,
 	maintainSector
+=======
+	listar_sectores,
+	mantener_sector,
+	control_de_acceso
+>>>>>>> 9b836ff7b2fb66d4094aa46f055e4b1c807d79c6
 };
