@@ -19,14 +19,14 @@ export default function Formulario() {
 
 			})
 		.then((response) => {
-				return response.text();
+				return response.json();
 			})
 		.then((data) => {
-				console.log("Response: ", data);
-				if(data === "") {
-					alert("Usuario/Contraseña equivocados");
+				if (data.success) {
+					const {query_ustype, email} = data.data;
+					alert(`Bienvenido ${email}. Tipo de usuario: ${query_ustype}`);
 				} else {
-					alert(data);
+					alert(data.message)
 				}
 			});
 	}
