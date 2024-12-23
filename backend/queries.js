@@ -27,28 +27,6 @@ const listar_sectores = async () => {
 	}
 };
 
-// Obtener tipo de incidentes
-
-const getTIncidentes = async () => {
-	try {
-		return await new Promise(function(resolve, reject) {
-			pool.query("SELECT tin_tnombre FROM TINCIDENTE", (error, results) => {
-				if (error) {
-					reject(error);
-				}
-				if (results && results.rows) {
-					resolve(results.rows);
-				} else{
-					reject(new Error("No results found"));
-				}
-			});
-		});
-	} catch (error_1) {
-		console.error(error_1);
-		throw new Error("Internal server error");
-	}
-};
-
 const getSectores = async () => {
 	try {
 		return await new Promise(function(resolve, reject) {
@@ -69,6 +47,84 @@ const getSectores = async () => {
 	}
 };
 
+// Obtener tipo de incidentes
+
+const getTIncidentes = async () => {
+	try {
+		return await new Promise(function(resolve, reject) {
+			pool.query("SELECT * FROM TINCIDENTE", (error, results) => {
+				if (error) {
+					reject(error);
+				}
+				if (results && results.rows) {
+					resolve(results.rows);
+				} else{
+					reject(new Error("No results found"));
+				}
+			});
+		});
+	} catch (error_1) {
+		console.error(error_1);
+		throw new Error("Internal server error");
+	}
+};
+
+
+// BEGIN: Generación de Reportes
+const generar_reporte = async (body) => {
+	const {reporte, list_pusurpada} = body;
+	try {
+		console.log(list_pusurpada);
+		const id = await registrar_reporte(reporte);
+		if (id < 0) {
+			throw new Error("Registrar reporte falló");
+		}
+		const add = await agregar_pertencia_reporte(list_pusurpada, id);
+		if (add < 0) {
+			throw new Error("Agregar pertenencia al reporte falló");
+		}
+		return true;
+	} catch(error) {
+		console.log('Error al generar el reporte', error);
+		return false;
+	}
+}
+
+const registrar_reporte = async (reporte) => {
+	if (typeof reporte === "string") {
+		reporte = JSON.parse(reporte);
+	}
+	console.log(reporte);
+	const {type, sector, date, hour} = reporte;
+	try {
+		const result = await pool.query("INSERT INTO REPORTE (REP_Correo, REP_Sector, REP_Tipo, REP_Fecha, REP_Hora) VALUES ($1, $2, $3, $4, $5) RETURNING REP_ID",
+			[email, sector, type, date, hour]);
+		return result.rows[0].rep_id;
+	} catch(err) {
+		console.error('Error al ejecutar la consulta:', err);
+		return -1;
+	}
+}
+
+const agregar_pertencia_reporte = async (list_pusurpada, rid) => {
+	try {
+		if (typeof list_pusurpada === "string") {
+			reporte = JSON.parse(reporte);
+		}
+		console.log(list_pusurpada);
+		for (const pid of list_pusurpada) {
+			await pool.query("INSERT INTO PUSURPADA (PU_RID, PU_PID) VALUES ($1, $2)", [rid, pid]);
+		}
+		console.log("Pertenencias agregadas correctamente");
+		return 1;
+	} catch (err) {
+		console.error("Error: ", err);
+		return -1;
+	}
+}
+
+// END: Generación de Reportes
+
 
 // BEGIN: Acceso (control y registro)
 
@@ -77,7 +133,7 @@ const control_de_acceso = async (body) => {
 
 	try {
 		let result = await pool.query("SELECT US_Contrasenya FROM USUARIO WHERE US_Correo = $1",
-		[email]);
+			[email]);
 
 		if (result.rows.length > 0){
 			const query_password = result.rows[0].us_contrasenya
@@ -149,10 +205,10 @@ const modifySector = (body) => {
 		const {name, image} = body;
 		pool.query(
 			"UPDATE SECTOR\
-			 SET SEC_Img = $1\
-			 WHERE SEC_Nombre = $2",
-			 [image, name],
-			 (error, results) => {
+			SET SEC_Img = $1\
+			WHERE SEC_Nombre = $2",
+			[image, name],
+			(error, results) => {
 				if(error) {
 					reject(error);
 				}
@@ -161,7 +217,7 @@ const modifySector = (body) => {
 				} else {
 					reject(new Error("No se pudo modificar el sector"));
 				}
-			 }
+			}
 		);
 	});
 }
@@ -170,8 +226,8 @@ const borrar_sector = (body) => {
 	return new Promise(function(resolve, reject) {
 		const {name, image} = body;
 		pool.query("DELETE FROM SECTOR WHERE SEC_Nombre = $1",
-		[name],
-		(error, results) => {
+			[name],
+			(error, results) => {
 				if(error){
 					reject(error);
 				}
@@ -189,7 +245,10 @@ const borrar_sector = (body) => {
 // END: Mantención de tablas Básicas.
 
 module.exports = {
+	getSectores,
+	getTIncidentes,
 	listar_sectores,
 	mantener_sector,
-	control_de_acceso
+	control_de_acceso,
+	generar_reporte
 };

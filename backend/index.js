@@ -75,6 +75,28 @@ app.post('/login', async (req, res) => {
 	}
 })
 
+app.post('/report', async (req, res) => {
+	try{
+		const response = await list.generar_reporte(req.body);
+		if (response) {
+			res.status(200).json({
+				success: response,
+				message: "Reporte agregado con éxito"
+			});
+		} else {
+			res.status(401).json({
+				success: response,
+				message: "No se pudo agregar el reporte"
+			})
+		}
+	} catch(err) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor"
+		})
+	}
+})
+
 
 app.listen(port, () => {
 	console.log(`App running on port ${port}.`)
