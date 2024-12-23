@@ -69,21 +69,14 @@ const getSectores = async () => {
 
 const getTIncidentes = async () => {
 	try {
-		return await new Promise(function(resolve, reject) {
-			pool.query("SELECT * FROM TINCIDENTE", (error, results) => {
-				if (error) {
-					reject(error);
-				}
-				if (results && results.rows) {
-					resolve(results.rows);
-				} else{
-					reject(new Error("No results found"));
-				}
-			});
-		});
-	} catch (error_1) {
-		console.error(error_1);
-		throw new Error("Internal server error");
+		const result = await pool.query("SELECT * FROM TINCIDENTE");
+		if(result && result.rows) {
+			return result.rows;
+		} else {
+			throw new Error("No hay tipos de incidente");
+		}
+	} catch (err) {
+		console.log("Error al ejecutar consulta LISTAR_TINCIDENTES");
 	}
 };
 
@@ -127,10 +120,9 @@ const registrar_reporte = async (reporte) => {
 const agregar_pertencia_reporte = async (list_pusurpada, rid) => {
 	try {
 		if (typeof list_pusurpada === "string") {
-			reporte = JSON.parse(reporte);
+			list_pusurpada = JSON.parse(list_pusurpada);
 		}
-		console.log(list_pusurpada);
-		for (const pid of list_pusurpada) {
+		for (const pid of list_pusurpada.pusurpada) {
 			await pool.query("INSERT INTO PUSURPADA (PU_RID, PU_PID) VALUES ($1, $2)", [rid, pid]);
 		}
 		console.log("Pertenencias agregadas correctamente");

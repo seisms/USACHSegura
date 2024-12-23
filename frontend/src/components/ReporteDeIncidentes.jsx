@@ -8,7 +8,6 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 	const [pertenencias, setPertencias] =  useState([]);
 	const { user } = useContext(UserContext);
 	const { email, userType } = user;
-	console.log(email, userType);
 
 	//Solicito los tipos de incidentes existentes en la base
 	function getTIncidentes() {
@@ -17,8 +16,11 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 				return response.json();
 			})
 			.then((data) => {
-				const mapped = data.map((item) => item.tin_tnombre); //mapeo los datos, ya que vienen en formato json
-				setTIncidentes(mapped); // guardo el arreglo de tipos en 'tincidentes'
+				if(data.success) {
+					setTIncidentes(data.data)
+				} else {
+					console.error(data.message)
+				};
 			});
 	}
 
@@ -40,7 +42,7 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 				if(data.success) {
 					setPertencias(data.data);
 				} else {
-					console.error("Fallo listado pertenencias");
+					console.error(data.message);
 				}
 			})
 	}
@@ -76,25 +78,20 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 				},
 				body: JSON.stringify({ reporte, list_pusurpada }),
 			})
-		console.log(list_pusurpada);
-		console.log(reporte);
 	}
 
 	const [selectedOptions, setSelectedOptions] = useState({
-		tipo: {
-			tid: 0,
-			tnombre: '',
-		},
+		tipo: [],
 		perts: [],
 		sector: '',
 		fecha: '',
 		hora: '',
 	});
 
-	const handleRadioChange = (category, option) => {
+	const handleRadioChange = (field, value) => {
 		setSelectedOptions((prevState) => ({
 			...prevState,
-			[category]: option,
+			[field]: value,
 		}));
 	};
 
@@ -141,16 +138,16 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 				<section>
 					<h3>Tipo De Incidente</h3>
 					<div className="scrollable-container tipo-de-incidente">
-						{tincidentes.map((option) => (
-							<div key={option}>
+						{tincidentes.map((item) => (
+							<div key={item.tin_tid}>
 								<label>
 									<input
 										type="radio"
 										name="tipo"
-										checked={selectedOptions.tipo === option}
-										onChange={() => handleRadioChange('tipo', option)}
+										checked={selectedOptions.tipo === item.tin_tid}
+										onChange={() => handleRadioChange('tipo', item.tin_tid)}
 									/>
-									{option}
+									{item.tin_tnombre}
 								</label>
 							</div>
 						))}
@@ -164,8 +161,8 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 								<label>
 									<input
 										type="checkbox"
-										checked={selectedOptions.perts.includes(item)}
-										onChange={() => handleCheckboxChange('perts', item)}
+										checked={selectedOptions.perts.includes(item.per_id)}
+										onChange={() => handleCheckboxChange('perts', item.per_id)}
 									/>
 									{item.per_nombre}
 								</label>
