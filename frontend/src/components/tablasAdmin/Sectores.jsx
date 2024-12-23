@@ -23,7 +23,6 @@ function Sectores() {
 				if(data.success) {
 					console.log(data.data);
 					setRows(data.data || []);
-					setFeedback("Datos cargados correctamente.");
 				} else {
 					setFeedback("No hay sectores para listar");
 				}

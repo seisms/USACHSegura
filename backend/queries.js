@@ -202,6 +202,7 @@ const crear_sector =  async (body) => {
 			return `Sector ${name} no se pudo agregar`;
 		}
 	} catch(err) {
+		console.error(error);
 		return `Hubo un error inesperado`;
 	}
 }
@@ -217,7 +218,7 @@ const modifySector = async (body) => {
 			return `Sector ${name} no existe`;
 		}
 	} catch(err) {
-		console.log(err);
+		console.error(err);
 		return `Hubo un error inesperado`;
 	}
 }
@@ -233,7 +234,8 @@ const borrar_sector = async (body) => {
 			return `Sector ${name} no existe`;
 		}
 	} catch (err) {
-		return err;
+		console.error(err);
+		return `Hubo un error inesperado`;
 	}
 }
 // **** END: Mantención de SECTOR
