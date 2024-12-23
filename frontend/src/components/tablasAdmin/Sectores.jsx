@@ -1,12 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Sectores() {
 
 	const [selectedTab, setSelectedTab] = useState(null); // Controla la pestaña seleccionada
+	const [rows, setRows] = useState([]);
 	const [name, setName] = useState(""); // Controla el valor del nombre del sector
 	const [image, setImage] = useState(""); // Controla el valor del archivo de imagen
 	const [op, setOP] = useState(""); // Define la operación a realizar
 	const [feedback, setFeedback] = useState(""); // Muestra retroalimentación al usuario
+
+	function consultarSector() { //Funcion para mostrar las filas
+		fetch("http://localhost:3001/listar-sectores", {
+			method: "GET",
+			headers: {
+				"Content-type": "application/json",
+			}
+		})
+			.then((response) => {
+				return response.json();
+			})
+			.then((data) => {
+				if(data.success) {
+					console.log(data.data);
+					setRows(data.data || []);
+					setFeedback("Datos cargados correctamente.");
+				} else {
+					setFeedback("No hay sectores para listar");
+				}
+			})
+			.catch((error) => {
+				console.error(error);
+				setFeedback("No se pudo cargar la tabla.");
+			});
+	};
 
 	function mantenerSector() { // Funcion similar al del App.jsx
 
@@ -28,9 +54,13 @@ function Sectores() {
 			.then((data) => {
 				console.log(data);
 				setFeedback(data);
+				consultarSector();
 			});
 	}
 
+	//const handleImageChange = (e) => {
+	//	setImage(e.target.files[0]);
+	//};
 	//const handleImageChange = (e) => {
 	//	setImage(e.target.files[0]);
 	//};
@@ -76,7 +106,7 @@ function Sectores() {
 							onChange={(e) => setName(e.target.value)}
 							required
 						/>
-						<button type="submit">Eliminar</button>
+						<button type="submit">Confirmar</button>
 					</form>
 				</div>
 
@@ -84,10 +114,36 @@ function Sectores() {
 		}
 	}
 
+	useEffect(() => {
+		consultarSector();
+	},[]);
 	return (
 		<div className="datos_tabla">
 			<div className="titulo">
 				<h2>Tabla Sectores</h2>
+			</div>
+			<div className="f_filas">
+				<h4>Filas de la tabla Sectores:</h4>
+				{rows.length > 0 ? (
+					<table>
+						<thead>
+							{Object.keys(rows[0]).map((col) => (
+								<th key={col}>{col}</th>
+							))}
+						</thead>
+						<tbody>
+							{rows.map((row, index) => (
+								<tr key={index}>
+									{Object.values(row).map((value, idx) => (
+										<td key={idx}>{value}</td>
+									))}
+								</tr>
+							))}
+						</tbody>
+					</table>
+				) : (
+						<p>No hay datos disponibles.</p>
+					)}
 			</div>
 			<div className="opciones">
 				<button className="botones" onClick={() => { setSelectedTab("Agregar"); setOP("a"); }}> <h2> Agregar </h2> </button>

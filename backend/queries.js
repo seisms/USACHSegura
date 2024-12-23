@@ -9,21 +9,17 @@ const pool = new Pool({
 
 const listar_sectores = async () => {
 	try {
-		return await new Promise(function(resolve, reject) {
-			pool.query("SELECT * FROM SECTOR", (error, results) => {
-				if (error) {
-					reject(error);
-				}
-				if (results && results.rows) {
-					resolve(results.rows);
-				} else{
-					reject(new Error("No results found"));
-				}
-			});
-		});
-	} catch (error_1) {
-		console.error(error_1);
-		throw new Error("Internal server error");
+		console.log("listing...");
+		const result = await pool.query("SELECT * FROM SECTOR;");
+		if (result && result.rows.length > 0) {
+			console.log(result.rows);
+			return result.rows;
+		} else {
+			return `No hay sectores para listar`;
+		}
+	} catch (err) {
+		console.error(err);
+		return `Ocurrió un error inesperado`;
 	}
 };
 
@@ -33,7 +29,7 @@ const listar_pertenencias = async (body) => {
 		const { email } = body;
 		console.log("PERT EMAIL:", email);
 		const result = await pool.query("SELECT * FROM PERTENENCIA WHERE PER_Correo = $1", [email]);
-		if (result && result.rows) {
+		if (result && result.rows.length > 0) {
 			console.log(result.rows);
 			return result.rows;
 		} else {

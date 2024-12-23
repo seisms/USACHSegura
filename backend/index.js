@@ -12,14 +12,27 @@ app.use(function (req, res, next) {
 	next();
 });
 
-app.get('/listar-sector', (req, res) => {
-	list.listar_sectores()
-		.then(response => {
-			res.status(200).send(response);
+app.get('/listar-sectores', async (req, res) => {
+	try {
+		const response = await list.listar_sectores();
+		if(response) {
+			console.log(response);
+			res.status(200).json({
+				success: true,
+				data: response
+			})
+		} else {
+			res.status(401).json({
+				success: false,
+				message: "No se pudo listar los sectores",
+			})
+		}
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor."
 		})
-		.catch(error =>	{
-			res.status(500).send(error);
-		})
+	}
 })
 
 app.get('/tipo-incidentes', async (req, res) => {
@@ -42,16 +55,16 @@ app.get('/tipo-incidentes', async (req, res) => {
 			message: "Error interno del servidor."
 		})
 	}
-  })
+})
 
 app.get('/sectores', (req, res) => {
 	list.getSectores()
-	  .then((response) => {
-		res.status(200).send(response); // Enviar el arreglo como JSON
-	  })
-	  .catch((error) => {
-		res.status(500).send(error);
-	  });
+		.then((response) => {
+			res.status(200).send(response); // Enviar el arreglo como JSON
+		})
+		.catch((error) => {
+			res.status(500).send(error);
+		});
 })
 
 app.post('/sector-maintain/:op', async (req, res) => {
