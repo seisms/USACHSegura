@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './css/ReporteDeIncidentes.css';
 
 const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
@@ -90,6 +90,7 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 		onClose();
 	};
 
+<<<<<<< HEAD
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		onSubmit(selectedOptions);

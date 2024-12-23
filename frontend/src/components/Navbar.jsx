@@ -1,61 +1,39 @@
 import React, { useState } from 'react';
-import { Menu, Button } from 'antd';
-import {
-  EnvironmentOutlined,
-  UserOutlined,
-  SettingOutlined,
-  FileTextOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-} from '@ant-design/icons';
 import './css/Navbar.css';
+import logo from '../assets/LogoSF.png'; // Importar la imagen desde la carpeta assets
 
-import Lulogo from '../assets/UsachSB.png';
-import UsachSe from '../assets/LogoSF.png';
+export default function Navbar({ onSelect }) {
+  const [isOpen, setIsOpen] = useState(false);
 
-const Navbar = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const handleSelect = (option) => {
+    onSelect(option);
+    setIsOpen(false); // Cerrar el menú al seleccionar una opción
+  };
 
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
-    <div className="navbar">
-      <Button type="primary" onClick={toggleCollapsed} className="collapse-button">
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      </Button>
-      <div className={`menu-wrapper ${collapsed ? 'collapsed' : ''}`}>
-        <div className="logo">
-          <img src={Lulogo} alt="USACH Logo" className="logo-image" />
-          <h1 className="logo-text">USACH</h1>
-        </div>
-        <Menu
-          defaultSelectedKeys={['1']}
-          mode="inline"
-          theme="dark"
-          inlineCollapsed={collapsed}
-        >
-          <Menu.Item key="1" icon={<EnvironmentOutlined />}>
+    <div>
+      <button
+        className={`menu-toggle ${isOpen ? 'open' : ''}`}
+        onClick={toggleMenu}
+      >
+        &#9776; { }
+      </button>
+      <nav className={`navbar ${isOpen ? 'open' : ''}`}>
+        <ul>
+          <li onClick={() => handleSelect('Lugares Frecuentados')}>
             Lugares Frecuentados
-          </Menu.Item>
-          <Menu.Item key="2" icon={<FileTextOutlined />}>
-            Pertenencias
-          </Menu.Item>
-          <Menu.Item key="3" icon={<UserOutlined />}>
-            Perfil
-          </Menu.Item>
-          <Menu.Item key="4" icon={<SettingOutlined />}>
-            Configuración
-          </Menu.Item>
-        </Menu>
-        <div className="footer-logo">
-          <img src={UsachSe} alt="USACH Segura" />
-          <p>USACH Segura</p>
+          </li>
+          <li onClick={() => handleSelect('Pertenencias')}>Pertenencias</li>
+          <li onClick={() => handleSelect('Perfil')}>Perfil</li>
+        </ul>
+        <div className="navbar-logo">
+          <img src={logo} alt="USACH" /> { }
         </div>
-      </div>
+      </nav>
     </div>
   );
-};
-
-export default Navbar;
+}

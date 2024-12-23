@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import ReporteDeIncidentes from './ReporteDeIncidentes';
+import Cabecera from './Cabecera';
 import './css/PagP.css';
+import MapI from '../assets/map.png';
+import Report from '../assets/Re.jpg';
 
-import MapI from '../assets/map.png'
-import Report from '../assets/Re.jpg'
-
-const App = () => {
+export default function PagP() {
     const [showReportForm, setShowReportForm] = useState(false);
-    const [nvReporte, setnvReporte] = useState({
-        tipo: '',
-        perts: [],
-        sector: '',
-        fecha: '',
-        hora: '',
-    });
+    const [submittedReport, setSubmittedReport] = useState(null);
 
     const toggleReportForm = () => {
         setShowReportForm(!showReportForm);
     };
 
     const handleReportSubmit = (reportData) => {
-        setnvReporte(reportData);
+        setSubmittedReport(reportData);
         setShowReportForm(false);
     };
 
     const closeReportPopup = () => {
-        setnvReporte(null);
+        setSubmittedReport(null);
+    };
+
+    const formatDate = (dateString) => {
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        return new Date(dateString).toLocaleDateString('es-CL', options);
     };
 
     return (
         <div className="App">
+            <Cabecera />
             <Navbar />
             <div className="content">
                 <div className="map-container">
@@ -45,22 +45,20 @@ const App = () => {
                 <button className="report-button" onClick={toggleReportForm}>
                     <img src={Report} alt="Reporte" className="report-icon" />
                 </button>
-                {nvReporte && (
+                {submittedReport && (
                     <div className="report-popup">
                         <button className="close-popup" onClick={closeReportPopup}>
                             X
                         </button>
                         <h2>Reporte Generado</h2>
-                        <p><strong>Tipo De Incidente:</strong> {nvReporte.tipo || 'Ninguno'}</p>
-                        <p><strong>Pertenencia Perdida:</strong> {nvReporte.perts.join(', ') || 'Ninguna'}</p>
-                        <p><strong>Sector Del Incidente:</strong> {nvReporte.sector || 'Ninguno'}</p>
-                        <p><strong>Fecha:</strong> {nvReporte.fecha || 'No especificada'}</p>
-                        <p><strong>Hora:</strong> {nvReporte.hora || 'No especificada'}</p>
+                        <p><strong>Tipo De Incidente:</strong> {submittedReport.tipoDeIncidente || 'Ninguno'}</p>
+                        <p><strong>Pertenencia Perdida:</strong> {submittedReport.pertenenciaPerdida.join(', ') || 'Ninguna'}</p>
+                        <p><strong>Sector Del Incidente:</strong> {submittedReport.sectorDelIncidente || 'Ninguno'}</p>
+                        <p><strong>Fecha:</strong> {formatDate(submittedReport.fecha) || 'No especificada'}</p>
+                        <p><strong>Hora:</strong> {submittedReport.hora || 'No especificada'}</p>
                     </div>
                 )}
             </div>
         </div>
     );
-};
-
-export default App;
+}
