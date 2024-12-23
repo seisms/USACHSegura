@@ -3,10 +3,34 @@ import { useState } from "react";
 function Sectores() {
 
 	const [selectedTab, setSelectedTab] = useState(null); // Controla la pestaña seleccionada
+  const [rows, setRows] = useState([]);
 	const [name, setName] = useState(""); // Controla el valor del nombre del sector
 	const [image, setImage] = useState(""); // Controla el valor del archivo de imagen
 	const [op, setOP] = useState(""); // Define la operación a realizar
 	const [feedback, setFeedback] = useState(""); // Muestra retroalimentación al usuario
+
+  function consultarSector() { //Funcion para mostrar las filas
+    fetch("https://localhost:3001/sector-view", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      }
+    })
+    .then((response) => {
+      if (!response.ok) {
+        setFeedback("Error al consultar la tabla.");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setRows(data.rows || []);
+      setFeedback("Datos cargados correctamente.");
+    })
+    .catch((error) => {
+      console.error(error);
+      setFeedback("No se pudo cargar la tabla.");
+    });
+  };
 
 	function mantenerSector() { // Funcion similar al del App.jsx
 
@@ -89,6 +113,32 @@ function Sectores() {
 			<div className="titulo">
 				<h2>Tabla Sectores</h2>
 			</div>
+      <div className="f_filas">
+      <h4>Filas de la tabla Sectores:</h4>
+        {rows.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                {Object.keys(rows[0]).map((col) => (
+                  <th key={col}>{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, index) => (
+                <tr key={index}>
+                  {Object.values(row).map((value, idx) => (
+                    <td key={idx}>{value}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No hay datos disponibles.</p>
+        )}
+        <button onClick={consultarSector}>Recargar Datos</button>
+      </div>
 			<div className="opciones">
 				<button className="botones" onClick={() => { setSelectedTab("Agregar"); setOP("a"); }}> <h2> Agregar </h2> </button>
 				<button className="botones" onClick={() => { setSelectedTab("Modificar"); setOP("m");}}> <h2> Modificar </h2> </button>
