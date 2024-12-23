@@ -1,19 +1,8 @@
 import { useState, useEffect } from "react";
-//import InicioSesion from "./components/InicioSesion.jsx"
+import InicioSesion from "./components/InicioSesion.jsx"
 import PaginaPrincipal from "./components/PagP.jsx"
 
 function App() {
-  const [users, setUsers] = useState(false);
-
-  function getUsers() {
-    fetch("http://localhost:3001")
-      .then((response) => {
-        return response.text();
-      })
-      .then((data) => {
-        setUsers(data);
-      });
-  }
 
   function maintainSector() {
     let name = prompt("Enter sector name");
@@ -32,20 +21,14 @@ function App() {
       })
       .then((data) => {
         alert(data);
-        maintainSector();
       });
   }
   useEffect(() => {
-    getUsers();
   }, []);
   return (
-    <div>
-      <button>{users ? users : "There are no users"}</button>
-      <br />
-      <button onClick={maintainSector}> Add sector </button>
-    </div>
+  <h1> hello, world!</h1>
   );
 }
-//export default InicioSesion;
+export default InicioSesion;
 //export default App;
-export default PaginaPrincipal;
+//export default PaginaPrincipal;
