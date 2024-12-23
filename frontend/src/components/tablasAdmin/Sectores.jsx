@@ -9,6 +9,12 @@ function Sectores() {
   const [feedback, setFeedback] = useState(""); // Muestra retroalimentación al usuario
 
   function mantenerSector() { // Funcion similar al del App.jsx
+
+    if (!name ) {
+      setFeedback("Ingrese el nombre del sector");
+      return;
+    }
+
     fetch(`http://localhost:3001/sector-maintain/${op}`, {
       method: "POST",
       headers: {
@@ -30,50 +36,53 @@ function Sectores() {
     switch (selectedTab) {
       case "Agregar":
       case "Modificar":
-        return <div className="f_AM">
-          <h3>{selectedTab === "Agregar" ? "Agregar Sector" : "Modificar Sector"}</h3>
+        return <div className="f_fAM">
+          <div className="subtitulo"><h3>{selectedTab === "Agregar" ? "Agregar Sector" : "Modificar Sector"}</h3> </div>
           <form onSubmit={(e) => {
             e.preventDefault();
             setOP(selectedTab === "Agregar" ? "c" : "m");
             mantenerSector();
           }} className="fAM">
-            <label htmlFor=""> Nombre: </label>
-            <input type="text" value={name} />
-            onChange={(e) => setName(e.target.value)}
-            <label htmlFor=""> Imagen: </label>
-            <input type="file" accept="image/*" onChange={handleImageChange} />
+            <div className="fila">
+              <label htmlFor=""> Nombre: </label>
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
+            </div>
+            <div className="fila">
+              <label htmlFor=""> Imagen: </label>
+              <input type="file" accept="image/*" onChange={handleImageChange} />
+            </div>
             <button type="submit"> Confirmar </button>
           </form>
         </div>
 
       case "Eliminar":
-        return <div className="fE">
-          <h3>Eliminar Sector</h3>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setOP("d");
-              mantenerSector();
-            }}
-          >
-            <label htmlFor="name">Nombre del Sector a eliminar:</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <button type="submit">Eliminar</button>
-          </form>
-        </div>
+        return <div className="fAM">
+          <div className="subtitulo"><h3>Eliminar Sector</h3></div>
+          <form className="fo"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setOP("d");
+                mantenerSector();
+              }}
+            >
+              <label htmlFor="name">Nombre del Sector a eliminar:</label>
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <button type="submit">Eliminar</button>
+            </form>
+          </div>
 
       default: return null;
     }
   }
 
   return (
-    <div className="f_form">
+    <div className="datos_tabla">
       <div className="titulo">
         <h2>Tabla Sectores</h2>
       </div>
@@ -84,9 +93,9 @@ function Sectores() {
       </div>
 
       {feedback && <div className="feedback">{feedback}</div>}
-
+      
       <div className="f_tabla">
-        <div>{renderTabContent()}</div>
+        {renderTabContent()}
       </div>
     </div>
   );

@@ -1,17 +1,38 @@
 .fondo {
-  background-color: #242424;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 }
 
 .titulo {
+  color: #394049;
   display: flex;
   justify-content: center;
   margin-top: 50px;
   /* Ajusta este valor según sea necesario */
 }
 
+.opcionesTablas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.datos_tabla {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .opciones {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,6 +40,7 @@
 }
 
 .botones {
+  margin: 0 15px;
   background-color: #00a499;
   padding: 25px;
   display: flex;
@@ -28,18 +50,67 @@
   margin: 0;
 }
 
-.datos_tabla {
-  display: flex;
-  justify-content: center;
+.subtitulo h3 {
+  color: #394049;
+  text-align: center;
 }
 
-.datos_tabla {
+.fAM{
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.f_form {
+.fAM button {
+  background-color: #00a499;
+  color: black;
+  width: 90%;
+  margin: 25px;
+  font-size: 20px;
+}
+
+.fila {
+  width: 100%;
+  display: flex;
+  margin: 10px;
+}
+
+.fila label {
+  color: #333f48;
+  font-size: 25px;
+  margin-right: 25px;
+}
+
+.fila input {
+  background-color: #ffffff;
+  color: #333f48;
+  border: 0 0 0 10px;
+  border-style: solid;
+  flex-grow: 1;
+}
+
+.fo {
   display: flex;
   flex-direction: column;
+}
+
+.fo label {
+  color: #333f48;
+  font-size: 25px;
+}
+
+.fo input {
+  background-color: #ffffff;
+  color: #333f48;
+  height: 35px;
+  border: 0 0 0 10px;
+  border-style: solid;
+}
+
+.feedback {
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+  color: #c8102e;;
 }

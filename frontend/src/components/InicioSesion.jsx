@@ -7,7 +7,8 @@ import seguraLogo from "../assets/LogoSF.png";
 export default function InicioSesion() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const navigate = useNavigate();
+	const [error, setError] = useState("");
+  const navigate = useNavigate(); // no me funciono ami
 
 	// Función para manejar el control de acceso
 	function control_de_acceso(event) {
@@ -38,7 +39,7 @@ export default function InicioSesion() {
 					}
 				} else {
 					// Muestra un mensaje de error si las credenciales son incorrectas
-					alert(data.message);
+					setError(data.message);
 				}
 			});
 	}
@@ -66,6 +67,7 @@ export default function InicioSesion() {
 							onChange={(e) => setPassword(e.target.value)}
 							required
 						/>
+						{error && <div className="f_error"><p className="error">{error}</p></div>}
 						<button type="submit"> Ingresar </button>
 						<a href="#">
 							<h3>Registrarse</h3>

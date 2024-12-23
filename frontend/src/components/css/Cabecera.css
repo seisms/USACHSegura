@@ -1,31 +1,13 @@
 .usach_div {
-  position: absolute;
+  position: relative; /* Tal vez */
   box-sizing: border-box;
-  top: 0;
-  left: 0;
-  width: 100%;
-  /* Para que ocupe todo el ancho del padre (se supone) */
+  width: 100%; /* Para que ocupe todo el ancho del padre */
+  height: 85px;
   background-color: #00a499;
   padding: 15px;
-  z-index: 1000;
-  /* Asegura que esté por encima de otros elementos */
+  z-index: 1; /* Asegura que esté por encima de otros elementos */
 }
 
 .logo_usach {
   width: 150px;
-}
-
-.logo_div {
-  display: flex;
-  justify-content: center;
-  /* Centra el logo horizontalmente */
-  align-items: center;
-  /* Centra el logo verticalmente */
-  margin: 0 auto;
-  /* Centra el contenedor en el padre */
-}
-
-.logo_usach {
-  max-width: 100%;
-  height: auto;
 }

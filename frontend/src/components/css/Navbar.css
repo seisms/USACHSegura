@@ -1,39 +1,46 @@
+.f_lateral {
+  position: absolute;
+  top: 0;
+  width: 450px;
+  height: 100vh;
+  display: flex;
+}
+
 .menu-toggle {
-  background-color: #5ff1e0;
-  border: none;
-  color: #050505;
+  background-color: #00a499;
+  color: #394049;
   font-size: 24px;
-  cursor: pointer;
   padding: 10px 15px;
   position: fixed;
-  top: 10px;
+  top: 16px;
   left: 10px;
-  z-index: 1100;
+  z-index: 2;
   /* Asegura que el botón esté por encima del menú */
   transition: left 0.3s ease;
   /* Transición suave para mover el botón */
 }
 
 .menu-toggle.open {
-  left: 260px;
+  left: 400px;
   /* Ajusta la posición cuando el menú está abierto */
 }
 
 .navbar {
-  width: 250px;
-  background-color: #e5fcfa;
-  height: 100vh;
+  width: 380px;
+  background-color: #ffffff;
+  height: 100%;
   position: fixed;
-  top: 0;
-  left: -300px;
+  left: -380px;
   /* Esconde el navbar fuera de la vista */
   transition: left 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px 0;
-  z-index: 1000;
+  z-index: 1;
   /* Asegura que el menú esté por encima de otros elementos */
+  flex: 1;
+  flex-direction: column;
+  overflow: scroll;
 }
 
 .navbar.open {
@@ -41,43 +48,45 @@
   /* Muestra el navbar */
 }
 
-.navbar ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.titulo {
+  padding: 15px;
+  color: #394049;
+  text-align: center;
 }
 
-.navbar ul li {
-  padding: 15px 20px;
-  color: #1b1e1f;
+.opcionesss {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+
+.opcionesss li {
+  border: 1px solid #394049;
+  padding: 15px;
+  color: #394049;
+  font-size: 25px;
+  font-weight: 400;
   cursor: pointer;
-  width: 100%;
-  text-align: left;
 }
 
 .navbar ul li:hover {
-  background-color: #5ff1e0;
+  background-color: #00a499;
+  color: #ffffff;
 }
 
 /* Ajuste específico para el logo en la parte inferior del navbar */
 .navbar-logo {
-  text-align: center;
-  padding: 20px;
-  position: relative;
-  /* Permite ajustar la posición del logo */
+  flex-grow: 1;
+  max-width: 100% !important;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .navbar-logo img {
-  width: 240px;
-  height: auto;
-  /* Ajuste adicional para la posición del logo */
-  position: absolute;
-  /* Permite un control preciso de la posición */
-  bottom: 100px;
-  /* Mueve el logo hacia arriba o abajo */
-  right: 20px;
-  /* Mueve el logo hacia la izquierda o derecha */
-  left: 5px;
+  max-width: 300px;
+  object-fit: contain;
 }
 
 /* Estilos responsivos para pantallas pequeñas */

@@ -18,6 +18,7 @@
 }
 
 .f_formulario {
+  position: relative;
   display: flex;
   align-items: center;
   width: 45%;
@@ -25,12 +26,7 @@
   text-align: center;
   padding: 10px;
   color: #333f48;
-  background-color: #f0f0f0;
-  /* Añadido para mejorar la visibilidad */
-  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
-  /* Añadido para el efecto de sombra */
-  border-radius: 10px;
-  /* Añadido para esquinas redondeadas */
+  border: 2px solid #00a499;
 }
 
 .f_formulario input {
@@ -38,17 +34,34 @@
   box-sizing: border-box;
   padding: 10px;
   background-color: transparent;
-  border: 1px solid #00a499;
+  border: 2px solid #00a499;
   /* Ajustado para el borde */
-  border-radius: 5px;
+  border-radius: 10px;
   /* Añadido para esquinas redondeadas */
   margin-top: 15px;
   color: #333f48;
+  font-size: 20px;
+}
+
+.f_ingreso_datos {
+  position: relative;
+  width: 100%;
+}
+
+.f_error {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  color: #c8102e;
+  font-size: large;
+  font-weight: 300;
 }
 
 .f_formulario button {
   width: 80%;
-  margin-top: 50px;
+  margin-top: 20px;
   background-color: #00a499;
   color: white;
   /* Añadido para el color del texto */

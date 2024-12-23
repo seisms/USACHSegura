@@ -4,6 +4,7 @@ import Cabecera from "./Cabecera";
 import Sectores from "./tablasAdmin/Sectores.jsx";
 
 function AdminSpaceWork() {
+  // Estado para el boton seleccionado
   const [selectedTab, setSelectedTab] = useState(null);
 
   const handleTabChange = (tabName) => {
@@ -31,14 +32,12 @@ function AdminSpaceWork() {
       <div className="titulo">
         <h1>Tablas UsachSegura</h1>
       </div>
-      <div className="opciones">
-        <button className="botones" onClick={() => handleTabChange("sectores")}>
-          <h2> Sectores </h2>
-        </button>
+      <div className="opcionesTablas">
+        <button className="botones" onClick={() => handleTabChange("sectores")}> <h2> Sectores </h2> </button>
       </div>
-      <div className="datos_tabla">
-        <div className="datos_tabla">{renderTabContent()}</div>
-      </div>
+        <div className="datos_tabla">
+          {renderTabContent()}
+        </div>
     </div>
   );
 }

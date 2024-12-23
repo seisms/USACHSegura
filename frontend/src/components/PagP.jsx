@@ -30,7 +30,6 @@ export default function PagP() {
 
     return (
         <div className="App">
-            <Cabecera />
             <Navbar />
             <div className="content">
                 <div className="map-container">
