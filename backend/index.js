@@ -60,7 +60,7 @@ app.get('/listar-sectores', async (req, res) => {
 
 app.get('/tipo-incidentes', async (req, res) => {
 	try {
-		const response = await list.getTIncidentes();
+		const response = await list.listar_TIncidentes();
 		if(response) {
 			res.status(200).json({
 				success: true,
