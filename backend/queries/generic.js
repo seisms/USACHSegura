@@ -7,87 +7,6 @@ const pool = new Pool({
     port: 5432
 })
 
-const listar_sectores_frecuentados = async (body) => {
-    try {
-        const {email} = body;
-        const result = await pool.query("SELECT FREC_Sector FROM FRECUENTA WHERE FREC_Correo = $1", [email]);
-        if(result && result.rows.length > 0) {
-            console.log(result.rows);
-            return result.rows;
-        }
-    } catch(err) {
-        console.error(err);
-        return null;
-    }
-}
-
-const listar_sectores = async () => {
-    try {
-        const result = await pool.query("SELECT * FROM SECTOR;");
-        if (result && result.rows.length > 0) {
-            console.log(result.rows);
-            return result.rows;
-        } else {
-            return `No hay sectores para listar`;
-        }
-    } catch (err) {
-        console.error(err);
-        return `Ocurrió un error inesperado`;
-    }
-};
-
-const listar_pertenencias = async (body) => {
-    try {
-        const { email } = body;
-        const result = await pool.query("SELECT * FROM PERTENENCIA WHERE PER_Correo = $1", [email]);
-        if (result && result.rows.length > 0) {
-            return result.rows;
-        } else {
-            console.error("No hay pertenencias/No existe el usuario", email);
-            return null;
-        }
-    } catch (err) {
-        console.error("error");
-        return null;
-    }
-}
-
-const getSectores = async () => {
-    try {
-        return await new Promise(function(resolve, reject) {
-            pool.query("SELECT sec_nombre FROM SECTOR", (error, results) => {
-                if (error) {
-                    reject(error);
-                }
-                if (results && results.rows) {
-                    resolve(results.rows);
-                } else {
-                    reject(new Error("No results found"));
-                }
-            });
-        });
-    } catch (error_1) {
-        console.error(error_1);
-        throw new Error("Internal server error");
-    }
-};
-
-// Obtener tipo de incidentes
-
-const getTIncidentes = async () => {
-    try {
-        const result = await pool.query("SELECT * FROM TINCIDENTE");
-        if (result && result.rows) {
-            return result.rows;
-        } else {
-            throw new Error("No hay tipos de incidente");
-        }
-    } catch (err) {
-        console.log("Error al ejecutar consulta LISTAR_TINCIDENTES");
-    }
-};
-
-
 // BEGIN: Generación de Reportes
 const generar_reporte = async (body) => {
     const { reporte, list_pusurpada } = body;
@@ -140,11 +59,9 @@ const agregar_pertencia_reporte = async (list_pusurpada, rid) => {
 
 // END: Generación de Reportes
 
-
 // BEGIN: Acceso (control y registro)
-
-const control_de_acceso = async (body) => {
-    const { email, password } = body;
+const control_de_acceso = async (login) => {
+    const { email, password } = login;
 
     try {
         let result = await pool.query("SELECT US_Contrasenya FROM USUARIO WHERE US_Correo = $1",
@@ -176,76 +93,7 @@ const control_de_acceso = async (body) => {
 
 // END: Acceso
 
-// BEGIN: Mantención de tablas básicas.
-
-// **** BEGIN: Mantención de SECTOR.
-const mantener_sector = async (op, body) => {
-    if (op === "a") {
-        const result = await crear_sector(body);
-        return result;
-    }
-
-    if (op === "m") {
-        const result = await modifySector(body);
-        return result;
-    }
-
-    if (op === "e") {
-        const result = await borrar_sector(body);
-        return result;
-    }
-};
-
-const crear_sector = async (body) => {
-    const { name, image } = body;
-    try {
-        const result = await pool.query("INSERT INTO SECTOR VALUES ($1, $2, 1) RETURNING *", [name, image]);
-        if (result && result.rows.length > 0) {
-            return `Sector agregado con éxito`;
-        } else {
-            return `Sector ${name} no se pudo agregar`;
-        }
-    } catch (err) {
-        console.error(error);
-        return `Hubo un error inesperado`;
-    }
-}
-
-const modifySector = async (body) => {
-    const { name, image } = body;
-    try {
-        const result = await pool.query("UPDATE SECTOR SET SEC_Img = $1 WHERE SEC_Nombre = $2 RETURNING *", [image, name]);
-        if (result && result.rows.length > 0) {
-            return `Sector modificado con éxito`;
-        } else {
-            return `Sector ${name} no existe`;
-        }
-    } catch (err) {
-        console.error(err);
-        return `Hubo un error inesperado`;
-    }
-}
-
-const borrar_sector = async (body) => {
-    const { name } = body;
-    try {
-        const result = await pool.query("DELETE FROM SECTOR WHERE SEC_Nombre = $1 RETURNING *", [name]);
-        if (result && result.rows.length > 0) {
-            return `Sector eliminado con éxito`;
-        } else {
-            return `Sector ${name} no existe`;
-        }
-    } catch (err) {
-        console.error(err);
-        return `Hubo un error inesperado`;
-    }
-}
-// **** END: Mantención de SECTOR
-
-// END: Mantención de tablas Básicas.
-
 // BEGIN:Administración tablas del usuario
-
 // **** BEGIN: Gestionar Pertenencias
 const gestion_de_perfil = async (body, op) => {
     if(op === 'PC') {
@@ -318,12 +166,7 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
 // END: Administración tablas del usuario
 
 module.exports = {
-    getSectores,
-    getTIncidentes,
-    listar_pertenencias,
-    listar_sectores,
-    mantener_sector,
-    control_de_acceso,
     generar_reporte,
-    listar_sectores_frecuentados
-};
+    control_de_acceso,
+    gestion_de_perfil
+}

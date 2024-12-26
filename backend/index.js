@@ -2,7 +2,9 @@ const express = require('express')
 const app = express()
 const port = 3001
 
-const list = require('./queries.js')
+const list = require('./queries/listings.js')
+const maintain = require('./queries/maintain.js')
+const generic = require('./queries/generic.js')
 
 app.use(express.json())
 app.use(function (req, res, next) {
@@ -90,7 +92,7 @@ app.get('/sectores', (req, res) => {
 
 app.post('/sector-maintain/:op', async (req, res) => {
 	const op = req.params.op
-	list.mantener_sector(op,req.body)
+	maintain.mantener_sector(op,req.body)
 		.then(response => {
 			res.status(200).send(response);
 		})
@@ -101,7 +103,7 @@ app.post('/sector-maintain/:op', async (req, res) => {
 
 app.post('/login', async (req, res) => {
 	try{ 
-		const response = await list.control_de_acceso(req.body)
+		const response = await generic.control_de_acceso(req.body)
 		if (response) {
 			res.status(200).json({
 				success: true,
