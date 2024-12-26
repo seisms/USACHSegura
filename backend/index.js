@@ -12,11 +12,32 @@ app.use(function (req, res, next) {
 	next();
 });
 
+app.put('/list-sec-frec', async (req, res) => {
+    try {
+        const response = await list.listar_sectores_frecuentados(req.body);
+        if(response) {
+            res.status(200).json({
+                success: true,
+                data: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "No se pudo listar los sectores frecuentados"
+            })
+        }
+    } catch(err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor."
+        })
+    }
+})
+
 app.get('/listar-sectores', async (req, res) => {
 	try {
 		const response = await list.listar_sectores();
 		if(response) {
-			console.log(response);
 			res.status(200).json({
 				success: true,
 				data: response
