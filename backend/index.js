@@ -19,7 +19,7 @@ app.get('/listar-sectores', async (req, res) => {
 			console.log(response);
 			res.status(200).json({
 				success: true,
-				data: response
+				result: response
 			})
 		} else {
 			res.status(401).json({
@@ -41,7 +41,7 @@ app.get('/tipo-incidentes', async (req, res) => {
 		if(response) {
 			res.status(200).json({
 				success: true,
-				data: response
+				result: response
 			})
 		} else {
 			res.status(401).json({
@@ -84,7 +84,7 @@ app.post('/login', async (req, res) => {
 		if (response) {
 			res.status(200).json({
 				success: true,
-				data: response
+				result: response
 			})
 		} else {
 			res.status(401).json({
@@ -128,7 +128,7 @@ app.put('/pertenencias', async (req, res) => {
 		if(response) {
 			res.status(200).json({
 				success: true,
-				data: response
+				result: response
 			})
 		} else {
 			res.status(401).json({
