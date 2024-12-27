@@ -1,23 +1,33 @@
-.fondo {
+.fondo_inicio_sesion {
   position: absolute;
   top: 0;
-  left: 0;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: scroll;
 }
 
-.f_doble {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.fondo_login_interface {
+  flex-grow: 1;
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fondo_form_and_logo {
+  position: absolute;
+  display: flex;
+  max-width: 1000px;
   width: 55%;
+  min-width: 750px;
+  height: 400px;
   justify-content: space-between;
 }
 
-.f_formulario {
+.fondo_form_login {
   position: relative;
   display: flex;
   align-items: center;
@@ -29,21 +39,19 @@
   border: 2px solid #00a499;
 }
 
-.f_formulario input {
+.fondo_form_login input {
   width: 100%;
   box-sizing: border-box;
   padding: 10px;
   background-color: transparent;
   border: 2px solid #00a499;
-  /* Ajustado para el borde */
   border-radius: 10px;
-  /* Añadido para esquinas redondeadas */
   margin-top: 15px;
   color: #333f48;
   font-size: 20px;
 }
-
-.f_ingreso_datos {
+/*
+.form_login {
   position: relative;
   width: 100%;
 }
@@ -52,44 +60,63 @@
   display: flex;
   justify-content: center;
 }
-
-.error {
+*/
+.error_feedback {
   color: #c8102e;
   font-size: large;
   font-weight: 300;
 }
 
-.f_formulario button {
+.fondo_form_login button {
   width: 80%;
   margin-top: 20px;
   background-color: #00a499;
   color: white;
-  /* Añadido para el color del texto */
   border: none;
-  /* Añadido para quitar el borde */
   padding: 10px;
-  /* Añadido para el padding */
   cursor: pointer;
-  /* Añadido para el cursor */
 }
 
-.f_formulario button:hover {
+.fondo_form_login button:hover {
   background-color: #009688;
   /* Añadido para el efecto hover */
 }
 
-.f_formulario a {
+.fondo_form_login a {
   color: #333f48;
   margin-top: 15px;
   /* Añadido para el espacio */
 }
 
-.f_logo_segura {
+.fondo_logo_USegura {
   display: flex;
   max-width: 350px;
   align-items: center;
 }
 
-.logo_segura {
+.logo_USegura {
   width: 100%;
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+  /* Cambia 768px al valor deseado */
+  .fondo_form_and_logo {
+    flex-direction: column; /* Cambia la dirección del flex */
+    align-items: center; /* Centra los hijos en la columna */
+    width: 90%; /* Ajusta el ancho si es necesario */
+    min-width: 0;
+    max-width: 430px;
+    height: auto;
+  }
+
+  .fondo_form_login,
+  .fondo_logo_USegura {
+    width: 100%; /* Asegura que ocupen todo el ancho disponible */
+    margin-bottom: 20px; /* Añade espacio entre ellos */
+  }
+
+  .fondo_logo_USegura {
+    margin-bottom: 0; /* Ajusta si necesitas eliminar el último margen */
+  }
 }
