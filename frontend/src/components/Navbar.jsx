@@ -38,7 +38,7 @@ export default function Navbar({ onSelect }) {
         .then((data) => {
                 console.log("Parsing data");
                 if (data.success) {
-                    console.log(data.data);
+                    console.log(data.result);
                 } else  {
                     console.error(data.message);
                 }

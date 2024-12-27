@@ -21,8 +21,8 @@ function Sectores() {
 			})
 			.then((data) => {
 				if(data.success) {
-					console.log(data.data);
-					setRows(data.data || []);
+					console.log(data.result);
+					setRows(data.result || []);
 				} else {
 					setFeedback("No hay sectores para listar");
 				}

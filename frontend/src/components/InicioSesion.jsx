@@ -27,7 +27,7 @@ export default function InicioSesion() {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					const { query_ustype, email } = data.data;
+					const { query_ustype, email } = data.result;
 					alert(`Bienvenido ${email}. Tipo de usuario: ${query_ustype}`);
 
 					setUser({ userType: query_ustype, email });

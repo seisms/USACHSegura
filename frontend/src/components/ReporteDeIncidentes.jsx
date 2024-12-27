@@ -17,7 +17,7 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 			})
 			.then((data) => {
 				if(data.success) {
-					setTIncidentes(data.data)
+					setTIncidentes(data.result)
 				} else {
 					console.error(data.message)
 				};
@@ -40,7 +40,7 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 			})
 		.then((data) => {
 				if(data.success) {
-					setPertencias(data.data);
+					setPertencias(data.result);
 				} else {
 					console.error(data.message);
 				}
