@@ -1,11 +1,4 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: 'usach',
-    host: 'localhost',
-    database: 'usach_segura',
-    password: 'usach2024',
-    port: 5432
-})
+const pool = require('./credentials.js')
 
 // BEGIN: Mantención de tablas básicas.
 // **** BEGIN: Mantención de SECTOR.
