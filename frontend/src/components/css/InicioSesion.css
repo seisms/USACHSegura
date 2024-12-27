@@ -18,7 +18,8 @@
 }
 
 .fondo_form_and_logo {
-  position: absolute;
+  position: relative;
+  top: 10px;
   display: flex;
   max-width: 1000px;
   width: 55%;
