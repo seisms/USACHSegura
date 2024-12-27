@@ -91,14 +91,21 @@ app.get('/sectores', (req, res) => {
 })
 
 app.post('/sector-maintain/:op', async (req, res) => {
-	const op = req.params.op
-	maintain.mantener_sector(op,req.body)
-		.then(response => {
-			res.status(200).send(response);
+	try {
+		const op = req.params.op
+		const response = await maintain.mantener_sector(op,req.body)
+		if (response) {
+			res.status(200).json({
+				success: true,
+				result: response
+			})
+		}
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor"
 		})
-		.catch(error => {
-			res.status(500).send(error);
-		})
+	}
 })
 
 app.post('/login', async (req, res) => {
@@ -116,10 +123,6 @@ app.post('/login', async (req, res) => {
 			})
 		}
 	} catch(error) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor"
-		})
 	}
 })
 

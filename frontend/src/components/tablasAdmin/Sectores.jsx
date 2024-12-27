@@ -35,7 +35,7 @@ function Sectores() {
 
 	function mantenerSector() { // Funcion similar al del App.jsx
 
-		if (!name ) {
+		if (!name) {
 			setFeedback("Ingrese el nombre del sector");
 			return;
 		}
@@ -48,11 +48,17 @@ function Sectores() {
 			body: JSON.stringify({ name, image }),
 		})
 			.then((response) => { //Mensaje de éxito, no se como hacerlo pal error, no caxo cmo hacerl
-				return response.text();
+				return response.json();
 			})
 			.then((data) => {
 				console.log(data);
-				setFeedback(data);
+				if (data.success) {
+					console.log(data.result)
+					setFeedback(data.result)
+				} else {
+					console.error(data.message)
+					setFeedback(data.message)
+				}
 				consultarSector();
 			});
 	}
