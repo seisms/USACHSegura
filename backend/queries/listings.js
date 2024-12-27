@@ -77,20 +77,47 @@ const getSectores = async () => {
 const listar_TIncidentes = async () => {
     try {
         const result = await pool.query("SELECT * FROM TINCIDENTE");
-        if (result && result.rows) {
+        if (result && result.rows.length > 0) {
             return result.rows;
         } else {
             throw new Error("No hay tipos de incidente");
         }
     } catch (err) {
-        console.log("Error al ejecutar consulta LISTAR_TINCIDENTES");
+        console.error("Error al ejecutar consulta LISTAR_TINCIDENTES", err);
+		return null;
     }
 };
+
+const listar_reportes = async (body) => {
+	try {
+		const {sector} = body;
+		let query = "SELECT * FROM REPORTE"
+		let params = []
+
+		if (sector) {
+			query =+ " WHERE REP_SECTOR = $1"
+			params.push(sector);
+		}
+
+		query += " ORDER BY REP_Fecha"
+		const result = await pool.query(query, params)
+
+		if (result && result.rows.length > 0) {
+			return result.rows;
+		} else {
+			throw new Error("No hay reportes")
+		}
+
+	} catch (err) {
+		console.error("Error al ejecutar consulta LISTAR_REPORTES", err);
+	}
+}
 
 module.exports = {
     listar_sectores,
     listar_TIncidentes,
     listar_pertenencias,
     listar_sectores_frecuentados,
-    getSectores
+    getSectores,
+	listar_reportes
 }
