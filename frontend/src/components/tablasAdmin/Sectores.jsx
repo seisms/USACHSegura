@@ -41,6 +41,11 @@ function Sectores() {
       return;
     }
 
+    if (!name) {
+      setFeedback("Ingrese el nombre del sector");
+      return;
+    }
+
     fetch(`http://localhost:3001/sector-maintain/${op}`, {
       method: "POST",
       headers: {
@@ -49,21 +54,21 @@ function Sectores() {
       body: JSON.stringify({ name, image }),
     })
       .then((response) => {
-        return response.text();
+        //Mensaje de éxito, no se como hacerlo pal error, no caxo cmo hacerl
+        return response.json();
       })
       .then((data) => {
         console.log(data);
-        setFeedback(data);
+        if (data.success) {
+          console.log(data.result);
+          setFeedback(data.result);
+        } else {
+          console.error(data.message);
+          setFeedback(data.message);
+        }
         consultarSector();
       });
   }
-
-  //const handleImageChange = (e) => {
-  //	setImage(e.target.files[0]);
-  //};
-  //const handleImageChange = (e) => {
-  //	setImage(e.target.files[0]);
-  //};
 
   const renderTabContent = () => {
     switch (selectedTab) {

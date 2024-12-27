@@ -33,11 +33,11 @@ const crear_sector = async (sector) => {
         if (result && result.rows.length > 0) {
             return `Sector agregado con éxito`;
         } else {
-            return `Sector ${name} no se pudo agregar`;
+			throw new Error(`No se pudo agregar sector ${name}`);
         }
     } catch (err) {
-        console.error(error);
-        return `Hubo un error inesperado`;
+        console.error(err);
+        return err.message;
     }
 }
 
@@ -48,11 +48,12 @@ const modifySector = async (sector) => {
         if (result && result.rows.length > 0) {
             return `Sector modificado con éxito`;
         } else {
-            return `Sector ${name} no existe`;
+			console.log("here!");
+			throw new Error(`No se pudo modificar sector ${name}`);
         }
     } catch (err) {
         console.error(err);
-        return `Hubo un error inesperado`;
+		return err.message;
     }
 }
 
@@ -63,11 +64,11 @@ const borrar_sector = async (sector) => {
         if (result && result.rows.length > 0) {
             return `Sector eliminado con éxito`;
         } else {
-            return `Sector ${name} no existe`;
+			throw new Error(`No se pudo eliminar sector ${name}`);
         }
     } catch (err) {
         console.error(err);
-        return `Hubo un error inesperado`;
+		return err.message;
     }
 }
 // **** END: Mantención de SECTOR
