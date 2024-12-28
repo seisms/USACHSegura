@@ -196,6 +196,29 @@ app.get('/listar_reportes/:sector?', async (req, res) => {
     }
 })
 
+app.post('/gestion-de-perfil/:op', async (req, res) => {
+    try {
+        const op = req.params.op;
+        const response =  await generic.gestion_de_perfil(req.body, op);
+        if(response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "Ocurrió un error al realizar la operación"
+            })
+        }
+    } catch(err) {
+        res.status(500).json({
+            success: false,
+            message: "Error intero del servidor"
+        })
+    }
+})
+
 app.listen(port, () => {
 	console.log(`Servidor vivo en puerto: ${port}.`)
 })
