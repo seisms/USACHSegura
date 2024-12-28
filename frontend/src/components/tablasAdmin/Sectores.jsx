@@ -41,11 +41,6 @@ function Sectores() {
       return;
     }
 
-    if (!name) {
-      setFeedback("Ingrese el nombre del sector");
-      return;
-    }
-
     fetch(`http://localhost:3001/sector-maintain/${op}`, {
       method: "POST",
       headers: {
