@@ -211,7 +211,32 @@ app.put('/pertenencias', async (req, res) => {
 	}
 })
 
+app.get('/listar_reportes/:sector?', async (req, res) => {
+    try {
+        let sector = null;
+        if (req.params.sector) {
+            sector = req.params.sector;
+        } 
+        const response = await list.listar_reportes(sector);
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "No se pudieron obtener los reportes"
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
+})
 
 app.listen(port, () => {
-	console.log(`App running on port ${port}.`)
+	console.log(`Servidor vivo en puerto: ${port}.`)
 })
