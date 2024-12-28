@@ -104,7 +104,6 @@ input[type="checkbox"] {
   /* Ancho máximo para el input de hora */
 }
 
-
 /* Contenedor de botones */
 .button-container {
   display: flex;
@@ -113,7 +112,7 @@ input[type="checkbox"] {
 }
 
 /* Botones */
-button {
+.button-container button {
   padding: 10px 15px;
   border: none;
   border-radius: 5px;

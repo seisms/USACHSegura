@@ -132,7 +132,7 @@ const ReporteDeIncidentes = ({ onClose, onSubmit }) => {
 
 
 	return (
-		<div className="incident-report-modal">\
+		<div className="incident-report-modal">
 			<form className="report-form" onSubmit={handleSubmit}>
 				<h2>Reporte de Incidentes</h2>
 				<section>
