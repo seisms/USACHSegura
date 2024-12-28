@@ -1,11 +1,4 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: 'usach',
-    host: 'localhost',
-    database: 'usach_segura',
-    password: 'usach2024',
-    port: 5432
-})
+const pool = require('./credentials.js')
 
 // BEGIN: Generación de Reportes
 const generar_reporte = async (body) => {
@@ -96,7 +89,17 @@ const control_de_acceso = async (login) => {
 // BEGIN:Administración tablas del usuario
 // **** BEGIN: Gestionar Pertenencias
 const gestion_de_perfil = async (body, op) => {
-    if(op === 'PC') {
+    if (op === "LFC") {
+        const result = await registrar_lugar_frecuentado(body, 'C');
+        return result;
+    }
+
+    if (op === "LFD") {
+        const result = await registrar_lugar_frecuentado(body, 'D');
+        return result;
+    }
+
+    if(op === "PC") {
         const result = await resgistrar_pertenencia(body, 'C');
         return result;
     }
@@ -121,9 +124,8 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
                 "VALUES ($1, $2, $3, $4) RETURNING *",
             [correo, tipo, img, nombre]);
             console.log("Pertenencia creada", result.rows[0]);
-            return result.rows[0];
+            return `Pertenencia ${nombre} creada`;
         }
-
         if (op === 'M') {
             const {id, tipo, img, nombre} = pertusuario;
             const result = await pool.query(
@@ -134,13 +136,11 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
             );
             if (result && result.rows.length > 0) {
                 console.log("Pertenencia actualizada:", result.rows[0]);
-                return result.rows[0];
+                return `Pertenencia ${nombre} actualizada`;
             } else {
-                console.log("Fallo actualizar pertenencia");
-                return null;
+                throw new Error(`Fallo actualizar pertenencia ${id}`)
             }
         }
-
         if (op === 'D') {
             const {id, nombre} = pertusuario;
             const result = await pool.query(
@@ -148,20 +148,54 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
                 "WHERE PER_ID = $1 RETURNING *", [id]
             );
             if (result && result.rows.length > 0) {
-                console.log(result.rows[0]);
                 return `Pertenencia ${nombre} eliminada`;
             } else {
-                console.log("No existe pertenencia", nombre);
-                return null;
+                throw new Error(`No existe pertenencia ${id}`)
             }
         }
     } catch(err) {
         console.error(err);
-        return null;
     }
 }
 
 // **** END: Gestionar Pertenencias
+
+// *** BEGIN: Gestionar lugares frecuentados
+const registrar_lugar_frecuentado = async (frecuentado, op) => {
+    try {
+        const {correo, sector} = frecuentado;
+        console.log(frecuentado);
+        console.log(correo, sector);
+        if (op === "C") {
+            // Check if entry already exists...
+            let result = await pool.query("SELECT * FROM FRECUENTA " + 
+                "WHERE FREC_Correo = $1 AND FREC_Sector = $2", [correo, sector]);
+            if (result && result.rows.length > 0) {
+                return `Ya frecuentas ese sector`
+            }
+            result = await pool.query("INSERT INTO FRECUENTA " + 
+                "(FREC_Sector, FREC_Correo) VALUES ($1, $2) RETURNING *", [sector, correo]);
+            if (result && result.rows.length > 0) {
+                console.log(result.rows[0]);
+                return `Sector frecuentado añadido`;
+            } else {
+                throw new Error("Insertar a tabla frecuenta falló");
+            }
+        }
+        if (op === "D") {
+            const result = await pool.query("DELETE FROM FRECUENTA " +
+                "WHERE FREC_Sector = $1 AND FREC_Correo = $2", [correo, sector]
+            )
+            if (result && result.rows.length > 0) {
+                return `Sector frecuentado eliminado`;
+            }
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// *** END: Gestionar lugares frecuentados
 
 // END: Administración tablas del usuario
 

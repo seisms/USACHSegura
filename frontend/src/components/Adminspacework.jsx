@@ -2,6 +2,7 @@ import "./css/AdminSpaceWork.css";
 import { useState } from "react";
 import Cabecera from "./Cabecera";
 import Sectores from "./tablasAdmin/Sectores.jsx";
+import TUsuario from "./tablasAdmin/TUsuario.jsx";
 
 function AdminSpaceWork() {
   // Estado para el boton seleccionado
@@ -18,9 +19,10 @@ function AdminSpaceWork() {
       /*
       case "tpertenencia":
         return <h2>Contenido del formulario de Pertenencia</h2>;
-      case "tusuario":
-        return <h2>Contenido del formulario de Usuarios</h2>;
       */
+      case "tusuario":
+        return <TUsuario />;
+      
       default:
         return <h2>Selecciona una opción para ver su contenido</h2>;
     }
@@ -34,6 +36,7 @@ function AdminSpaceWork() {
       </div>
       <div className="opcionesTablas">
         <button className="botones" onClick={() => handleTabChange("sectores")}> <h2> Sectores </h2> </button>
+        <button className="botones" onClick={() => handleTabChange("tusuario")}> <h2> Tipo de Usuarios </h2> </button>
       </div>
         <div className="datos_tabla">
           {renderTabContent()}

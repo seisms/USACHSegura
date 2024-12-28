@@ -1,11 +1,4 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-    user: 'usach',
-    host: 'localhost',
-    database: 'usach_segura',
-    password: 'usach2024',
-    port: 5432
-})
+const pool = require('./credentials.js')
 
 const listar_sectores_frecuentados = async (body) => {
     try {
@@ -21,6 +14,7 @@ const listar_sectores_frecuentados = async (body) => {
     }
 }
 
+//Listado tablas basicas
 const listar_sectores = async () => {
     try {
         const result = await pool.query("SELECT * FROM SECTOR;");
@@ -36,6 +30,22 @@ const listar_sectores = async () => {
     }
 };
 
+const listar_tusuario = async () => {
+    try {
+        const result = await pool.query("SELECT * FROM TUSUARIO;");
+        if (result && result.rows.length > 0) {
+            console.log(result.rows);
+            return result.rows;
+        } else {
+            return `No hay tipos de usuario para listar`;
+        }
+    } catch (err) {
+        console.error(err);
+        return `Ocurrió un error inesperado`;
+    }
+}
+
+//Listados del usuario y para el usuario
 const listar_pertenencias = async (body) => {
     try {
         const { email } = body;
@@ -84,40 +94,47 @@ const listar_TIncidentes = async () => {
         }
     } catch (err) {
         console.error("Error al ejecutar consulta LISTAR_TINCIDENTES", err);
-		return null;
+        return null;
     }
 };
 
-const listar_reportes = async (body) => {
-	try {
-		const {sector} = body;
-		let query = "SELECT * FROM REPORTE"
-		let params = []
+const listar_reportes = async (sector) => {
+    try {
+        console.log(sector);
+        let query = "SELECT REP_ID, REP_Correo, " +
+            "REP_Sector, TIN_Tnombre REP_Tipo, " +
+            "REP_Fecha, REP_Hora " +
+            "FROM REPORTE, TINCIDENTE " +
+            "WHERE REP_Tipo = TIN_TID";
 
-		if (sector) {
-			query =+ " WHERE REP_SECTOR = $1"
-			params.push(sector);
-		}
+        let params = []
 
-		query += " ORDER BY REP_Fecha"
-		const result = await pool.query(query, params)
+        if (sector) {
+            query += " AND REP_SECTOR = $1"
+            params.push(sector);
+        }
 
-		if (result && result.rows.length > 0) {
-			return result.rows;
-		} else {
-			throw new Error("No hay reportes")
-		}
+        query += " ORDER BY REP_Fecha DESC, REP_Hora DESC"
+        console.log(query);
+        const result = await pool.query(query, params)
 
-	} catch (err) {
-		console.error("Error al ejecutar consulta LISTAR_REPORTES", err);
-	}
+        if (result && result.rows.length > 0) {
+            return result.rows;
+        } else {
+            throw new Error("No hay reportes")
+        }
+
+    } catch (err) {
+        console.error("Error al ejecutar consulta LISTAR_REPORTES", err);
+    }
 }
 
 module.exports = {
     listar_sectores,
+    listar_tusuario,
     listar_TIncidentes,
     listar_pertenencias,
     listar_sectores_frecuentados,
     getSectores,
-	listar_reportes
+    listar_reportes
 }

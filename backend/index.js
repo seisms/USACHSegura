@@ -90,6 +90,28 @@ app.get('/sectores', (req, res) => {
 		});
 })
 
+app.get('/listar-tusuarios', async (req, res) => {
+	try {
+		const response = await list.listar_tusuario();
+		if(response) {
+			res.status(200).json({
+				success: true,
+				result: response
+			})
+		} else {
+			res.status(401).json({
+				success: false,
+				message: "No se pudo listar los tipos de usuario."
+			})
+		}
+	} catch(err) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor."
+		})
+	}
+})
+
 app.post('/sector-maintain/:op', async (req, res) => {
 	try {
 		const op = req.params.op
@@ -101,6 +123,25 @@ app.post('/sector-maintain/:op', async (req, res) => {
 			})
 		}
 	} catch (err) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor"
+		})
+	}
+})
+
+app.post('/tusuario-maintain/:op', async (req, res) => {
+	try{
+		const op = req.params.op
+		const response = await maintain.mantener_tusuario(op, req.body)
+		if(response) {
+			res.status(200).json({
+				success: true,
+				result: response
+			})
+		}
+
+	} catch (err){
 		res.status(500).json({
 			success: false,
 			message: "Error interno del servidor"
@@ -170,7 +211,55 @@ app.put('/pertenencias', async (req, res) => {
 	}
 })
 
+app.get('/listar_reportes/:sector?', async (req, res) => {
+    try {
+        let sector = null;
+        if (req.params.sector) {
+            sector = req.params.sector;
+        } 
+        const response = await list.listar_reportes(sector);
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "No se pudieron obtener los reportes"
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
+})
+
+app.post('/gestion-de-perfil/:op', async (req, res) => {
+    try {
+        const op = req.params.op;
+        const response =  await generic.gestion_de_perfil(req.body, op);
+        if(response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "Ocurrió un error al realizar la operación"
+            })
+        }
+    } catch(err) {
+        res.status(500).json({
+            success: false,
+            message: "Error intero del servidor"
+        })
+    }
+})
 
 app.listen(port, () => {
-	console.log(`App running on port ${port}.`)
+	console.log(`Servidor vivo en puerto: ${port}.`)
 })
