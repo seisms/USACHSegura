@@ -14,6 +14,7 @@ const listar_sectores_frecuentados = async (body) => {
     }
 }
 
+//Listado tablas basicas
 const listar_sectores = async () => {
     try {
         const result = await pool.query("SELECT * FROM SECTOR;");
@@ -29,6 +30,22 @@ const listar_sectores = async () => {
     }
 };
 
+const listar_tusuario = async () => {
+    try {
+        const result = await pool.query("SELECT * FROM TUSUARIO;");
+        if (result && result.rows.length > 0) {
+            console.log(result.rows);
+            return result.rows;
+        } else {
+            return `No hay tipos de usuario para listar`;
+        }
+    } catch (err) {
+        console.error(err);
+        return `Ocurrió un error inesperado`;
+    }
+}
+
+//Listados del usuario y para el usuario
 const listar_pertenencias = async (body) => {
     try {
         const { email } = body;
@@ -114,6 +131,7 @@ const listar_reportes = async (sector) => {
 
 module.exports = {
     listar_sectores,
+    listar_tusuario,
     listar_TIncidentes,
     listar_pertenencias,
     listar_sectores_frecuentados,

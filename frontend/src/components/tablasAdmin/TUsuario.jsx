@@ -4,8 +4,8 @@ function TUsuario() {
 
     const [selectedTab, setSelectedTab] = useState(null); // Controla la pestaña seleccionada
     const [rows, setRows] = useState([]);
-    const [Tu_tid, setTu_tid] = useState(null); // Controla el valor del archivo de imagen
-    const [Tu_tnombre, setTu_tunombre] = useState(""); // Controla el valor del nombre del sector
+    const [Tu_tid, setTu_tid] = useState(0); // Controla el valor del archivo de imagen
+    const [Tu_tnombre, setTu_tnombre] = useState(""); // Controla el valor del nombre del sector
     const [op, setOP] = useState(""); // Define la operación a realizar
     const [feedback, setFeedback] = useState(""); // Muestra retroalimentación al usuario
 
@@ -35,7 +35,7 @@ function TUsuario() {
 
     function mantenerTUsuario() { // Funcion similar al del App.jsx
 
-        if (!name ) {
+        if (!Tu_tid && !Tu_tnombre) {
             setFeedback("Ingrese el tipo de usuario");
             return;
         }
@@ -48,11 +48,10 @@ function TUsuario() {
             body: JSON.stringify({ Tu_tid, Tu_tnombre }),
         })
             .then((response) => { //Mensaje de éxito, no se como hacerlo pal error, no caxo cmo hacerl
-                return response.text();
+                return response.json();
             })
             .then((data) => {
-                console.log(data);
-                setFeedback(data);
+                setFeedback(data.result);
                 consultarTUsuario();
             });
     }
@@ -67,21 +66,42 @@ function TUsuario() {
     const renderTabContent = () => {
         switch (selectedTab) {
             case "Agregar":
+                return <div className="fAM">
+                <div className="subtitulo"><h3>Agregar Tipo de Usuario</h3></div>
+                <form className="fo"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        setOP("a");
+                        mantenerTUsuario();
+                    }}
+                >
+                    <label htmlFor="name">Nombre del Tipo de Usuario a agregar:</label>
+                    <input
+                        type="text"
+                        id="name"
+                        value={Tu_tnombre}
+                        onChange={(e) => setTu_tnombre(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Confirmar</button>
+                </form>
+            </div>
+
             case "Modificar":
                 return <div className="f_fAM">
-                    <div className="subtitulo"><h3>{selectedTab === "Agregar" ? "Agregar Tipo de Usuario" : "Modificar Tipo de Usuario"}</h3> </div>
+                    <div className="subtitulo"><h3>Modificar Tipo de Usuario</h3> </div>
                     <form onSubmit={(e) => {
                         e.preventDefault();
-                        setOP(selectedTab === "Agregar" ? "c" : "m");
+                        setOP("m");
                         mantenerTUsuario();
                     }} className="fAM">
                         <div className="fila">
-                            <label htmlFor=""> Nueva id: </label>
+                            <label htmlFor=""> Id: </label>
                             <input type="text" value={Tu_tid} onChange={(e) => setTu_tid(e.target.value)}/>
                         </div>
                         <div className="fila">
                             <label htmlFor=""> Tipo de Usuario: </label>
-                            <input type="text" value={Tu_tnombre} onChange={(e) => setTu_tunombre(e.target.value)} />
+                            <input type="text" value={Tu_tnombre} onChange={(e) => setTu_tnombre(e.target.value)} />
                         </div>
                         <button type="submit"> Confirmar </button>
                     </form>
@@ -97,7 +117,7 @@ function TUsuario() {
                             mantenerTUsuario();
                         }}
                     >
-                        <label htmlFor="name">Nombre del Tipo de Usuario a eliminar:</label>
+                        <label htmlFor="name">Id del Tipo de Usuario a eliminar:</label>
                         <input
                             type="text"
                             id="name"
@@ -126,18 +146,24 @@ function TUsuario() {
                 {rows.length > 0 ? (
                     <table>
                         <thead>
+                          <tr>
                             {Object.keys(rows[0]).map((col) => (
                                 <th key={col}>{col}</th>
                             ))}
+                          </tr>
                         </thead>
                         <tbody>
-                            {rows.map((row, index) => (
-                                <tr key={index}>
-                                    {Object.values(row).map((value, idx) => (
-                                        <td key={idx}>{value}</td>
-                                    ))}
-                                </tr>
-                            ))}
+                        {rows.map((row, index) => (
+                            <tr key={index}>
+                                {Object.keys(row).map((key, idx) => (
+                                <td key={idx}>
+                                    {typeof row[key] === "object"
+                                    ? JSON.stringify(row[key]) // Mostrar objetos anidados como string
+                                    : row[key]}
+                                </td>
+                             ))}
+                            </tr>
+                        ))}
                         </tbody>
                     </table>
                 ) : (
