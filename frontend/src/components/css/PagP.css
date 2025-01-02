@@ -7,7 +7,9 @@
 }
 
 .fondo_mapa {
-  flex: 1;
+  height: 100%;
+  flex-grow: 1;
+  transition: flex-grow 0.3s ease;
 }
 
 /* Botón flotante para el formulario */
@@ -33,10 +35,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.map-image {
-  width: 70%;
 }
 
 /* Ventana emergente para el reporte generado */

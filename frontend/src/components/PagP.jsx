@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
+import MapaDefault from "./mapasEAO/MapaDefault";
 import ReporteDeIncidentes from "./ReporteDeIncidentes";
 import "./css/PagP.css";
-import MapI from "../assets/map.png";
 import Report from "../assets/Re.jpg";
 
 export default function PagP() {
@@ -30,47 +30,43 @@ export default function PagP() {
   return (
     <div className="fondo_pagp">
       <Navbar />
-      <div className="fondo_mapa">
-        <div className="map-container">
-          <img src={MapI} alt="Mapa del Campus" className="map-image" />
+      <MapaDefault />
+      {showReportForm && (
+        <ReporteDeIncidentes
+          onClose={toggleReportForm}
+          onSubmit={handleReportSubmit}
+        />
+      )}
+      <button className="report-button" onClick={toggleReportForm}>
+        <img src={Report} alt="Reporte" className="report-icon" />
+      </button>
+      {submittedReport && (
+        <div className="report-popup">
+          <button className="close-popup" onClick={closeReportPopup}>
+            X
+          </button>
+          <h2>Reporte Generado</h2>
+          <p>
+            <strong>Tipo De Incidente:</strong>{" "}
+            {submittedReport.tipo || "Ninguno"}
+          </p>
+          <p>
+            <strong>Pertenencia Perdida:</strong>{" "}
+            {submittedReport.perts.join(", ") || "Ninguna"}
+          </p>
+          <p>
+            <strong>Sector Del Incidente:</strong>{" "}
+            {submittedReport.sector || "Ninguno"}
+          </p>
+          <p>
+            <strong>Fecha:</strong>{" "}
+            {formatDate(submittedReport.fecha) || "No especificada"}
+          </p>
+          <p>
+            <strong>Hora:</strong> {submittedReport.hora || "No especificada"}
+          </p>
         </div>
-        {showReportForm && (
-          <ReporteDeIncidentes
-            onClose={toggleReportForm}
-            onSubmit={handleReportSubmit}
-          />
-        )}
-        <button className="report-button" onClick={toggleReportForm}>
-          <img src={Report} alt="Reporte" className="report-icon" />
-        </button>
-        {submittedReport && (
-          <div className="report-popup">
-            <button className="close-popup" onClick={closeReportPopup}>
-              X
-            </button>
-            <h2>Reporte Generado</h2>
-            <p>
-              <strong>Tipo De Incidente:</strong>{" "}
-              {submittedReport.tipo || "Ninguno"}
-            </p>
-            <p>
-              <strong>Pertenencia Perdida:</strong>{" "}
-              {submittedReport.perts.join(", ") || "Ninguna"}
-            </p>
-            <p>
-              <strong>Sector Del Incidente:</strong>{" "}
-              {submittedReport.sector || "Ninguno"}
-            </p>
-            <p>
-              <strong>Fecha:</strong>{" "}
-              {formatDate(submittedReport.fecha) || "No especificada"}
-            </p>
-            <p>
-              <strong>Hora:</strong> {submittedReport.hora || "No especificada"}
-            </p>
-          </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }

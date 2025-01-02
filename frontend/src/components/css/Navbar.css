@@ -1,28 +1,27 @@
 .navbar {
-  width: 460px;
-  position: relative;
-  left: -380px;
-  transition: left 0.3s ease;
-  overflow: scroll;
+  width: auto;
   display: flex;
-}
-
-.navbar.open {
-  left: 0;
-  /* Muestra el navbar */
+  flex-shrink: 0;
+  transition: all 0.3s ease;
 }
 
 .panel_lateral {
+  width: 0;
   height: 100vh;
-  background-color: #ffffff;
-  width: 380px;
   display: flex;
+  overflow: scroll;
+  background-color: #ffffff;
   flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.navbar.open .panel_lateral {
+  width: 380px;
 }
 
 .caja_boton_panel {
+  margin-left: 10px;
   display: flex;
-  flex: 1;
   justify-content: center;
   align-items: start;
   padding: 10px 0;
@@ -33,6 +32,7 @@
   color: #ffffff;
   background-color: #00a499;
   font-size: 20px;
+  border: 3px solid #00877d;
 }
 
 .titulo {
@@ -47,7 +47,7 @@
 }
 
 .opcionesss li {
-  border: 1px solid #394049;
+  border: 2px solid #00877d;
   padding: 15px;
   color: #394049;
   font-size: 25px;
@@ -75,15 +75,48 @@
   object-fit: contain;
 }
 
+/*Pertenencias y Perfil*/
+.panel_pertenencias,
+.panel_perfil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100vh;
+  background-color: #ffffff;
+  z-index: 2; /* Por encima del panel lateral */
+  overflow: scroll;
+  transition: all 0.3s ease;
+}
+
+.panel_pertenencias.open,
+.panel_perfil.open {
+  width: 380px; /* Ocupará todo el ancho */
+}
+
 /* Estilos responsivos para pantallas pequeñas */
 @media screen and (max-width: 768px) {
   .navbar {
+    width: 0;
+  }
+
+  .navbar.open .panel_lateral {
     width: 100%;
-    left: -100%;
+    left: 0;
   }
 
   .navbar.open {
-    left: 0;
-    /* Muestra el navbar en pantallas pequeñas */
+    width: 100%;
+  }
+
+  .caja_boton_panel {
+    position: fixed;
+    z-index: 2;
+    top: 5px;
+  }
+
+  .navbar.open .caja_boton_panel {
+    right: 20px;
+    top: 5px;
   }
 }
