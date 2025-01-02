@@ -55,7 +55,6 @@ const agregar_pertencia_reporte = async (list_pusurpada, rid) => {
 // BEGIN: Acceso (control y registro)
 const control_de_acceso = async (login) => {
     const { email, password } = login;
-
     try {
         let result = await pool.query("SELECT US_Contrasenya FROM USUARIO WHERE US_Correo = $1",
             [email]);
@@ -99,17 +98,17 @@ const gestion_de_perfil = async (body, op) => {
         return result;
     }
 
-    if(op === "PC") {
+    if (op === "PC") {
         const result = await resgistrar_pertenencia(body, 'C');
         return result;
     }
 
-    if(op === "PM") {
+    if (op === "PM") {
         const result = await resgistrar_pertenencia(body, 'M');
         return result;
     }
 
-    if(op === "PE") {
+    if (op === "PE") {
         const result = await resgistrar_pertenencia(body, 'E');
         return result;
     }
@@ -118,16 +117,16 @@ const gestion_de_perfil = async (body, op) => {
 const resgistrar_pertenencia = async (pertusuario, op) => {
     try {
         if (op === 'C') {
-            const {correo, tipo, img, nombre} = pertusuario;
-            const result = await pool.query("INSERT INTO PERTENENCIA " + 
+            const { correo, tipo, img, nombre } = pertusuario;
+            const result = await pool.query("INSERT INTO PERTENENCIA " +
                 "(PER_Correo, PER_Tipo, PER_Img, PER_Nombre) " +
                 "VALUES ($1, $2, $3, $4) RETURNING *",
-            [correo, tipo, img, nombre]);
+                [correo, tipo, img, nombre]);
             console.log("Pertenencia creada", result.rows[0]);
             return `Pertenencia ${nombre} creada`;
         }
         if (op === 'M') {
-            const {id, tipo, img, nombre} = pertusuario;
+            const { id, tipo, img, nombre } = pertusuario;
             const result = await pool.query(
                 "UPDATE PERTENENCIA " +
                 "SET " +
@@ -142,7 +141,7 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
             }
         }
         if (op === 'D') {
-            const {id, nombre} = pertusuario;
+            const { id, nombre } = pertusuario;
             const result = await pool.query(
                 "DELETE FROM PERTENENCIA " +
                 "WHERE PER_ID = $1 RETURNING *", [id]
@@ -153,7 +152,7 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
                 throw new Error(`No existe pertenencia ${id}`)
             }
         }
-    } catch(err) {
+    } catch (err) {
         console.error(err);
     }
 }
@@ -163,17 +162,17 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
 // *** BEGIN: Gestionar lugares frecuentados
 const registrar_lugar_frecuentado = async (frecuentado, op) => {
     try {
-        const {correo, sector} = frecuentado;
+        const { correo, sector } = frecuentado;
         console.log(frecuentado);
         console.log(correo, sector);
         if (op === "C") {
             // Check if entry already exists...
-            let result = await pool.query("SELECT * FROM FRECUENTA " + 
+            let result = await pool.query("SELECT * FROM FRECUENTA " +
                 "WHERE FREC_Correo = $1 AND FREC_Sector = $2", [correo, sector]);
             if (result && result.rows.length > 0) {
                 return `Ya frecuentas ese sector`
             }
-            result = await pool.query("INSERT INTO FRECUENTA " + 
+            result = await pool.query("INSERT INTO FRECUENTA " +
                 "(FREC_Sector, FREC_Correo) VALUES ($1, $2) RETURNING *", [sector, correo]);
             if (result && result.rows.length > 0) {
                 console.log(result.rows[0]);

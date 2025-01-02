@@ -2,13 +2,13 @@ const pool = require('./credentials.js')
 
 const listar_sectores_frecuentados = async (body) => {
     try {
-        const {email} = body;
+        const { email } = body;
         const result = await pool.query("SELECT FREC_Sector FROM FRECUENTA WHERE FREC_Correo = $1", [email]);
-        if(result && result.rows.length > 0) {
+        if (result && result.rows.length > 0) {
             console.log(result.rows);
             return result.rows;
         }
-    } catch(err) {
+    } catch (err) {
         console.error(err);
         return null;
     }
@@ -100,7 +100,6 @@ const listar_TIncidentes = async () => {
 
 const listar_reportes = async (sector) => {
     try {
-        console.log(sector);
         let query = "SELECT REP_ID, REP_Correo, " +
             "REP_Sector, TIN_Tnombre REP_Tipo, " +
             "REP_Fecha, REP_Hora " +
