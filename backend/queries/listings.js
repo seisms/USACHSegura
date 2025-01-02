@@ -128,6 +128,20 @@ const listar_reportes = async (sector) => {
     }
 }
 
+const listar_info_perfil = async (correo) => {
+    try {
+        const lperfil = await pool.query("SELECT US_CORREO, US_FONO FROM USUARIO WHERE US_Correo = $1", [correo]);
+        if (lperfil && lperfil.rows.length > 0) {
+            console.log(lperfil.rows[0])
+            return lperfil.rows[0]
+        } else {
+            throw new Error(`No existe el usuario ${correo}`)
+        }
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 module.exports = {
     listar_sectores,
     listar_tusuario,
@@ -135,5 +149,6 @@ module.exports = {
     listar_pertenencias,
     listar_sectores_frecuentados,
     getSectores,
-    listar_reportes
+    listar_reportes,
+    listar_info_perfil
 }

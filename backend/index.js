@@ -255,7 +255,30 @@ app.post('/gestion-de-perfil/:op', async (req, res) => {
     } catch (err) {
         res.status(500).json({
             success: false,
-            message: "Error intero del servidor"
+            message: "Error interno del servidor"
+        })
+    }
+})
+
+app.get('/listar_info_perfil/:correo', async (req, res) => {
+    try {
+        const correo = req.params.correo
+        const response = await list.listar_info_perfil(correo)
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "Ocurrió un error al realizar la operación"
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
         })
     }
 })
