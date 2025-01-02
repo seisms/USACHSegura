@@ -9,6 +9,7 @@
   overflow: scroll;
 }
 
+
 .titulo {
   color: #394049;
   display: flex;
@@ -159,6 +160,10 @@
 
 .f_filas tr:hover {
   background-color: #f1f7ff;
+}
+
+.f_filas thead:hover th {
+    background-color: #007bff;
 }
 
 .f_filas button {
