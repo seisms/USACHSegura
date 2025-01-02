@@ -169,7 +169,7 @@ app.post('/login', async (req, res) => {
 
 app.post('/report', async (req, res) => {
     try {
-        const response = await list.generar_reporte(req.body);
+        const response = await generic.generar_reporte(req.body);
         if (response) {
             res.status(200).json({
                 success: response,
@@ -264,6 +264,29 @@ app.get('/listar_info_perfil/:correo', async (req, res) => {
     try {
         const correo = req.params.correo
         const response = await list.listar_info_perfil(correo)
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "Ocurrió un error al realizar la operación"
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
+})
+
+app.get("/listar_info_sector/:sector", async (req, res) => {
+    try {
+        const sector = req.params.sector
+        const response = await list.listar_info_sector(sector)
         if (response) {
             res.status(200).json({
                 success: true,

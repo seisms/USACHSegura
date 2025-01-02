@@ -142,6 +142,35 @@ const listar_info_perfil = async (correo) => {
     }
 }
 
+const listar_info_sector = async (sector) => {
+    try {
+        const DATEDIFF = "EXTRACT(DAY FROM NOW() - REP_Fecha)"
+        const rep_per_sector = await pool.query(`SELECT REP_Tipo, REP_Fecha, REP_Hora \
+                                                 FROM REPORTE, SECTOR \
+                                                 WHERE REP_Sector = $1 \
+                                                 AND REP_Sector = SEC_Nombre \
+                                                 AND ${DATEDIFF} <= 15 \
+                                                 AND ${DATEDIFF} >= 0`, [sector]);
+        const rep_tot = await pool.query(`SELECT COUNT(REP_ID) as tot\
+                                          FROM REPORTE \
+                                          WHERE REP_Sector = $1`, [sector])
+        const last_rep_count = await pool.query(`SELECT COUNT(REP_ID) as recent_count\
+                                                FROM REPORTE \
+                                                WHERE REP_Sector = $1 \
+                                                AND ${DATEDIFF} <= 15 \
+                                                AND ${DATEDIFF} >= 0`, [sector])
+        const list = {
+            per_sector: rep_per_sector.rows,
+            total: rep_tot.rows[0].tot,
+            recent_count: last_rep_count.rows[0].recent_count
+        }
+        console.log(list)
+        return list;
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 module.exports = {
     listar_sectores,
     listar_tusuario,
@@ -150,5 +179,6 @@ module.exports = {
     listar_sectores_frecuentados,
     getSectores,
     listar_reportes,
-    listar_info_perfil
+    listar_info_perfil,
+    listar_info_sector
 }
