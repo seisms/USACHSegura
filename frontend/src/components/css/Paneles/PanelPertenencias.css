@@ -1,0 +1,70 @@
+.fondo-panel-pertenencias {
+  background-color: #ffffff;
+  height: 100vh;
+}
+
+.lista-pertenencias {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.pertenencia {
+  border: 1px solid #00877d;
+  border-radius: 5px;
+}
+
+.pertenencia-boton {
+  background-color: #ffffff;
+  color: black;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  text-align: left;
+  width: 100%;
+}
+
+.pertenencia-boton:hover {
+  background-color: #00a499;
+  color: #ffffff;
+}
+
+.detalle-pertenencia {
+  padding: 10px;
+  border-top: 1px solid #00877d;
+  color: black;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.detalle-pertenencia p {
+  margin: 0 0 10px 0;
+}
+
+.imagen-pertenencia {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.boton-atras {
+  margin: 20px;
+  background-color: #00a499;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.boton-atras:hover {
+  background-color: #00877d;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}

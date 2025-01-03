@@ -36,6 +36,9 @@ function AdminSpaceWork() {
   return (
     <div className="fondo">
       <Cabecera />
+      <div className="logout-button">
+        <button>Cerrar Sesión</button>
+      </div>
       <div className="titulo">
         <h1>Tablas UsachSegura</h1>
       </div>
@@ -45,9 +48,7 @@ function AdminSpaceWork() {
         <button className="botones" onClick={() => handleTabChange("tincidente")}> <h2> Tipo de Incidentes </h2> </button>
         <button className="botones" onClick={() => handleTabChange("tpertenencia")}> <h2> Tipo de Pertenencias </h2> </button>
       </div>
-        <div className="datos_tabla">
-          {renderTabContent()}
-        </div>
+      <div className="datos_tabla">{renderTabContent()}</div>
     </div>
   );
 }

@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Cabecera from "../Cabecera";
-import "../css/Paneles/PanelPertenencias.css";
+/*import "../css/Paneles/PanelReportes.css";*/
 
-function PanelPertenencias({ handleSelect }) {
+function PanelReportes({ handleSelect }) {
   const email = "vicente.torres@usach.cl"; // Correo para pruebas
-  const [pertenencias, setPertenencias] = useState([]);
+  const [reportes, setreportes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [detalleVisible, setDetalleVisible] = useState(null);
 
   useEffect(() => {
-    const fetchPertenencias = async () => {
+    const fetchReportes = async () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch("http://localhost:3001/pertenencias", {
+        const response = await fetch("http://localhost:3001/listar_reportes", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -24,9 +24,9 @@ function PanelPertenencias({ handleSelect }) {
 
         const data = await response.json();
         if (data.success) {
-          setPertenencias(data.result);
+          setreportes(data.result);
         } else {
-          setError(data.message || "No se pudieron cargar las pertenencias.");
+          setError(data.message || "No se pudieron cargar los reportes .");
         }
       } catch (err) {
         setError("Error al conectar con el servidor.");
@@ -36,7 +36,7 @@ function PanelPertenencias({ handleSelect }) {
       }
     };
 
-    fetchPertenencias();
+    fetchReportes();
   }, [email]);
 
   const toggleDetalle = (index) => {
@@ -44,41 +44,38 @@ function PanelPertenencias({ handleSelect }) {
   };
 
   return (
-    <div className="fondo-panel-pertenencias">
+    <div className="fondo-panel-reportes">
       <Cabecera />
-      <h1 className="titulo">Pertenencias</h1>
+      <h1 className="titulo">Reportes realizados</h1>
       {loading && <p>Cargando...</p>}
       {error && <p className="error">{error}</p>}
-      <div className="lista-pertenencias">
-        {pertenencias.map((pertenencia, index) => (
-          <div key={index} className="pertenencia">
+      <div className="lista-reportes">
+        {reportes.map((reporte, index) => (
+          <div key={index} className="reporte">
             <button
-              className="pertenencia-boton"
+              className="reporte-boton"
               onClick={() => toggleDetalle(index)}
             >
-              {`Pertenencia ${index + 1}`}
+              {`Reporte ${index + 1}`}
             </button>
             {detalleVisible === index && (
-              <div className="detalle-pertenencia">
-                <p>Tipo: {pertenencia.tipo}</p>
-                <img
-                  src={pertenencia.imagen}
-                  alt={`Imagen de ${pertenencia.tipo}`}
-                  className="imagen-pertenencia"
-                />
+              <div className="detalle-Reporte">
+                <p>Sector: {reporte.REP_SECTOR}</p>
+                <p>Tipo: {reporte.REP_DTIPO}</p>
+                <p>
+                  Fecha: {reporte.REP_FECHA} {reporte.REP_HORA}
+                </p>
+                <p>Reportado por: {reporte.REP_USU}</p>
               </div>
             )}
           </div>
         ))}
       </div>
-      <button
-        onClick={() => handleSelect("Pertenencias")}
-        className="boton-atras"
-      >
+      <button onClick={() => handleSelect("Reportes")} className="boton-atras">
         Atrás
       </button>
     </div>
   );
 }
 
-export default PanelPertenencias;
+export default PanelReportes;

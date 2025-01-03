@@ -77,7 +77,8 @@
 
 /*Pertenencias y Perfil*/
 .panel_pertenencias,
-.panel_perfil {
+.panel_perfil,
+.panel_reportes {
   position: absolute;
   top: 0;
   left: 0;
@@ -90,7 +91,8 @@
 }
 
 .panel_pertenencias.open,
-.panel_perfil.open {
+.panel_perfil.open,
+.panel_reportes.open {
   width: 380px; /* Ocupará todo el ancho */
 }
 
@@ -118,5 +120,10 @@
   .navbar.open .caja_boton_panel {
     right: 20px;
     top: 5px;
+  }
+  .panel_pertenencias.open,
+  .panel_perfil.open,
+  .panel_reportes.open {
+    width: 100%; /* Ocupará todo el ancho */
   }
 }

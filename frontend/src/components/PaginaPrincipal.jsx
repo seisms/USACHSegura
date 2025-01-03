@@ -32,7 +32,7 @@ export default function PagP() {
       <Navbar />
       <MapaDefault />
       {showReportForm && (
-        <ReporteDeIncidentes
+        <FormularioReporte
           onClose={toggleReportForm}
           onSubmit={handleReportSubmit}
         />

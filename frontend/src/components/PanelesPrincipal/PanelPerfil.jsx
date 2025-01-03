@@ -2,7 +2,7 @@ import Cabecera from "../Cabecera";
 
 function PanelPertenencias({ handleSelect }) {
   return (
-    <div className="fondods">
+    <div className="fondo-panel-perfil">
       <Cabecera />
       <h1 className="titulo">Perfil</h1>
 
