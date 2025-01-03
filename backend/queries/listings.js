@@ -45,7 +45,25 @@ const listar_tusuario = async () => {
     }
 }
 
-//Listados del usuario y para el usuario
+//Listado de tipo de pertenencias
+const listar_tpertenencia = async () => {
+    try {
+        const result = await pool.query("SELECT * FROM TPERTENENCIA;");
+        if (result && result.rows.length > 0) {
+            console.log(result.rows);
+            return result.rows;
+        } else {
+            return `No hay tipos de pertenencias para listar`;
+        }
+    } catch (err) {
+        console.error(err);
+        return `Ocurrió un error inesperado`;
+    }
+}
+
+
+//Listados del usuaris y para el usuario
+
 const listar_pertenencias = async (body) => {
     try {
         const { email } = body;
@@ -83,8 +101,7 @@ const getSectores = async () => {
 };
 
 // Obtener tipo de incidentes
-
-const listar_TIncidentes = async () => {
+const listar_tincidentes = async () => {
     try {
         const result = await pool.query("SELECT * FROM TINCIDENTE");
         if (result && result.rows.length > 0) {
@@ -97,6 +114,21 @@ const listar_TIncidentes = async () => {
         return null;
     }
 };
+
+
+const listar_tpertenencias = async () => {
+    try {
+        const result = await pool.query("SELECT * FROM TPERTENENCIA");
+        if (result && result.rows.length > 0) {
+            return result.rows;
+        } else {
+            throw new Error("No hay tipos de pertenencia");
+        }
+    } catch (err) {
+        console.error("Error al ejecutar consulta LISTAR_TPertenencias", err);
+        return null;
+    }
+}
 
 const listar_reportes = async (sector) => {
     try {
@@ -174,11 +206,12 @@ const listar_info_sector = async (sector) => {
 module.exports = {
     listar_sectores,
     listar_tusuario,
-    listar_TIncidentes,
+    listar_tincidentes,
     listar_pertenencias,
     listar_sectores_frecuentados,
     getSectores,
     listar_reportes,
+    listar_tpertenencia,
     listar_info_perfil,
     listar_info_sector
 }

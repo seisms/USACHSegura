@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import "./css/Navbar.css";
+import "./css/BarraNavegacion.css";
 import logo from "../assets/LogoSF.png"; // Importar la imagen desde la carpeta assets
 import Cabecera from "./Cabecera.jsx";
 import PanelPertenencias from "./PanelesPrincipal/PanelPertenencias.jsx";
@@ -10,8 +10,8 @@ import PanelReportes from "./PanelesPrincipal/PanelReportes.jsx";
 export default function Navbar() {
   const [isOpenMain, setIsOpenMain] = useState(false);
   const [isOpenPert, setIsOpenPert] = useState(false);
-  const [isOpenRep, setIsOpenRep] = useState(false);
   const [isOpenPerf, setIsOpenPerf] = useState(false);
+  const [isOpenRep, setIsOpenRep] = useState(false);
   const { user } = useContext(UserContext);
   const { email, userType } = user;
 

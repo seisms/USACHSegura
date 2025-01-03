@@ -55,7 +55,7 @@
   cursor: pointer;
 }
 
-.opcionesss li:hover {
+.navbar ul li:hover {
   background-color: #00a499;
   color: #ffffff;
 }
@@ -95,6 +95,7 @@
 .panel_reportes.open {
   width: 380px; /* Ocupará todo el ancho */
 }
+
 /* Estilos responsivos para pantallas pequeñas */
 @media screen and (max-width: 768px) {
   .navbar {
@@ -121,7 +122,8 @@
     top: 5px;
   }
   .panel_pertenencias.open,
-  .panel_perfil.open {
+  .panel_perfil.open,
+  .panel_reportes.open {
     width: 100%; /* Ocupará todo el ancho */
   }
 }

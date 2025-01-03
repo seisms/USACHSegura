@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Navbar from "./Navbar";
+import Navbar from "./BarraNavegacion";
 import MapaDefault from "./mapasEAO/MapaDefault";
-import ReporteDeIncidentes from "./ReporteDeIncidentes";
-import "./css/PagP.css";
+import FormularioReporte from "./Reporte";
+import "./css/PaginaPrincipal.css";
 import Report from "../assets/Re.jpg";
 
 export default function PagP() {
@@ -32,7 +32,7 @@ export default function PagP() {
       <Navbar />
       <MapaDefault />
       {showReportForm && (
-        <ReporteDeIncidentes
+        <FormularioReporte
           onClose={toggleReportForm}
           onSubmit={handleReportSubmit}
         />

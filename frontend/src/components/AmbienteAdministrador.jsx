@@ -1,8 +1,10 @@
-import "./css/AdminSpaceWork.css";
+import "./css/AmbienteAdministrador.css";
 import { useState } from "react";
-import Cabecera from "./Cabecera";
+import Cabecera from "./Cabecera.jsx";
 import Sectores from "./tablasAdmin/Sectores.jsx";
 import TUsuario from "./tablasAdmin/TUsuario.jsx";
+import TPertenencia from "./tablasAdmin/TPertenencia.jsx";
+import TIncidente from "./tablasAdmin/TIncidente.jsx";
 
 function AdminSpaceWork() {
   // Estado para el boton seleccionado
@@ -16,12 +18,15 @@ function AdminSpaceWork() {
     switch (selectedTab) {
       case "sectores":
         return <Sectores />;
-      /*
+    
       case "tpertenencia":
-        return <h2>Contenido del formulario de Pertenencia</h2>;
-      */
+        return <TPertenencia />;
+
       case "tusuario":
         return <TUsuario />;
+      
+      case "tincidente":
+        return <TIncidente />;
 
       default:
         return <h2>Selecciona una opción para ver su contenido</h2>;
@@ -38,14 +43,10 @@ function AdminSpaceWork() {
         <h1>Tablas UsachSegura</h1>
       </div>
       <div className="opcionesTablas">
-        <button className="botones" onClick={() => handleTabChange("sectores")}>
-          {" "}
-          <h2> Sectores </h2>{" "}
-        </button>
-        <button className="botones" onClick={() => handleTabChange("tusuario")}>
-          {" "}
-          <h2> Tipo de Usuarios </h2>{" "}
-        </button>
+        <button className="botones" onClick={() => handleTabChange("sectores")}> <h2> Sectores </h2> </button>
+        <button className="botones" onClick={() => handleTabChange("tusuario")}> <h2> Tipo de Usuarios </h2> </button>
+        <button className="botones" onClick={() => handleTabChange("tincidente")}> <h2> Tipo de Incidentes </h2> </button>
+        <button className="botones" onClick={() => handleTabChange("tpertenencia")}> <h2> Tipo de Pertenencias </h2> </button>
       </div>
       <div className="datos_tabla">{renderTabContent()}</div>
     </div>
