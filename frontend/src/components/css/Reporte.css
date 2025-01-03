@@ -1,0 +1,139 @@
+/* Estilo general para el contenedor del formulario */
+.incident-report-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 500px;
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  color: #fff;
+  padding: 20px;
+}
+
+/* Título del formulario */
+.report-form h2 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Secciones del formulario */
+.report-form section {
+  margin-bottom: 15px;
+}
+
+/* Estilo para las etiquetas */
+.report-form label {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+/* Contenedores de opciones (radio/checkbox) */
+.scrollable-container {
+  max-height: 100px;
+  overflow-y: auto;
+  background-color: #2a2a2a;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Opciones de radio y checkbox */
+.scrollable-container div {
+  margin-bottom: 5px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Contenedores de fecha y hora */
+.fecha-hora-container {
+  display: flex;
+  justify-content: space-between;
+  /* Ajusta el espacio entre los recuadros */
+  align-items: center;
+  margin: 20px 0;
+  /* Margen alrededor del contenedor */
+}
+
+.fecha-container,
+.hora-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  /* Permite que los recuadros se ajusten proporcionalmente */
+  margin-right: 10px;
+  /* Espacio entre recuadros */
+}
+
+.fecha-container label,
+.hora-container label {
+  margin-bottom: 5px;
+  /* Espacio entre el label y el input */
+}
+
+.fecha-container input,
+.hora-container input {
+  width: 100%;
+  /* Ancho del input */
+  padding: 10px;
+  /* Espaciado interno */
+  border: 1px solid #ccc;
+  /* Borde */
+  border-radius: 4px;
+  /* Bordes redondeados */
+  box-sizing: border-box;
+  /* Incluye padding y border en el tamaño total */
+}
+
+.fecha-container input {
+  max-width: 300px;
+  /* Ancho máximo para el input de fecha */
+}
+
+.hora-container input {
+  max-width: 300px;
+  /* Ancho máximo para el input de hora */
+}
+
+/* Contenedor de botones */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Botones */
+.button-container button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.cancel-button {
+  background-color: #555;
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background-color: #777;
+}
+
+.submit-button {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}

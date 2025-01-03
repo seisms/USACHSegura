@@ -199,8 +199,43 @@ const registrar_lugar_frecuentado = async (frecuentado, op) => {
 
 // END: Administración tablas del usuario
 
+// Begin: Calcular indice de seguridad
+
+const calcular_indice_seguridad = async () => {
+    try {
+        const total = await pool.query("SELECT COUNT(*) FROM REPORTE");
+        const lista_sectores = await pool.query("SELECT SEC_Nombre FROM SECTOR");
+
+        for(const sector of lista_sectores.rows) {
+            const rsector = await pool.query("SELECT COUNT(rep_id) FROM REPORTE WHERE REP_Sector = $1", [sector.sec_nombre]);
+            console.log(sector.sec_nombre, rsector.rows[0].count);
+            console.log("Indice de seguridad:", rsector.rows[0].count / total.rows[0].count);
+
+            if(rsector.rows[0].count >= 0) {
+                result = await pool.query("UPDATE SECTOR SET sec_seguridad = 1 - (($1 * 1.0) / $2) WHERE sec_nombre = $3", [rsector.rows[0].count, total.rows[0].count, sector.sec_nombre]);
+            }   
+            else if (rsector.rows[0].count === 0) {
+                result = await pool.query("UPDATE SECTOR SET sec_seguridad = 1 WHERE sec_nombre = $1", [sector.sec_nombre]);
+            }
+            else {
+                throw new Error("Error al calcular el indice de seguridad");
+            }
+        }
+
+        return `Indice de seguridad calculado`;
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+
+// End: Calcular indice de seguridad
+
+
 module.exports = {
     generar_reporte,
     control_de_acceso,
-    gestion_de_perfil
+    gestion_de_perfil,
+    calcular_indice_seguridad
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Navbar from "./Navbar";
-import ReporteDeIncidentes from "./ReporteDeIncidentes";
-import "./css/PagP.css";
+import Navbar from "./BarraNavegacion";
+import FormularioReporte from "./Reporte";
+import "./css/PaginaPrincipal.css";
 import MapI from "../assets/map.png";
 import Report from "../assets/Re.jpg";
 
@@ -35,7 +35,7 @@ export default function PagP() {
           <img src={MapI} alt="Mapa del Campus" className="map-image" />
         </div>
         {showReportForm && (
-          <ReporteDeIncidentes
+          <FormularioReporte
             onClose={toggleReportForm}
             onSubmit={handleReportSubmit}
           />
