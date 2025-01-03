@@ -5,10 +5,12 @@ import Cabecera from "./Cabecera.jsx";
 import PanelPertenencias from "./PanelesPrincipal/PanelPertenencias.jsx";
 import PanelPerfil from "./PanelesPrincipal/PanelPerfil.jsx";
 import { UserContext } from "../userContext.jsx";
+import PanelReportes from "./PanelesPrincipal/PanelReportes.jsx";
 
 export default function Navbar() {
   const [isOpenMain, setIsOpenMain] = useState(false);
   const [isOpenPert, setIsOpenPert] = useState(false);
+  const [isOpenRep, setIsOpenRep] = useState(false);
   const [isOpenPerf, setIsOpenPerf] = useState(false);
   const { user } = useContext(UserContext);
   const { email, userType } = user;
@@ -18,6 +20,8 @@ export default function Navbar() {
       setIsOpenPert(!isOpenPert);
     } else if (option === "Perfil") {
       setIsOpenPerf(!isOpenPerf);
+    } else if (option === "Reportes") {
+      setIsOpenRep(!isOpenRep);
     }
   };
 
@@ -59,11 +63,16 @@ export default function Navbar() {
         <div className={`panel_perfil ${isOpenPerf ? "open" : ""}`}>
           <PanelPerfil handleSelect={handleSelect} />
         </div>
+        <div className={`panel_reportes ${isOpenRep ? "open" : ""}`}>
+          <PanelReportes handleSelect={handleSelect} />
+        </div>
         <h1 className="titulo">Usach Segura</h1>
         <ul className="opcionesss">
           <li onClick={listar_sectores_frecuentados}>Lugares Frecuentados</li>
           <li onClick={() => handleSelect("Pertenencias")}>Pertenencias</li>
           <li onClick={() => handleSelect("Perfil")}>Perfil</li>
+          <li onClick={() => handleSelect("Reportes")}>Reportes</li>
+          <li> Cerrar Sesión </li>
         </ul>
         <div className="navbar-logo">
           <img src={logo} alt="USACH" />

@@ -55,7 +55,7 @@
   cursor: pointer;
 }
 
-.navbar ul li:hover {
+.opcionesss li:hover {
   background-color: #00a499;
   color: #ffffff;
 }
@@ -77,7 +77,8 @@
 
 /*Pertenencias y Perfil*/
 .panel_pertenencias,
-.panel_perfil {
+.panel_perfil,
+.panel_reportes {
   position: absolute;
   top: 0;
   left: 0;
@@ -90,10 +91,10 @@
 }
 
 .panel_pertenencias.open,
-.panel_perfil.open {
+.panel_perfil.open,
+.panel_reportes.open {
   width: 380px; /* Ocupará todo el ancho */
 }
-
 /* Estilos responsivos para pantallas pequeñas */
 @media screen and (max-width: 768px) {
   .navbar {
@@ -118,5 +119,9 @@
   .navbar.open .caja_boton_panel {
     right: 20px;
     top: 5px;
+  }
+  .panel_pertenencias.open,
+  .panel_perfil.open {
+    width: 100%; /* Ocupará todo el ancho */
   }
 }
