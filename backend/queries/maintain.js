@@ -26,7 +26,7 @@ const crear_sector = async (sector) => {
         if (result && result.rows.length > 0) {
             return `Sector agregado con éxito`;
         } else {
-			throw new Error(`No se pudo agregar sector ${name}`);
+            throw new Error(`No se pudo agregar sector ${name}`);
         }
     } catch (err) {
         console.error(err);
@@ -41,12 +41,12 @@ const modifySector = async (sector) => {
         if (result && result.rows.length > 0) {
             return `Sector modificado con éxito`;
         } else {
-			console.log("here!");
-			throw new Error(`No se pudo modificar sector ${name}`);
+            console.log("here!");
+            throw new Error(`No se pudo modificar sector ${name}`);
         }
     } catch (err) {
         console.error(err);
-		return err.message;
+        return err.message;
     }
 }
 
@@ -57,11 +57,11 @@ const borrar_sector = async (sector) => {
         if (result && result.rows.length > 0) {
             return `Sector eliminado con éxito`;
         } else {
-			throw new Error(`No se pudo eliminar sector ${name}`);
+            throw new Error(`No se pudo eliminar sector ${name}`);
         }
     } catch (err) {
         console.error(err);
-		return err.message;
+        return err.message;
     }
 }
 // **** END: Mantención de SECTOR
@@ -84,7 +84,7 @@ const mantener_tusuario = async (op, tusuario) => {
 };
 
 const crear_tusuario = async (tusuario) => {
-    const { Tu_tid, Tu_tnombre } = tusuario;
+    const { Tu_tnombre } = tusuario;
     try {
         const result = await pool.query("INSERT INTO TUSUARIO (tu_tnombre) VALUES ($1) RETURNING *", [Tu_tnombre]);
         if (result && result.rows.length > 0) {
@@ -107,10 +107,12 @@ const modificar_tusuario = async (tusuario) => {
         } else {
 			console.log("here!");
 			throw new Error(`No se pudo modificar el tipo de usuario: ${Tu_tid}`);
+            console.log("here!");
+            throw new Error(`No se pudo modificar sector ${Tu_tid}`);
         }
     } catch (err) {
         console.error(err);
-		return err.message;
+        return err.message;
     }
 }
 

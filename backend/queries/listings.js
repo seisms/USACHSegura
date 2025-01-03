@@ -2,13 +2,13 @@ const pool = require('./credentials.js')
 
 const listar_sectores_frecuentados = async (body) => {
     try {
-        const {email} = body;
+        const { email } = body;
         const result = await pool.query("SELECT FREC_Sector FROM FRECUENTA WHERE FREC_Correo = $1", [email]);
-        if(result && result.rows.length > 0) {
+        if (result && result.rows.length > 0) {
             console.log(result.rows);
             return result.rows;
         }
-    } catch(err) {
+    } catch (err) {
         console.error(err);
         return null;
     }
@@ -132,7 +132,6 @@ const listar_tpertenencias = async () => {
 
 const listar_reportes = async (sector) => {
     try {
-        console.log(sector);
         let query = "SELECT REP_ID, REP_Correo, " +
             "REP_Sector, TIN_Tnombre REP_Tipo, " +
             "REP_Fecha, REP_Hora " +
@@ -161,6 +160,49 @@ const listar_reportes = async (sector) => {
     }
 }
 
+const listar_info_perfil = async (correo) => {
+    try {
+        const lperfil = await pool.query("SELECT US_CORREO, US_FONO FROM USUARIO WHERE US_Correo = $1", [correo]);
+        if (lperfil && lperfil.rows.length > 0) {
+            console.log(lperfil.rows[0])
+            return lperfil.rows[0]
+        } else {
+            throw new Error(`No existe el usuario ${correo}`)
+        }
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+const listar_info_sector = async (sector) => {
+    try {
+        const DATEDIFF = "EXTRACT(DAY FROM NOW() - REP_Fecha)"
+        const rep_per_sector = await pool.query(`SELECT REP_Tipo, REP_Fecha, REP_Hora \
+                                                 FROM REPORTE, SECTOR \
+                                                 WHERE REP_Sector = $1 \
+                                                 AND REP_Sector = SEC_Nombre \
+                                                 AND ${DATEDIFF} <= 15 \
+                                                 AND ${DATEDIFF} >= 0`, [sector]);
+        const rep_tot = await pool.query(`SELECT COUNT(REP_ID) as tot\
+                                          FROM REPORTE \
+                                          WHERE REP_Sector = $1`, [sector])
+        const last_rep_count = await pool.query(`SELECT COUNT(REP_ID) as recent_count\
+                                                FROM REPORTE \
+                                                WHERE REP_Sector = $1 \
+                                                AND ${DATEDIFF} <= 15 \
+                                                AND ${DATEDIFF} >= 0`, [sector])
+        const list = {
+            per_sector: rep_per_sector.rows,
+            total: rep_tot.rows[0].tot,
+            recent_count: last_rep_count.rows[0].recent_count
+        }
+        console.log(list)
+        return list;
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 module.exports = {
     listar_sectores,
     listar_tusuario,
@@ -169,5 +211,7 @@ module.exports = {
     listar_sectores_frecuentados,
     getSectores,
     listar_reportes,
-    listar_tpertenencia
+    listar_tpertenencia,
+    listar_info_perfil,
+    listar_info_sector
 }
