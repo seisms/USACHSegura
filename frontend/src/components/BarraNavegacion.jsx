@@ -31,14 +31,11 @@ export default function Navbar() {
 
   function listar_sectores_frecuentados() {
     console.log(email);
-    fetch("http://localhost:3001/list-sec-frec", {
-      method: "PUT",
+    fetch(`http://localhost:3001/listar/sectores_frecuentados/${email}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email,
-      }),
     })
       .then((response) => {
         return response.json();

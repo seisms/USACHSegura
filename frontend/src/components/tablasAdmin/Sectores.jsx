@@ -10,7 +10,7 @@ function Sectores() {
 
   function consultarSector() {
     //Funcion para mostrar las filas
-    fetch("http://localhost:3001/listar-sectores", {
+    fetch("http://localhost:3001/listar/sectores", {
       method: "GET",
       headers: {
         "Content-type": "application/json",

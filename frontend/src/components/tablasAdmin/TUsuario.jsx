@@ -10,7 +10,7 @@ function TUsuario() {
     const [feedback, setFeedback] = useState(""); // Muestra retroalimentación al usuario
 
     function consultarTUsuario() { //Funcion para mostrar las filas
-        fetch("http://localhost:3001/listar-tusuarios", {
+        fetch("http://localhost:3001/listar/tusuarios", {
             method: "GET",
             headers: {
                 "Content-type": "application/json",

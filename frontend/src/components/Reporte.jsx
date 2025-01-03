@@ -11,7 +11,7 @@ const FormularioReporte = ({ onClose, onSubmit }) => {
 
 	//Solicito los tipos de incidentes existentes en la base
 	function getTIncidentes() {
-		fetch('http://localhost:3001/listar-tincidentes')
+		fetch('http://localhost:3001/listar/tincidentes')
 			.then((response) => {
 				return response.json();
 			})
@@ -25,15 +25,12 @@ const FormularioReporte = ({ onClose, onSubmit }) => {
 	}
 
 	function getPertenencias() {
-		fetch('http://localhost:3001/pertenencias',
+		fetch(`http://localhost:3001/listar/pertenencias/${email}`,
 			{
-				method: "PUT",
+				method: "GET",
 				headers: {
 					"content-type": "application/json",
 				},
-				body: JSON.stringify({
-					email,
-				}),
 			})
 		.then((response) => {
 				return response.json();
@@ -50,13 +47,17 @@ const FormularioReporte = ({ onClose, onSubmit }) => {
 
 	//solitico los sectores existentes en la base
 	function getSectores() {
-		fetch('http://localhost:3001/sectores')
+		fetch('http://localhost:3001/listar/sectores')
 			.then((response) => {
 				return response.json();
 			})
 			.then((data) => {
-				const mapped = data.map((item) => item.sec_nombre); //mapeo los datos, ya que vienen en formato json
-				setSectores(mapped); //guardo el arreglo de sectores en 'sectores'
+				if (data.success) {
+					const mapped = data.result.map((item) => item.sec_nombre); //mapeo los datos, ya que vienen en formato json
+					setSectores(mapped); //guardo el arreglo de sectores en 'sectores'
+				} else {
+					console.error(data.message)
+				}
 			});
 	}
 

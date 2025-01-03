@@ -10,7 +10,7 @@ function TPertenencia() {
     const [feedback, setFeedback] = useState(""); // Muestra retroalimentación al usuario
 
     function consultarTPertenencia() { //Funcion para mostrar las filas
-        fetch("http://localhost:3001/listar-tpertenencias", {
+        fetch("http://localhost:3001/listar/tpertenencias", {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
