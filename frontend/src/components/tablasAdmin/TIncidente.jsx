@@ -10,7 +10,7 @@ function TIncidente() {
     const [feedback, setFeedback] = useState(""); // Muestra retroalimentación al usuario
 
     function consultarTIncidente() { //Funcion para mostrar las filas
-        fetch("http://localhost:3001/listar-tincidentes", {
+        fetch("http://localhost:3001/listar/tincidentes", {
             method: "GET",
             headers: {
                 "Content-type": "application/json",

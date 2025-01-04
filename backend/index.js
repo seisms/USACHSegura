@@ -340,11 +340,12 @@ app.post('/gestion-de-perfil/:op', async (req, res) => {
     }
 })
 
-app.get('/listar_info_perfil/:correo', async (req, res) => {
+app.get('/info/perfil/:correo', async (req, res) => {
     try {
         const correo = req.params.correo
         const response = await list.listar_info_perfil(correo)
         if (response) {
+			console.log(response);
             res.status(200).json({
                 success: true,
                 result: response
@@ -352,7 +353,7 @@ app.get('/listar_info_perfil/:correo', async (req, res) => {
         } else {
             res.status(401).json({
                 success: false,
-                message: "Ocurrió un error al realizar la operación"
+                message: `Ocurrió un error al listar la información del usuario ${correo}`
             })
         }
     } catch (err) {
@@ -363,11 +364,12 @@ app.get('/listar_info_perfil/:correo', async (req, res) => {
     }
 })
 
-app.get("/listar_info_sector/:sector", async (req, res) => {
+app.get('/info/sector/:sector', async (req, res) => {
     try {
         const sector = req.params.sector
         const response = await list.listar_info_sector(sector)
         if (response) {
+			console.log(response);
             res.status(200).json({
                 success: true,
                 result: response
@@ -375,7 +377,7 @@ app.get("/listar_info_sector/:sector", async (req, res) => {
         } else {
             res.status(401).json({
                 success: false,
-                message: "Ocurrió un error al realizar la operación"
+                message: `Ocurrió un error al listar información del sector ${sector}`
             })
         }
     } catch (err) {
@@ -384,6 +386,31 @@ app.get("/listar_info_sector/:sector", async (req, res) => {
             message: "Error interno del servidor"
         })
     }
+})
+
+app.get('/info/reporte/:rid', async (req, res) => {
+	try {
+		const rid = req.params.rid
+		const response = await list.listar_info_reporte(rid)
+
+		if (response) {
+			console.log(response);
+			res.status(200).json({
+				success: true,
+				result: response
+			})
+		} else {
+			res.status(401).json({
+				success: false,
+				message: `Ocurrió un error al listar información del reporte ${rid}`
+			})
+		} 	
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor"
+		})
+	}
 })
 
 app.listen(port, () => {

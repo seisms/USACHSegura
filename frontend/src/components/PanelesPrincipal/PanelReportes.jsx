@@ -9,12 +9,13 @@ function PanelReportes({ handleSelect }) {
   const [error, setError] = useState(null);
   const [detalleVisible, setDetalleVisible] = useState(null);
 
+// ESTO ESTA MAL
   useEffect(() => {
     const fetchReportes = async () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch("http://localhost:3001/listar_reportes", {
+        const response = await fetch("http://localhost:3001/listar/reportes", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -61,7 +62,7 @@ function PanelReportes({ handleSelect }) {
             {detalleVisible === index && (
               <div className="detalle-Reporte">
                 <p>Sector: {reporte.REP_SECTOR}</p>
-                <p>Tipo: {reporte.REP_DTIPO}</p>
+                <p>Tipo: {reporte.REP_TIPO}</p>
                 <p>
                   Fecha: {reporte.REP_FECHA} {reporte.REP_HORA}
                 </p>
