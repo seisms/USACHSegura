@@ -34,8 +34,6 @@ function Sectores() {
   }
 
   function mantenerSector() {
-    // Funcion similar al del App.jsx
-
     if (!name) {
       setFeedback("Ingrese el nombre del sector");
       return;
@@ -49,7 +47,6 @@ function Sectores() {
       body: JSON.stringify({ name, image }),
     })
       .then((response) => {
-        //Mensaje de éxito, no se como hacerlo pal error, no caxo cmo hacerl
         return response.json();
       })
       .then((data) => {
@@ -76,7 +73,7 @@ function Sectores() {
                 {selectedTab === "Agregar"
                   ? "Agregar Sector"
                   : "Modificar Sector"}
-              </h3>{" "}
+              </h3>
             </div>
             <form
               onSubmit={(e) => {

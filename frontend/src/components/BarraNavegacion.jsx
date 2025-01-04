@@ -69,7 +69,6 @@ export default function Navbar() {
           <li onClick={() => handleSelect("Pertenencias")}>Pertenencias</li>
           <li onClick={() => handleSelect("Perfil")}>Perfil</li>
           <li onClick={() => handleSelect("Reportes")}>Reportes</li>
-          <li> Cerrar Sesión </li>
         </ul>
         <div className="navbar-logo">
           <img src={logo} alt="USACH" />

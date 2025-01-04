@@ -3,10 +3,6 @@ import Cabecera from "../Cabecera";
 import { UserContext } from '../../userContext.jsx'
 import "../css/Paneles/PanelPertenencias.css";
 
-
-
-
-
 function PanelPertenencias({ handleSelect }) {
 
 	const { user } = useContext(UserContext);

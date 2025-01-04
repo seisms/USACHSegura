@@ -1,0 +1,44 @@
+.contenido-perfil {
+  width: 100%;
+}
+
+.box-perfil {
+  margin: 10px;
+  border: 2px solid #333f48;
+  border-radius: 10px;
+}
+
+.box-perfil-header {
+  background-color: #00a499;
+  border-bottom: 2px solid #333f48;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  font-size: 25px;
+  font-weight: 600;
+  padding: 10px;
+  margin: 0;
+}
+
+.box-perfil-info {
+  color: #333f48;
+  font-size: 25px;
+  margin: 5px 0;
+  padding: 0 10px;
+}
+
+.perfil-little-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.perfil-little-buttons button {
+  background-color: #00a499;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px 15px;
+}
+
+.perfil-little-buttons button:hover {
+  background-color: #009688;
+}
