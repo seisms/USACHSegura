@@ -36,13 +36,15 @@ app.get('/calcular-indice', async (req, res) => {
 	}
 })
 
-app.put('/list-sec-frec', async (req, res) => {
+app.get('/listar/sectores_frecuentados/:email', async (req, res) => {
     try {
-        const response = await list.listar_sectores_frecuentados(req.body);
+		const email = req.params.email
+        const response = await list.listar_sectores_frecuentados(email);
         if (response) {
+			console.log(response)
             res.status(200).json({
                 success: true,
-                data: response
+                result: response
             })
         } else {
             res.status(401).json({
@@ -58,7 +60,7 @@ app.put('/list-sec-frec', async (req, res) => {
     }
 })
 
-app.get('/listar-sectores', async (req, res) => {
+app.get('/listar/sectores', async (req, res) => {
     try {
         const response = await list.listar_sectores();
         if (response) {
@@ -80,17 +82,7 @@ app.get('/listar-sectores', async (req, res) => {
     }
 })
 
-app.get('/sectores', (req, res) => {
-    list.getSectores()
-        .then((response) => {
-            res.status(200).send(response); // Enviar el arreglo como JSON
-        })
-        .catch((error) => {
-            res.status(500).send(error);
-        });
-})
-
-app.get('/listar-tusuarios', async (req, res) => {
+app.get('/listar/tusuarios', async (req, res) => {
 	try {
 		const response = await list.listar_tusuario();
 		if(response) {
@@ -112,7 +104,7 @@ app.get('/listar-tusuarios', async (req, res) => {
 	}
 })
 
-app.get('/listar-tpertenencias', async (req, res) => {
+app.get('/listar/tpertenencias', async (req, res) => {
 	try {
 		const response = await list.listar_tpertenencia();
 		if(response) {
@@ -134,7 +126,7 @@ app.get('/listar-tpertenencias', async (req, res) => {
 	}
 })
 
-app.get('/listar-tincidentes', async (req, res) => {
+app.get('/listar/tincidentes', async (req, res) => {
 	try {
 		const response = await list.listar_tincidentes();
 		if(response) {
@@ -269,9 +261,10 @@ app.post('/report', async (req, res) => {
     }
 })
 
-app.put('/pertenencias', async (req, res) => {
+app.get('/listar/pertenencias/:email', async (req, res) => {
     try {
-        const response = await list.listar_pertenencias(req.body);
+		const email = req.params.email
+        const response = await list.listar_pertenencias(email);
         if (response) {
             res.status(200).json({
                 success: true,
@@ -291,7 +284,7 @@ app.put('/pertenencias', async (req, res) => {
     }
 })
 
-app.get('/listar_reportes/:sector?', async (req, res) => {
+app.get('/listar/reportes/:sector?', async (req, res) => {
     try {
         let sector = null;
         if (req.params.sector) {
