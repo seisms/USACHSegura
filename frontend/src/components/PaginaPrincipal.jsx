@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "./BarraNavegacion";
 import MapaDefault from "./mapasEAO/MapaDefault";
+import MapaSeccionado from "./mapasEAO/MapaSeccionado";
 import FormularioReporte from "./Reporte";
 import "./css/PaginaPrincipal.css";
 import Report from "../assets/Re.jpg";
@@ -30,7 +31,7 @@ export default function PagP() {
   return (
     <div className="fondo_pagp">
       <Navbar />
-      <MapaDefault />
+      <MapaSeccionado />
       {showReportForm && (
         <FormularioReporte
           onClose={toggleReportForm}
