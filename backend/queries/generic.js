@@ -204,7 +204,7 @@ const registrar_lugar_frecuentado = async (frecuentado, op) => {
         }
         if (op === "D") {
             const result = await pool.query("DELETE FROM FRECUENTA " +
-                "WHERE FREC_Sector = $1 AND FREC_Correo = $2", [correo, sector]
+                "WHERE FREC_Correo = $1 AND FREC_Sector = $2", [correo, sector]
             )
             if (result && result.rows.length > 0) {
                 return `Sector frecuentado eliminado`;
