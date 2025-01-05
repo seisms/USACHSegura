@@ -12,11 +12,10 @@ const NotificarReporte = ({ rep_id }) => {
     const [reporteInfo, setReporteInfo] = useState(null);
 
     useEffect(() => {
-        if(!rep_id) return;
+        if (!rep_id) return;
 
         const NuevoReporte = async () => {
             try {
-                console.log('Solicitando datos del reporte:', rep_id);
                 const response = await fetch(`http://localhost:3001/info/reporte/${rep_id}`, {
                     method: "GET",
                     headers: {
@@ -29,7 +28,7 @@ const NotificarReporte = ({ rep_id }) => {
                 const reporte = data?.result?.reporte;
                 const pusurpada = data?.result?.pertenencias_usurpadas;
 
-                if(data.success === true){
+                if (data.success === true) {
                     console.log('Datos del reporte:', reporte);
                     console.log('Pertenencias usurpadas:', pusurpada);
 
@@ -38,7 +37,7 @@ const NotificarReporte = ({ rep_id }) => {
                     setRepTipo(reporte.rep_tipo);
                     setRepUPerts(pusurpada);
                 }
-                else{
+                else {
                     console.error('Error al obtener datos del reporte:', data.message);
                     setError(data.message);
                 }
@@ -52,7 +51,7 @@ const NotificarReporte = ({ rep_id }) => {
     }, [rep_id]);
 
     useEffect(() => {
-        if(!repSector) return;
+        if (!repSector) return;
 
         const ListadoUsuarios = async () => {
             try {
@@ -66,11 +65,11 @@ const NotificarReporte = ({ rep_id }) => {
                 const data = await response.json();
                 console.log('Datos de los usuarios:', data.result);
 
-                if(data.success){
+                if (data.success) {
                     console.log('Usuarios notificados:', data.result);
                     setUsuariosNotificados(data.result);
                 }
-                else{
+                else {
                     console.error('Error al listar usuarios:', data.message);
                     setError(data.message);
                 }
@@ -100,7 +99,7 @@ const NotificarReporte = ({ rep_id }) => {
             <h2>Usuarios a Notificar:</h2>
             <ul>
                 {usuariosNotificados.map((usuario, index) => (
-                    <li key={index}>{usuario}</li>
+                    <li key={index}>{usuario.frec_correo}</li>
                 ))}
             </ul>
         </div>

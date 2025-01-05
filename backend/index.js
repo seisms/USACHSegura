@@ -15,33 +15,33 @@ app.use(function(req, res, next) {
 });
 
 app.get('/calcular-indice', async (req, res) => {
-	try	{
-		const response = await generic.calcular_indice_seguridad();
-		if(response) {
-			res.status(200).json({
-				success: true,
-				result: response
-			})
-		} else {
-			res.status(401).json({
-				success: false,
-				message: "No se pudo calcular el índice de seguridad."
-			})
-		}
-	} catch (err) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor."
-		})
-	}
+    try {
+        const response = await generic.calcular_indice_seguridad();
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "No se pudo calcular el índice de seguridad."
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor."
+        })
+    }
 })
 
 app.get('/listar/sectores_frecuentados/:email', async (req, res) => {
     try {
-		const email = req.params.email
+        const email = req.params.email
         const response = await list.listar_sectores_frecuentados(email);
-        if (response) {
-			console.log(response)
+        if (response || response == []) {
+            console.log(response)
             res.status(200).json({
                 success: true,
                 result: response
@@ -83,142 +83,142 @@ app.get('/listar/sectores', async (req, res) => {
 })
 
 app.get('/listar/tusuarios', async (req, res) => {
-	try {
-		const response = await list.listar_tusuario();
-		if(response) {
-			res.status(200).json({
-				success: true,
-				result: response
-			})
-		} else {
-			res.status(401).json({
-				success: false,
-				message: "No se pudo listar los tipos de usuario."
-			})
-		}
-	} catch(err) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor."
-		})
-	}
+    try {
+        const response = await list.listar_tusuario();
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "No se pudo listar los tipos de usuario."
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor."
+        })
+    }
 })
 
 app.get('/listar/tpertenencias', async (req, res) => {
-	try {
-		const response = await list.listar_tpertenencia();
-		if(response) {
-			res.status(200).json({
-				success: true,
-				result: response
-			})
-		} else {
-			res.status(401).json({
-				success: false,
-				message: "No se pudo listar los tipos de pertenencias."
-			})
-		}
-	} catch(err) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor."
-		})
-	}
+    try {
+        const response = await list.listar_tpertenencia();
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "No se pudo listar los tipos de pertenencias."
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor."
+        })
+    }
 })
 
 app.get('/listar/tincidentes', async (req, res) => {
-	try {
-		const response = await list.listar_tincidentes();
-		if(response) {
-			res.status(200).json({
-				success: true,
-				result: response
-			})
-		} else {
-			res.status(401).json({
-				success: false,
-				message: "No se pudo listar los tipos de incidentes."
-			})
-		}
-	} catch(err) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor."
-		})
-	}
+    try {
+        const response = await list.listar_tincidentes();
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "No se pudo listar los tipos de incidentes."
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor."
+        })
+    }
 })
 
 app.post('/sector-maintain/:op', async (req, res) => {
-	try {
-		const op = req.params.op
-		const response = await maintain.mantener_sector(op,req.body)
-		if (response) {
-			res.status(200).json({
-				success: true,
-				result: response
-			})
-		}
-	} catch (err) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor"
-		})
-	}
+    try {
+        const op = req.params.op
+        const response = await maintain.mantener_sector(op, req.body)
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
 })
 
 app.post('/tpertenencia-maintain/:op', async (req, res) => {
-	try {
-		const op = req.params.op
-		const response = await maintain.mantener_tpertenencia(op, req.body)
-		if (response) {
-			res.status(200).json({
-				success: true,
-				result: response
-			})
-		}
-	} catch (err) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor"
-		})
-	}
+    try {
+        const op = req.params.op
+        const response = await maintain.mantener_tpertenencia(op, req.body)
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
 })
 
 app.post('/tincidente-maintain/:op', async (req, res) => {
-	try {
-		const op = req.params.op
-		const response = await maintain.mantener_tincidente(op, req.body)
-		if (response) {
-			res.status(200).json({
-				success: true,
-				result: response
-			})
-		}
-	} catch (err) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor"
-		})
-	}
+    try {
+        const op = req.params.op
+        const response = await maintain.mantener_tincidente(op, req.body)
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
 })
 
 app.post('/tusuario-maintain/:op', async (req, res) => {
-	try{
-		const op = req.params.op
-		const response = await maintain.mantener_tusuario(op, req.body)
-		if(response) {
-			res.status(200).json({
-				success: true,
-				result: response
-			})
-		}
+    try {
+        const op = req.params.op
+        const response = await maintain.mantener_tusuario(op, req.body)
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        }
 
-	} catch (err){
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor"
-		})
-	}
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
 })
 
 app.post('/login', async (req, res) => {
@@ -236,33 +236,33 @@ app.post('/login', async (req, res) => {
             })
         }
     } catch (error) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor"
-		})
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
     }
 })
 
 app.post('/register', async (req, res) => {
-	try {
-		const response = await generic.registrar_nuevo_usuario(req.body)
-		if (response === "OK") {
-			res.status(200).json({
-				success: true,
-				message: "Usuario registrado con éxito"
-			})
-		} else {
-			res.status(401).json({
-				success: false,
-				message: response.msg
-			})
-		}
-	} catch (err) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor"
-		})
-	}
+    try {
+        const response = await generic.registrar_nuevo_usuario(req.body)
+        if (response === "OK") {
+            res.status(200).json({
+                success: true,
+                message: "Usuario registrado con éxito"
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: response.msg
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
 })
 
 app.post('/report', async (req, res) => {
@@ -290,7 +290,7 @@ app.post('/report', async (req, res) => {
 
 app.get('/listar/pertenencias/:email', async (req, res) => {
     try {
-		const email = req.params.email
+        const email = req.params.email
         const response = await list.listar_pertenencias(email);
         if (response) {
             res.status(200).json({
@@ -298,14 +298,14 @@ app.get('/listar/pertenencias/:email', async (req, res) => {
                 result: response
             })
         } else {
-			console.error(`No se pudieron listar las pertenencias de ${email}`)
+            console.error(`No se pudieron listar las pertenencias de ${email}`)
             res.status(401).json({
                 success: false,
                 message: "No se pudo listar las pertenencias."
             })
         }
     } catch (err) {
-		console.error(err)
+        console.error(err)
         res.status(500).json({
             success: false,
             message: "Error interno del servidor."
@@ -343,12 +343,12 @@ app.get('/listar/usuarios_por_sector/:sector?', async (req, res) => {
     try {
         let sector = null;
         if (req.params.sector) {
-            console.log('se pudo obtener un parametro sector: ',req.params.sector);
+            console.log('se pudo obtener un parametro sector: ', req.params.sector);
             sector = req.params.sector;
         }
         const response = await list.listar_usuario_por_sector(sector);
         if (response) {
-            console.log('obtuviste respuesta de la base de datos',response);
+            console.log('obtuviste respuesta de la base de datos', response);
             res.status(200).json({
                 success: true,
                 result: response
@@ -395,7 +395,7 @@ app.get('/info/perfil/:correo', async (req, res) => {
         const correo = req.params.correo
         const response = await list.listar_info_perfil(correo)
         if (response) {
-			console.log(response);
+            console.log(response);
             res.status(200).json({
                 success: true,
                 result: response
@@ -419,7 +419,7 @@ app.get('/info/sector/:sector', async (req, res) => {
         const sector = req.params.sector
         const response = await list.listar_info_sector(sector)
         if (response) {
-			console.log(response);
+            console.log(response);
             res.status(200).json({
                 success: true,
                 result: response
@@ -439,28 +439,28 @@ app.get('/info/sector/:sector', async (req, res) => {
 })
 
 app.get('/info/reporte/:rid', async (req, res) => {
-	try {
-		const rid = req.params.rid
-		const response = await list.listar_info_reporte(rid)
+    try {
+        const rid = req.params.rid
+        const response = await list.listar_info_reporte(rid)
 
-		if (response) {
-			console.log(response);
-			res.status(200).json({
-				success: true,
-				result: response
-			})
-		} else {
-			res.status(401).json({
-				success: false,
-				message: `Ocurrió un error al listar información del reporte ${rid}`
-			})
-		} 	
-	} catch (err) {
-		res.status(500).json({
-			success: false,
-			message: "Error interno del servidor"
-		})
-	}
+        if (response) {
+            console.log(response);
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: `Ocurrió un error al listar información del reporte ${rid}`
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
 })
 
 app.listen(port, () => {
