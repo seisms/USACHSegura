@@ -4,7 +4,7 @@ import "../css/Paneles/PanelFrecuenta.css";
 
 export default function PanelFrecuenta({ handleSelect, email, setFrecuenta }) {
     const [frecuentados, setFrecuentados] = useState([]);
-    const [frec_has_changed, setChanged] = useState(false)
+    const [frec_has_changed, setChanged] = useState(true)
     const [rows, setRows] = useState([]);
     const [feedback, setFeedback] = useState(""); // Muestra retroalimentación al usuario
     const [isOpenPopup, setIsOpenPopup] = useState("");
