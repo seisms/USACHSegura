@@ -78,10 +78,8 @@ export default function InicioSesion() {
                             />
                             {error && <p className="error_feedback">{error}</p>}
                             <button type="submit"> Ingresar </button>
-                            <a href="#">
-                                <h3>Registrarse</h3>
-                            </a>
                         </form>
+                        <button className="singin-button" onClick={() => navigate("/registro")}> Registrarse </button>
                     </div>
                     <div className="fondo_logo_USegura">
                         <img src={seguraLogo} alt="S" className="logo_USegura" />

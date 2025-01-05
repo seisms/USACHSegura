@@ -1,0 +1,75 @@
+.fondo-sing-in {
+  background-color: #ffffff;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
+}
+
+.fondo-sing-in h1 {
+  color: black;
+  text-align: center;
+  margin: 10px;
+}
+
+.fondo-form-sing-in {
+  display: flex;
+  justify-content: center;
+}
+
+.form-sing-in-labelinput {
+  margin-bottom: 10px;
+}
+
+.form-sing-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+  padding: 20px;
+  color: #333f48;
+  border: 2px solid #00a499;
+  border-radius: 10px;
+  font-size: 25px;
+  margin: 15px;
+}
+
+.form-sing-in input[type="text"],
+.form-sing-in input[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: transparent;
+  border: 2px solid #00a499;
+  border-radius: 10px;
+  color: #333f48;
+  font-size: 20px;
+}
+
+.form-sing-in-checkbox {
+  width: 100%;
+}
+
+.checkbox-item {
+  height: 40px;
+  margin: 5px 10px;
+}
+
+.checkbox-item label {
+  width: 50%;
+}
+
+.checkbox-item input[type="checkbox"] {
+  accent-color: #00a499;
+  width: 25px;
+  height: 25px;
+}
+
+.form-sing-in button {
+  background-color: #00a499;
+}
+
+.form-sing-in button:hover {
+  background-color: #009688;
+}
