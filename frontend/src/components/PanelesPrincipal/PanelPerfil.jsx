@@ -10,7 +10,7 @@ function PanelPertenencias({ handleSelect }) {
   const [fono, setFono] = useState("");
 
 
-  fetch(`http://localhost:3001/listar_info_perfil/${email}`, {
+  fetch(`http://localhost:3001/info/perfil/${email}`, {
     method: "GET",
     headers: {
       "Content-type": "application/json",

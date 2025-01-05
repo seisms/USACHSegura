@@ -242,14 +242,15 @@ app.post('/login', async (req, res) => {
 app.post('/report', async (req, res) => {
     try {
         const response = await generic.generar_reporte(req.body);
-        if (response) {
+        if (response.success === true) {
             res.status(200).json({
-                success: response,
+                success: true,
+                id: response.result,
                 message: "Reporte agregado con éxito"
             });
         } else {
             res.status(401).json({
-                success: response,
+                success: false,
                 message: "No se pudo agregar el reporte"
             })
         }
@@ -300,6 +301,34 @@ app.get('/listar/reportes/:sector?', async (req, res) => {
             res.status(401).json({
                 success: false,
                 message: "No se pudieron obtener los reportes"
+            })
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
+})
+
+app.get('/listar/usuarios_por_sector/:sector?', async (req, res) => {
+    try {
+        let sector = null;
+        if (req.params.sector) {
+            console.log('se pudo obtener un parametro sector: ',req.params.sector);
+            sector = req.params.sector;
+        }
+        const response = await list.listar_usuario_por_sector(sector);
+        if (response) {
+            console.log('obtuviste respuesta de la base de datos',response);
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "No se pudieron obtener los usuarios"
             })
         }
     } catch (err) {

@@ -2,10 +2,11 @@ import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../userContext.jsx'
 import './css/Reporte.css';
 
-const FormularioReporte = ({ onClose, onSubmit }) => {
+const FormularioReporte = ({ onClose, onSubmit, onReportID }) => {
 	const [tincidentes, setTIncidentes] = useState([]);
 	const [sectores, setSectores] = useState([]);
 	const [pertenencias, setPertencias] =  useState([]);
+	const [reporteID, setReporteID] = useState(null);
 	const { user } = useContext(UserContext);
 	const { email, userType } = user;
 
@@ -41,7 +42,7 @@ const FormularioReporte = ({ onClose, onSubmit }) => {
 				} else {
 					console.error(data.message);
 				}
-			})
+			});
 	}
 
 
@@ -61,23 +62,38 @@ const FormularioReporte = ({ onClose, onSubmit }) => {
 			});
 	}
 
-	function generar_reporte() {
+	async function generar_reporte() {
 		const type = selectedOptions.tipo;
 		const sector = selectedOptions.sector;
 		const date = selectedOptions.fecha;
 		const hour = selectedOptions.hora;
 		const pusurpada = selectedOptions.perts;
-		const reporte = JSON.stringify({email, type, sector, date, hour});
-		const list_pusurpada = JSON.stringify({pusurpada});
-		fetch('http://localhost:3001/report',
-			{
-				method: "POST",
+		const reporte = JSON.stringify({ email, type, sector, date, hour });
+		const list_pusurpada = JSON.stringify({ pusurpada });
+	
+		try {
+			const response = await fetch('http://localhost:3001/report', {
+				method: 'POST',
 				headers: {
-					"content-type":	"application/json",
+					'content-type': 'application/json',
 				},
 				body: JSON.stringify({ reporte, list_pusurpada }),
-			})
-	}
+			});
+	
+			const data = await response.json();
+	
+			if (data.success && data.id) {
+				console.log('Reporte generado con ID:', data.id);
+				return data.id; // Retorna el ID del reporte
+			} else {
+				console.error('Error al generar el reporte:', data.message || 'Sin ID');
+				throw new Error(data.message || 'Error al generar el reporte');
+			}
+		} catch (error) {
+			console.error('Error al generar el reporte:', error);
+			throw error; // Lanza el error para manejarlo en el lugar donde se llama
+		}
+	}	
 
 	const [selectedOptions, setSelectedOptions] = useState({
 		tipo: [],
@@ -117,10 +133,16 @@ const FormularioReporte = ({ onClose, onSubmit }) => {
 		onClose();
 	};
 
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
 		onSubmit(selectedOptions);
-		generar_reporte();
+	
+		try {
+			const reporteID = await generar_reporte();
+			onReportID(reporteID); // Asume que tienes un estado para manejar el ID del reporte
+		} catch (error) {
+			console.error('Error en el manejo del reporte:', error);
+		}
 	};
 
 	useEffect(() => {

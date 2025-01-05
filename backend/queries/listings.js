@@ -111,21 +111,6 @@ const listar_tincidentes = async () => {
     }
 };
 
-
-const listar_tpertenencias = async () => {
-    try {
-        const result = await pool.query("SELECT * FROM TPERTENENCIA");
-        if (result && result.rows.length > 0) {
-            return result.rows;
-        } else {
-            throw new Error("No hay tipos de pertenencia");
-        }
-    } catch (err) {
-        console.error("Error al ejecutar consulta LISTAR_TPertenencias", err);
-        return null;
-    }
-}
-
 const listar_reportes = async (sector) => {
     try {
         let query = "SELECT REP_ID, REP_Correo, " +
@@ -163,11 +148,13 @@ const listar_info_reporte = async (report_id) => {
 										 FROM REPORTE, TINCIDENTE \
 										 WHERE REP_ID = $1 AND REP_Tipo = TIN_TID", [report_id])
 		if (report && report.rows.length > 0) {
-			const perts = await pool.query("SELECT PER_ID, PER_Nombre \
-				                           FROM REPORTE, PERTENENCIA, PUSURPADA \
+			const perts = await pool.query("SELECT PER_ID, TPER_Tnombre \
+				                           FROM REPORTE, PERTENENCIA, PUSURPADA, TPERTENENCIA \
 										   WHERE REP_ID = $1 \
 										   AND PU_RID = REP_ID \
-										   AND PER_ID = PU_PID", [report_id])
+										   AND PER_ID = PU_PID \
+                                           AND PER_Tipo = TPER_TID"
+                                           , [report_id])
 			return {
 				reporte: report.rows[0],
 				pertenencias_usurpadas: perts.rows
@@ -219,12 +206,27 @@ const listar_info_sector = async (sector) => {
     }
 }
 
+const listar_usuario_por_sector = async (sector) => {
+    try {
+        const lusector = await pool.query("SELECT FREC_Correo FROM FRECUENTA WHERE FREC_Sector = $1", [sector]);
+        if (lusector && lusector.rows.length > 0) {
+            console.log('Usuarios que frecuentas el sector: ',lusector.rows);
+            return lusector.rows;
+        } else {
+            throw new Error(`No hay usuarios en el sector ${sector}`)
+        }
+    }   catch (err) {
+        console.error(err)
+    }
+}
+
 module.exports = {
     listar_sectores,
     listar_tusuario,
     listar_tincidentes,
     listar_pertenencias,
     listar_sectores_frecuentados,
+    listar_usuario_por_sector,
     getSectores,
     listar_reportes,
     listar_tpertenencia,

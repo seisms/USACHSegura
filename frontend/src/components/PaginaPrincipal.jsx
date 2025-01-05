@@ -4,10 +4,12 @@ import MapaDefault from "./mapasEAO/MapaDefault";
 import FormularioReporte from "./Reporte";
 import "./css/PaginaPrincipal.css";
 import Report from "../assets/Re.jpg";
+import NotificarReporte from "./Genericos/NotificarReporte";
 
 export default function PagP() {
   const [showReportForm, setShowReportForm] = useState(false);
   const [submittedReport, setSubmittedReport] = useState(null);
+  const [reportID, setReportID] = useState(null);
 
   const toggleReportForm = () => {
     setShowReportForm(!showReportForm);
@@ -17,6 +19,10 @@ export default function PagP() {
     setSubmittedReport(reportData);
     setShowReportForm(false);
   };
+
+  const handleReportID = (id) => {
+    setReportID(id);
+  }
 
   const closeReportPopup = () => {
     setSubmittedReport(null);
@@ -35,8 +41,10 @@ export default function PagP() {
         <FormularioReporte
           onClose={toggleReportForm}
           onSubmit={handleReportSubmit}
+          onReportID={handleReportID}
         />
       )}
+      <NotificarReporte rep_id={reportID} />
       <button className="report-button" onClick={toggleReportForm}>
         <img src={Report} alt="Reporte" className="report-icon" />
       </button>

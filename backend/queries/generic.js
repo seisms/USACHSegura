@@ -13,7 +13,10 @@ const generar_reporte = async (body) => {
         if (add < 0) {
             throw new Error("Agregar pertenencia al reporte falló");
         }
-        return true;
+        return {
+            success: true,
+            result: id
+        };
     } catch (error) {
         console.log('Error al generar el reporte', error);
         return false;
