@@ -41,7 +41,6 @@ export default function PanelFrecuenta({ handleSelect, email, setFrecuenta }) {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    console.log(data.result);
                     setRows(data.result || []);
                 } else {
                     setFeedback("No hay sectores para listar");

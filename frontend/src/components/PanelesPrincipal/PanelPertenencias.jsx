@@ -46,7 +46,6 @@ export default function PanelPertenencias({ handleSelect }) {
             })
             .then((data) => {
                 if (data.success) {
-                    console.log(data.result);
                     setTPertenencias(data.result || []);
                 } else {
                     setFeedback("No hay tipo de pertenencias para listar");
@@ -107,11 +106,9 @@ export default function PanelPertenencias({ handleSelect }) {
             }, {});
 
             Object.values(perteneciasSeleccionadas).forEach((pertenencia) => {
-                console.log(pertenencia);
                 gestion_pertenencias(pertenencia, "PD");
             });
 
-            console.log("Pertenencias seleccionadas para eliminar:", perteneciasSeleccionadas);
         }
 
         setModoSeleccion(null);
@@ -144,7 +141,6 @@ export default function PanelPertenencias({ handleSelect }) {
                 img: e.target.elements["add-pert-img"].value,
                 nombre: e.target.elements["add-pert-nombre"].value,
             };
-            console.log("Pertenencia confirmada:", nuevaPertenencia);
             gestion_pertenencias(nuevaPertenencia, "PM");
         } else {
             const nuevaPertenencia = { //Agregar nueva pertenencia
@@ -153,7 +149,6 @@ export default function PanelPertenencias({ handleSelect }) {
                 img: e.target.elements["add-pert-img"].value,
                 nombre: e.target.elements["add-pert-nombre"].value,
             };
-            console.log("Pertenencia confirmada:", nuevaPertenencia);
             gestion_pertenencias(nuevaPertenencia, "PC");
         }
         cerrarPopup();

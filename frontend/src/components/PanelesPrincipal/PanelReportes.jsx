@@ -8,7 +8,6 @@ export default function PanelReportes({ handleSelect, frecuentados }) {
     function listar_reportes_por_sector() {
         const nuevosReportes = {};
 
-        console.log("frecuentados:", frecuentados)
 
         setReportesPorSector([])
         frecuentados.forEach((sector) => {
@@ -21,7 +20,6 @@ export default function PanelReportes({ handleSelect, frecuentados }) {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
-                        console.log(data.result);
                         nuevosReportes[sector.frec_sector] = data.result;
                     } else {
                         console.error(
@@ -49,8 +47,6 @@ export default function PanelReportes({ handleSelect, frecuentados }) {
     useEffect(() => {
         listar_reportes_por_sector();
     }, [frecuentados]);
-
-    console.log("rep-per-sector:", reportesPorSector)
 
     return (
         <div className="fondo-panel-reportes">
