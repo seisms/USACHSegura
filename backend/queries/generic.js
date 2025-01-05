@@ -85,9 +85,9 @@ const control_de_acceso = async (login) => {
 }
 
 const registrar_nuevo_usuario = async (nvusuario) => {
-	const {email, password, phone, usertype} = nvusuario;
-	try {
-		await pool.query("INSERT INTO USUARIO \
+    const { email, password, phone, usertype } = nvusuario;
+    try {
+        await pool.query("INSERT INTO USUARIO \
 			(US_Correo, US_Fono, US_Contrasenya) \
 			VALUES ($1, $2, $3)", [email, password, phone])
 
@@ -95,13 +95,13 @@ const registrar_nuevo_usuario = async (nvusuario) => {
             await pool.query("INSERT INTO RUSUARIO (RU_Correo, RU_Tipo) \
                                 Values ($1, $2)", [email, tipo]);
         }
-		return "OK"
-	} catch (err) {
-		console.error(err)
-		return {
-			msg: err.message
-		}
-	}
+        return "OK"
+    } catch (err) {
+        console.error(err)
+        return {
+            msg: err.message
+        }
+    }
 }
 
 // END: Acceso
@@ -204,7 +204,7 @@ const registrar_lugar_frecuentado = async (frecuentado, op) => {
         }
         if (op === "D") {
             const result = await pool.query("DELETE FROM FRECUENTA " +
-                "WHERE FREC_Correo = $1 AND FREC_Sector = $2", [correo, sector]
+                "WHERE FREC_Correo = $1 AND FREC_Sector = $2 RETURNING *", [correo, sector]
             )
             if (result && result.rows.length > 0) {
                 return `Sector frecuentado eliminado`;
@@ -226,12 +226,12 @@ const calcular_indice_seguridad = async () => {
         const total = await pool.query("SELECT COUNT(*) FROM REPORTE");
         const lista_sectores = await pool.query("SELECT SEC_Nombre FROM SECTOR");
 
-        for(const sector of lista_sectores.rows) {
+        for (const sector of lista_sectores.rows) {
             const rsector = await pool.query("SELECT COUNT(rep_id) FROM REPORTE WHERE REP_Sector = $1", [sector.sec_nombre]);
             console.log(sector.sec_nombre, rsector.rows[0].count);
-            console.log("Indice de seguridad:",  1 - rsector.rows[0].count / total.rows[0].count);
+            console.log("Indice de seguridad:", 1 - rsector.rows[0].count / total.rows[0].count);
 
-            if(rsector.rows[0].count >= 0) {
+            if (rsector.rows[0].count >= 0) {
                 result = await pool.query("UPDATE SECTOR SET sec_seguridad = 1 - (($1 * 1.0) / $2) WHERE sec_nombre = $3", [rsector.rows[0].count, total.rows[0].count, sector.sec_nombre]);
             }
             else if (rsector.rows[0].count === 0) {
@@ -256,7 +256,7 @@ const calcular_indice_seguridad = async () => {
 module.exports = {
     generar_reporte,
     control_de_acceso,
-	registrar_nuevo_usuario,
+    registrar_nuevo_usuario,
     gestion_de_perfil,
     calcular_indice_seguridad
 }
