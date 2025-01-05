@@ -86,12 +86,14 @@ const control_de_acceso = async (login) => {
 
 const registrar_nuevo_usuario = async (nvusuario) => {
     const { email, password, phone, usertype } = nvusuario;
+    console.log(`usertype: ${usertype}`)
     try {
         await pool.query("INSERT INTO USUARIO \
 			(US_Correo, US_Fono, US_Contrasenya) \
-			VALUES ($1, $2, $3)", [email, password, phone])
+			VALUES ($1, $2, $3)", [email, phone, password])
 
         for (const tipo of usertype) {
+            console.log(`tipo ${tipo}, email: ${email}`)
             await pool.query("INSERT INTO RUSUARIO (RU_Correo, RU_Tipo) \
                                 Values ($1, $2)", [email, tipo]);
         }
