@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Cabecera from "../Cabecera";
 import "../css/Paneles/PanelFrecuenta.css";
 
-export default function PanelFrecuenta({ handleSelect, email }) {
+export default function PanelFrecuenta({ handleSelect, email, setFrecuenta }) {
   const [frecuentados, setFrecuentados] = useState([]);
 
   function listar_sectores_frecuentados() {
@@ -20,7 +20,8 @@ export default function PanelFrecuenta({ handleSelect, email }) {
         console.log("Parsing data");
         if (data.success) {
           console.log(data.result);
-          setFrecuentados(data.result);
+          setFrecuentados(data.result); //info local
+          setFrecuenta(data.result); //info para PanelReportes
         } else {
           console.error(data.message);
         }
