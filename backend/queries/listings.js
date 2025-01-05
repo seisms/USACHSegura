@@ -206,6 +206,7 @@ module.exports = {
     listar_tusuario,
     listar_tincidentes,
     listar_pertenencias,
+    listar_usuario_por_sector,
     listar_sectores_frecuentados,
     listar_reportes,
     listar_tpertenencia,
