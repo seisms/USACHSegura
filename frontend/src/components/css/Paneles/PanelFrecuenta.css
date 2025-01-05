@@ -7,6 +7,12 @@
   width: 100%;
 }
 
+.lista-frecuentados p {
+  color: #009688;
+  font-size: 19px;
+  text-align: center;
+}
+
 .lista-frecuentados ul {
   background-color: #00a499;
   list-style: none;
@@ -46,4 +52,16 @@
 
 .seleccion-frecuenta {
   color: #333f48;
+}
+
+.lista-frecuentados ul li.seleccionada {
+  background-color: #ffa726; /* Color de fondo para elementos seleccionados */
+  color: #ffffff; /* Cambia el color del texto */
+  border: 2px solid #ff9800; /* Resalta el borde */
+}
+
+.selected {
+  background-color: #ff5722; /* Un color para indicar la selección */
+  border: 2px solid #d32f2f; /* Un borde para resaltar la selección */
+  color: white; /* Texto blanco */
 }

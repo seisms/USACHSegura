@@ -131,8 +131,8 @@ const gestion_de_perfil = async (body, op) => {
         return result;
     }
 
-    if (op === "PE") {
-        const result = await resgistrar_pertenencia(body, 'E');
+    if (op === "PD") {
+        const result = await resgistrar_pertenencia(body, 'D');
         return result;
     }
 };

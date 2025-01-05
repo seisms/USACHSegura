@@ -51,7 +51,7 @@
 }
 
 .boton-atras {
-  margin: 20px;
+  margin: 100px 0 0 20px ;
   background-color: #00a499;
   color: white;
   padding: 10px 20px;
@@ -67,4 +67,101 @@
 .error {
   color: red;
   font-size: 14px;
+}
+
+/* Estilos para el overlay */
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+	z-index: 999; /* Asegura que el overlay esté encima de otros elementos */
+}
+
+
+.pert-form-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  z-index: 10000;
+  border: 2px solid #009688;
+  border-radius: 15px;
+}
+
+.pert-form-popup.open {
+  display: block;
+}
+
+.pert-form-popup form {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+}
+
+.pert-form-popup form select {
+  background-color: #ffffff;
+  border: 2px solid #009688;
+  border-radius: 2px;
+  color: #333f48;
+  font-size: 25px;
+  }
+
+.pert-form-popup form label {
+  color: #333f48;
+  font-size: 25px;
+}
+
+.pert-form-popup form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: transparent;
+  border: 2px solid #00a499;
+  border-radius: 10px;
+  margin-top: 15px;
+  color: #333f48;
+  font-size: 20px;
+}
+
+.pert-form-popup button {
+  margin-top: 20px;
+  background-color: #00a499;
+}
+
+.pert-form-popup button:hover {
+  background-color: #009688;
+}
+
+.pert-feedback {
+  position: absolute;
+  width: 100%;
+  color: #00a499;
+  text-align: center;
+  font-size: 25px;
+}
+
+.pertenencias-buttons-uno, .pertenencias-buttons-dos {
+  display: block; /* Esto es el valor predeterminado */
+  display: flex;
+  justify-content: space-around;
+}
+
+.pertenencias-buttons-uno button, .pertenencias-buttons-dos button {
+  background-color: #00a499;
+  color: white;
+  cursor: pointer;
+}
+
+.pertenencias-buttons-uno button:hover, .pertenencias-buttons-dos button:hover {
+  background-color: #00877d;
+}
+
+.pertenencias-buttons-uno.hidden {
+  display: none;
 }
