@@ -11,7 +11,7 @@ function Usuario() {
     const [feedback, setFeedback] = useState(""); // Muestra retroalimentación al usuario
 
     function consultarUsuario() { //Funcion para mostrar las filas
-        fetch("http://localhost:3001/listar-usuarios", {
+        fetch("http://localhost:3001/listar/usuarios", {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
