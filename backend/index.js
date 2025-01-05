@@ -236,7 +236,33 @@ app.post('/login', async (req, res) => {
             })
         }
     } catch (error) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor"
+		})
     }
+})
+
+app.post('/register', async (req, res) => {
+	try {
+		const response = await generic.registrar_nuevo_usuario(req.body)
+		if (response === "OK") {
+			res.status(200).json({
+				success: true,
+				message: "Usuario registrado con éxito"
+			})
+		} else {
+			res.status(401).json({
+				success: false,
+				message: response.msg
+			})
+		}
+	} catch (err) {
+		res.status(500).json({
+			success: false,
+			message: "Error interno del servidor"
+		})
+	}
 })
 
 app.post('/report', async (req, res) => {
@@ -271,12 +297,14 @@ app.get('/listar/pertenencias/:email', async (req, res) => {
                 result: response
             })
         } else {
+			console.error(`No se pudieron listar las pertenencias de ${email}`)
             res.status(401).json({
                 success: false,
                 message: "No se pudo listar las pertenencias."
             })
         }
     } catch (err) {
+		console.error(err)
         res.status(500).json({
             success: false,
             message: "Error interno del servidor."

@@ -1,12 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Cabecera from "../Cabecera";
-import { UserContext } from '../../userContext.jsx'
+import Cookies from "js-cookie"
 import "../css/Paneles/PanelPertenencias.css";
 
 function PanelPertenencias({ handleSelect }) {
 
-	const { user } = useContext(UserContext);
-	const { email, userType } = user;
+	const email = Cookies.get("username");
+	const userType = Cookies.get("usertype");
 	const [pertenencias, setPertenencias] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -59,7 +59,7 @@ function PanelPertenencias({ handleSelect }) {
 						</button>
 						{detalleVisible === index && (
 							<div className="detalle-pertenencia">
-								<p>Tipo: {pertenencia.per_tipo}</p>
+								<p>Tipo: {pertenencia.tper_tnombre}</p>
 								<img
 									src={pertenencia.per_img}
 									alt={`Imagen de ${pertenencia.per_img}`}

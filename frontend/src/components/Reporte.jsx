@@ -1,13 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { UserContext } from '../userContext.jsx'
+import Cookies from "js-cookie"
 import './css/Reporte.css';
 
 const FormularioReporte = ({ onClose, onSubmit }) => {
 	const [tincidentes, setTIncidentes] = useState([]);
 	const [sectores, setSectores] = useState([]);
 	const [pertenencias, setPertencias] =  useState([]);
-	const { user } = useContext(UserContext);
-	const { email, userType } = user;
+	const  email = Cookies.get("username")
+	const userType = Cookies.get("usertype")
 
 	//Solicito los tipos de incidentes existentes en la base
 	function getTIncidentes() {

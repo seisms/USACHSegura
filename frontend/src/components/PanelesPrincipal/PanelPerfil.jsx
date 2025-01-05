@@ -16,7 +16,6 @@ function PanelPerfil({ handleSelect, email }) {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       if (data.success) {
         setCorreo(data.result.us_correo || "");
         setFono(data.result.us_fono || "");
