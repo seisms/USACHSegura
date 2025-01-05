@@ -68,11 +68,9 @@ const listar_pertenencias = async (email) => {
             return result.rows;
         } else {
             console.error("No hay pertenencias/No existe el usuario", email);
-            return null;
         }
     } catch (err) {
         console.error("error");
-        return null;
     }
 }
 
