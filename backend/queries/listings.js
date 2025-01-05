@@ -59,42 +59,23 @@ const listar_tpertenencia = async () => {
 }
 
 
-//Listados del usuaris y para el usuario
+//Listados del usuario y para el usuario
 
 const listar_pertenencias = async (email) => {
     try {
-        const result = await pool.query("SELECT * FROM PERTENENCIA WHERE PER_Correo = $1", [email]);
+		const result = await pool.query("SELECT PER_ID, PER_Nombre, PER_Correo, \
+			TPER_TNombre, PER_Img \
+			FROM PERTENENCIA, TPERTENENCIA WHERE PER_Correo = $1 \
+			AND PER_Tipo = TPER_TID", [email]);
         if (result && result.rows.length > 0) {
             return result.rows;
         } else {
             console.error("No hay pertenencias/No existe el usuario", email);
-            return null;
         }
     } catch (err) {
         console.error("error");
-        return null;
     }
 }
-
-const getSectores = async () => {
-    try {
-        return await new Promise(function(resolve, reject) {
-            pool.query("SELECT sec_nombre FROM SECTOR", (error, results) => {
-                if (error) {
-                    reject(error);
-                }
-                if (results && results.rows) {
-                    resolve(results.rows);
-                } else {
-                    reject(new Error("No results found"));
-                }
-            });
-        });
-    } catch (error_1) {
-        console.error(error_1);
-        throw new Error("Internal server error");
-    }
-};
 
 // Obtener tipo de incidentes
 const listar_tincidentes = async () => {
@@ -226,8 +207,6 @@ module.exports = {
     listar_tincidentes,
     listar_pertenencias,
     listar_sectores_frecuentados,
-    listar_usuario_por_sector,
-    getSectores,
     listar_reportes,
     listar_tpertenencia,
     listar_info_perfil,

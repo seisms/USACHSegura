@@ -1,0 +1,215 @@
+.fondo-mapa-seccionado {
+  height: 100vh;
+  flex-grow: 1;
+  transition: flex-grow 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Estilo del titulo */
+.titulo-mapa {
+  position: absolute;
+  background-color: gainsboro;
+  top: 50px;
+  z-index: 5;
+  color: #333f48;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.titulo-mapa h1 {
+  margin: 0;
+  font-size: 45px;
+}
+.titulo-mapa h4 {
+  font-size: 25px;
+  margin: 0;
+}
+
+.mapa-seccionado {
+  width: 1500px;
+  height: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mapa-blanco-negro {
+  z-index: 1;
+}
+
+.imagen-sectores {
+  position: absolute;
+}
+
+.section-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 3;
+}
+
+#sector1-active {
+  clip-path: polygon(
+    76.01% 42.22%,
+    57.37% 42.12%,
+    57.4% 37.33%,
+    79.1% 37.85%,
+    78.85% 52.23%,
+    57.1% 52.55%,
+    57.39% 47.52%,
+    75.95% 47.67%
+  ); /* Ajusta según la forma de tu dibujo */
+}
+
+#sector2-active {
+  clip-path: polygon(75.19% 52.17%, 79% 52.38%, 78.81% 65.65%, 75% 65.44%);
+}
+
+#sector3-active {
+  clip-path: polygon(78.73% 47.3%, 82.14% 46.89%, 82.36% 65.34%, 78.96% 65.64%);
+}
+
+#sector4-active {
+  clip-path: polygon(71.73% 25.43%, 83.5% 25.13%, 83.32% 38.18%, 71.88% 37.65%);
+}
+
+#sector5-active {
+  clip-path: polygon(
+    57.52% 25.12%,
+    63.92% 25.13%,
+    63.68% 37.55%,
+    57.27% 37.24%
+  );
+}
+
+#sector6-active {
+  clip-path: polygon(
+    45.92% 25.74%,
+    57.44% 25.75%,
+    57.2% 46.56%,
+    52.7% 46.36%,
+    52.66% 34.93%,
+    46.04% 34.73%
+  );
+}
+
+#sector7-active {
+  clip-path: polygon(
+    46.33% 52.79%,
+    52.53% 53.21%,
+    52.76% 46.35%,
+    57.34% 46.04%,
+    57.09% 64.46%,
+    36.43% 65.09%,
+    37.81% 42.13%,
+    46.28% 42.28%
+  );
+}
+
+#sector8-active {
+  clip-path: polygon(
+    75.18% 65.64%,
+    56.96% 64.82%,
+    57.19% 52.05%,
+    75.21% 52.47%
+  );
+}
+
+#sector9-active {
+  clip-path: polygon(
+    36.57% 43.15%,
+    20.74% 45.76%,
+    19.95% 25.42%,
+    37.15% 25.22%
+  );
+}
+
+#sector10-active {
+  clip-path: polygon(35.55% 65.12%, 21.97% 70.32%, 20.9% 45.22%, 36.4% 44.18%);
+}
+
+#sector11-active {
+  clip-path: polygon(75.94% 47.91%, 57.23% 47.32%, 57.27% 42.52%, 75.9% 42.84%);
+}
+
+#sector11sec-active {
+  clip-path: polygon(
+    82.83% 46.77%,
+    78.93% 47.22%,
+    79.03% 38.06%,
+    83.27% 37.35%
+  );
+}
+
+#sector12-active {
+  clip-path: polygon(52.48% 53.2%, 46.24% 52.92%, 46.28% 34.74%, 52.64% 35.17%);
+}
+
+#sector13-active {
+  clip-path: polygon(
+    46.13% 42.63%,
+    37.79% 42.45%,
+    38.37% 25.42%,
+    46.23% 25.22%
+  );
+}
+
+#sector14-active {
+  clip-path: polygon(
+    63.46% 25.33%,
+    72.17% 25.65%,
+    71.99% 37.77%,
+    63.42% 37.65%
+  );
+}
+
+#sector1-active:hover ~ #sector1-img,
+#sector2-active:hover ~ #sector2-img,
+#sector3-active:hover ~ #sector3-img,
+#sector4-active:hover ~ #sector4-img,
+#sector5-active:hover ~ #sector5-img,
+#sector6-active:hover ~ #sector6-img,
+#sector7-active:hover ~ #sector7-img,
+#sector8-active:hover ~ #sector8-img,
+#sector9-active:hover ~ #sector9-img,
+#sector10-active:hover ~ #sector10-img,
+#sector11-active:hover ~ #sector11-img,
+#sector11sec-active:hover ~ #sector11-img,
+#sector12-active:hover ~ #sector12-img,
+#sector13-active:hover ~ #sector13-img,
+#sector14-active:hover ~ #sector14-img {
+  z-index: 2;
+}
+
+@media screen and (max-width: 768px) {
+  .titulo-mapa h1 {
+    margin: 0;
+    font-size: 35px;
+  }
+
+  .titulo-mapa h4 {
+    font-size: 15px;
+    margin: 0;
+  }
+
+  .fondo-mapa-seccionado {
+    width: 100%;
+    top: 0;
+    height: 100vh;
+  }
+  .mapa-blanco-negro {
+    width: 100%;
+  }
+
+  .section-active {
+    width: 100%;
+  }
+}

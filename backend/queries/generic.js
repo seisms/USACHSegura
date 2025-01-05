@@ -78,12 +78,27 @@ const control_de_acceso = async (login) => {
                 return null;
             }
         } else {
-            return null;
         }
     } catch (err) {
         console.error('Error al ejecutar la consulta:', err);
-        return null;
     }
+}
+
+const registrar_nuevo_usuario = async (nvusuario) => {
+	const {email, password, phone, usertype} = nvusuario;
+	try {
+		await pool.query("INSERT INTO USUARIO \
+			(US_Correo, US_Fono, US_Contrasenya) \
+			VALUES ($1, $2, $3)", [email, password, phone])
+		await pool.query("INSERT INTO RUSUARIO (RU_Correo, RU_Tipo) \
+			VALUES ($1, $2)", [email, usertype])
+		return "OK"
+	} catch (err) {
+		console.error(err)
+		return {
+			msg: err.message
+		}
+	}
 }
 
 // END: Acceso
@@ -238,6 +253,7 @@ const calcular_indice_seguridad = async () => {
 module.exports = {
     generar_reporte,
     control_de_acceso,
+	registrar_nuevo_usuario,
     gestion_de_perfil,
     calcular_indice_seguridad
 }

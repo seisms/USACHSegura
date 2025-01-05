@@ -1,73 +1,87 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Cabecera from "../Cabecera";
-/*import "../css/Paneles/PanelReportes.css";*/
+import "../css/Paneles/PanelReportes.css";
 
-function PanelReportes({ handleSelect }) {
-  const email = "vicente.torres@usach.cl"; // Correo para pruebas
-  const [reportes, setreportes] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [detalleVisible, setDetalleVisible] = useState(null);
+export default function PanelReportes({ handleSelect, frecuentados }) {
+  const [reportesPorSector, setReportesPorSector] = useState({});
 
-// ESTO ESTA MAL
-  useEffect(() => {
-    const fetchReportes = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await fetch("http://localhost:3001/listar/reportes", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
+  function listar_reportes_por_sector() {
+    const nuevosReportes = {};
+
+    frecuentados.forEach((sector) => {
+      fetch(`http://localhost:3001/listar/reportes/${sector.frec_sector}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            console.log(data.result);
+            nuevosReportes[sector.frec_sector] = data.result;
+          } else {
+            console.error(
+              `Error obteniendo reportes para ${sector.frec_sector}: ${data.message}`
+            );
+            nuevosReportes[sector.frec_sector] = [];
+          }
+        })
+        .catch((error) => {
+          console.error(
+            `Error obteniendo reportes para ${sector.frec_sector}:`,
+            error
+          );
+          nuevosReportes[sector.frec_sector] = [];
+        })
+        .finally(() => {
+          setReportesPorSector((prevState) => ({
+            ...prevState,
+            [sector.frec_sector]: nuevosReportes[sector.frec_sector],
+          }));
         });
+    });
+  }
 
-        const data = await response.json();
-        if (data.success) {
-          setreportes(data.result);
-        } else {
-          setError(data.message || "No se pudieron cargar los reportes .");
-        }
-      } catch (err) {
-        setError("Error al conectar con el servidor.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchReportes();
-  }, [email]);
-
-  const toggleDetalle = (index) => {
-    setDetalleVisible(detalleVisible === index ? null : index);
-  };
+  useEffect(() => {
+    if (frecuentados.length > 0) {
+      listar_reportes_por_sector();
+    }
+  }, [frecuentados]);
 
   return (
     <div className="fondo-panel-reportes">
       <Cabecera />
       <h1 className="titulo">Reportes realizados</h1>
-      {loading && <p>Cargando...</p>}
-      {error && <p className="error">{error}</p>}
       <div className="lista-reportes">
-        {reportes.map((reporte, index) => (
-          <div key={index} className="reporte">
-            <button
-              className="reporte-boton"
-              onClick={() => toggleDetalle(index)}
-            >
-              {`Reporte ${index + 1}`}
-            </button>
-            {detalleVisible === index && (
-              <div className="detalle-Reporte">
-                <p>Sector: {reporte.REP_SECTOR}</p>
-                <p>Tipo: {reporte.REP_TIPO}</p>
-                <p>
-                  Fecha: {reporte.REP_FECHA} {reporte.REP_HORA}
-                </p>
-                <p>Reportado por: {reporte.REP_USU}</p>
-              </div>
+        {Object.keys(reportesPorSector).map((sector) => (
+          <div key={sector} className="sector-reportes">
+            <h2>{sector}</h2>
+            {reportesPorSector[sector]?.length > 0 ? (
+              <ul className="reporte-vertical">
+                {reportesPorSector[sector].map((reporte) => (
+                  <li key={reporte.rep_id} className="reporte-item">
+                    <p>
+                      <strong>ID:</strong> {reporte.rep_id}
+                    </p>
+                    <p>
+                      <strong>Correo:</strong> {reporte.rep_correo}
+                    </p>
+                    <p>
+                      <strong>Fecha:</strong>{" "}
+                      {new Date(reporte.rep_fecha).toLocaleDateString()}
+                    </p>
+                    <p>
+                      <strong>Hora:</strong> {reporte.rep_hora}
+                    </p>
+                    <p>
+                      <strong>Tipo:</strong> {reporte.rep_tipo}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No se encontraron reportes para este sector.</p>
             )}
           </div>
         ))}
@@ -78,5 +92,3 @@ function PanelReportes({ handleSelect }) {
     </div>
   );
 }
-
-export default PanelReportes;
