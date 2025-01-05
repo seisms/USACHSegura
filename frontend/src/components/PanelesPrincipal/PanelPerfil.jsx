@@ -6,7 +6,6 @@ function PanelPerfil({ handleSelect, email }) {
 	const [correo, setCorreo] = useState("");
 	const [fono, setFono] = useState("");
 
-
 	fetch(`http://localhost:3001/info/perfil/${email}`, {
 		method: "GET",
 		headers: {
