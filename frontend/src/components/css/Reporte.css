@@ -1,16 +1,14 @@
 /* Estilo general para el contenedor del formulario */
 .incident-report-modal {
   position: fixed;
-  top: 50%;
+  top: 10px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 500px;
-  background-color: #1c1c1c;
-  border-radius: 10px;
+  transform: translate(-50%, 0);
+  width: 500px;
+  background-color: #ffffff;
+  border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  color: #fff;
   padding: 20px;
 }
 
@@ -19,33 +17,50 @@
   font-size: 24px;
   text-align: center;
   margin-bottom: 20px;
+  color: #2a2a2a;
+  font-size: 35px;
 }
 
 /* Secciones del formulario */
 .report-form section {
-  margin-bottom: 15px;
+  border: 2px solid #333f48;;
+  margin: 10px 20px;
 }
+
+/* Secciones del formulario */
+.report-form h3 {
+  color: #333f48;
+  font-size: 20px;
+  margin: 0;
+  padding: 5px;
+  padding-left: 15px;
+  border-bottom: 2px solid #333f48;
+}
+
 
 /* Estilo para las etiquetas */
 .report-form label {
   display: block;
-  font-size: 16px;
+  font-size: 13px;
   margin-bottom: 5px;
   cursor: pointer;
 }
 
 /* Contenedores de opciones (radio/checkbox) */
 .scrollable-container {
-  max-height: 100px;
-  overflow-y: auto;
-  background-color: #2a2a2a;
-  padding: 10px;
-  border-radius: 5px;
+  overflow-y: scroll;
+  background-color: #00a499;
+  padding: 5px 10px ;
 }
 
-/* Opciones de radio y checkbox */
-.scrollable-container div {
-  margin-bottom: 5px;
+.scrollable-container label {
+  margin: 0;
+  font-size: 25px;
+}
+
+.scrollable-container label input {
+  width: 20px;
+  height: 20px;
 }
 
 input[type="radio"],
@@ -56,42 +71,31 @@ input[type="checkbox"] {
 /* Contenedores de fecha y hora */
 .fecha-hora-container {
   display: flex;
-  justify-content: space-between;
-  /* Ajusta el espacio entre los recuadros */
-  align-items: center;
-  margin: 20px 0;
-  /* Margen alrededor del contenedor */
+  justify-content: space-around;
+  padding: 10px 0;
+  background-color: #00a499;
 }
 
 .fecha-container,
 .hora-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1;
-  /* Permite que los recuadros se ajusten proporcionalmente */
-  margin-right: 10px;
-  /* Espacio entre recuadros */
+  width: 45%;
 }
 
 .fecha-container label,
 .hora-container label {
-  margin-bottom: 5px;
-  /* Espacio entre el label y el input */
+  font-size: 25px;
 }
 
 .fecha-container input,
 .hora-container input {
   width: 100%;
-  /* Ancho del input */
   padding: 10px;
-  /* Espaciado interno */
-  border: 1px solid #ccc;
-  /* Borde */
-  border-radius: 4px;
-  /* Bordes redondeados */
+  border: 3px solid #009688;
+  border-radius: 10px;
   box-sizing: border-box;
-  /* Incluye padding y border en el tamaño total */
+  background-color: #ffffff;
+  color: #333f48;
+  font-size: 15px;
 }
 
 .fecha-container input {
@@ -107,33 +111,22 @@ input[type="checkbox"] {
 /* Contenedor de botones */
 .button-container {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  justify-content: space-around;  
 }
 
 /* Botones */
 .button-container button {
   padding: 10px 15px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
 }
 
-.cancel-button {
-  background-color: #555;
-  color: #fff;
+.button-container button {
+  background-color: #00a499;
 }
 
-.cancel-button:hover {
-  background-color: #777;
-}
-
-.submit-button {
-  background-color: #4caf50;
-  color: #fff;
-}
-
-.submit-button:hover {
-  background-color: #45a049;
+.button-container button:hover {
+  background-color: #009688;
 }

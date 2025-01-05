@@ -155,7 +155,7 @@ const FormularioReporte = ({ onClose, onSubmit, onReportID }) => {
 	return (
 		<div className="incident-report-modal">
 			<form className="report-form" onSubmit={handleSubmit}>
-				<h2>Reporte de Incidentes</h2>
+				<h2>Reportar Incidente</h2>
 				<section>
 					<h3>Tipo De Incidente</h3>
 					<div className="scrollable-container tipo-de-incidente">
