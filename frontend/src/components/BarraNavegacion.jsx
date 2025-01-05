@@ -9,11 +9,12 @@ import { UserContext } from "../userContext.jsx";
 import PanelReportes from "./PanelesPrincipal/PanelReportes.jsx";
 
 export default function Navbar() {
-  const [isOpenMain, setIsOpenMain] = useState(false);
+  const [isOpenMain, setIsOpenMain] = useState(false); // Para abrir o cerrar paneles laterales
   const [isOpenPert, setIsOpenPert] = useState(false);
   const [isOpenPerf, setIsOpenPerf] = useState(false);
   const [isOpenRep, setIsOpenRep] = useState(false);
   const [isOpenFre, setIsOpenFre] = useState(false);
+  const [frecuenta, setFrecuenta] = useState([]); //Pasar info a PanelReportes
   const { user } = useContext(UserContext);
   const { email, userType } = user;
 
@@ -38,7 +39,11 @@ export default function Navbar() {
       <div className="panel_lateral">
         <Cabecera />
         <div className={`panel_frecuenta ${isOpenFre ? "open" : ""}`}>
-          <PanelFrecuenta handleSelect={handleSelect} email={email} />
+          <PanelFrecuenta
+            handleSelect={handleSelect}
+            email={email}
+            setFrecuenta={setFrecuenta}
+          />
         </div>
         <div className={`panel_pertenencias ${isOpenPert ? "open" : ""}`}>
           <PanelPertenencias handleSelect={handleSelect} />
@@ -47,7 +52,7 @@ export default function Navbar() {
           <PanelPerfil handleSelect={handleSelect} email={email} />
         </div>
         <div className={`panel_reportes ${isOpenRep ? "open" : ""}`}>
-          <PanelReportes handleSelect={handleSelect} />
+          <PanelReportes handleSelect={handleSelect} frecuentados={frecuenta} />
         </div>
         <h1 className="titulo">Usach Segura</h1>
         <ul className="opcionesss">
