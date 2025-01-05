@@ -3,6 +3,7 @@
   display: flex;
   flex-shrink: 0;
   transition: all 0.3s ease;
+  z-index: 10;
 }
 
 .panel_lateral {
@@ -55,7 +56,7 @@
   cursor: pointer;
 }
 
-.navbar ul li:hover {
+.opcionesss li:hover {
   background-color: #00a499;
   color: #ffffff;
 }
@@ -76,6 +77,7 @@
 }
 
 /*Pertenencias y Perfil*/
+.panel_frecuenta,
 .panel_pertenencias,
 .panel_perfil,
 .panel_reportes {
@@ -90,6 +92,7 @@
   transition: all 0.3s ease;
 }
 
+.panel_frecuenta.open,
 .panel_pertenencias.open,
 .panel_perfil.open,
 .panel_reportes.open {
@@ -99,6 +102,7 @@
 /* Estilos responsivos para pantallas pequeñas */
 @media screen and (max-width: 768px) {
   .navbar {
+    position: absolute;
     width: 0;
   }
 
@@ -121,6 +125,8 @@
     right: 20px;
     top: 5px;
   }
+
+  .panel_frecuenta.open,
   .panel_pertenencias.open,
   .panel_perfil.open,
   .panel_reportes.open {

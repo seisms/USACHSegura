@@ -4,6 +4,7 @@ import logo from "../assets/LogoSF.png"; // Importar la imagen desde la carpeta 
 import Cabecera from "./Cabecera.jsx";
 import PanelPertenencias from "./PanelesPrincipal/PanelPertenencias.jsx";
 import PanelPerfil from "./PanelesPrincipal/PanelPerfil.jsx";
+import PanelFrecuenta from "./PanelesPrincipal/PanelFrecuenta.jsx";
 import { UserContext } from "../userContext.jsx";
 import PanelReportes from "./PanelesPrincipal/PanelReportes.jsx";
 
@@ -12,11 +13,14 @@ export default function Navbar() {
   const [isOpenPert, setIsOpenPert] = useState(false);
   const [isOpenPerf, setIsOpenPerf] = useState(false);
   const [isOpenRep, setIsOpenRep] = useState(false);
+  const [isOpenFre, setIsOpenFre] = useState(false);
   const { user } = useContext(UserContext);
   const { email, userType } = user;
 
   const handleSelect = (option) => {
-    if (option === "Pertenencias") {
+    if (option === "Frecuenta") {
+      setIsOpenFre(!isOpenFre);
+    } else if (option === "Pertenencias") {
       setIsOpenPert(!isOpenPert);
     } else if (option === "Perfil") {
       setIsOpenPerf(!isOpenPerf);
@@ -29,43 +33,27 @@ export default function Navbar() {
     setIsOpenMain(!isOpenMain);
   };
 
-  function listar_sectores_frecuentados() {
-    console.log(email);
-    fetch(`http://localhost:3001/listar/sectores_frecuentados/${email}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Parsing data");
-        if (data.success) {
-          console.log(data.result);
-        } else {
-          console.error(data.message);
-        }
-      });
-  }
-
   return (
     <div className={`navbar ${isOpenMain ? "open" : ""}`}>
       <div className="panel_lateral">
         <Cabecera />
+        <div className={`panel_frecuenta ${isOpenFre ? "open" : ""}`}>
+          <PanelFrecuenta handleSelect={handleSelect} email={email} />
+        </div>
         <div className={`panel_pertenencias ${isOpenPert ? "open" : ""}`}>
           <PanelPertenencias handleSelect={handleSelect} />
         </div>
         <div className={`panel_perfil ${isOpenPerf ? "open" : ""}`}>
-          <PanelPerfil handleSelect={handleSelect} />
+          <PanelPerfil handleSelect={handleSelect} email={email} />
         </div>
         <div className={`panel_reportes ${isOpenRep ? "open" : ""}`}>
           <PanelReportes handleSelect={handleSelect} />
         </div>
         <h1 className="titulo">Usach Segura</h1>
         <ul className="opcionesss">
-          <li onClick={listar_sectores_frecuentados}>Lugares Frecuentados</li>
+          <li onClick={() => handleSelect("Frecuenta")}>
+            Lugares Frecuentados
+          </li>
           <li onClick={() => handleSelect("Pertenencias")}>Pertenencias</li>
           <li onClick={() => handleSelect("Perfil")}>Perfil</li>
           <li onClick={() => handleSelect("Reportes")}>Reportes</li>
