@@ -51,7 +51,7 @@ export default function PanelReportes({ handleSelect, frecuentados }) {
     return (
         <div className="fondo-panel-reportes">
             <Cabecera />
-            <h1 className="titulo">Reportes realizados</h1>
+            <h1 className="titulo">Reportes de tus lugares frecuentados</h1>
             <div className="lista-reportes">
                 {Object.keys(reportesPorSector).map((sector) => (
                     <div key={sector} className="sector-reportes">
