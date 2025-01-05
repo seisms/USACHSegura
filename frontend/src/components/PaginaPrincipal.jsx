@@ -47,7 +47,7 @@ export default function PagP() {
   return (
     <div className="fondo_pagp">
       <Navbar />
-      <MapaDefault />
+      <MapaSeccionado />
       {showReportForm && (
         <FormularioReporte
           onClose={toggleReportForm}
