@@ -30,8 +30,15 @@
   margin: 0;
 }
 
+.mapa-seccionado {
+  width: 1500px;
+  height: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .mapa-blanco-negro {
-  position: absolute;
   z-index: 1;
 }
 
@@ -233,4 +240,41 @@
 
 .sector13-active:hover ~ .sector13-img {
   z-index: 2;
+}
+
+@media screen and (max-width: 768px) {
+  .titulo-mapa h1 {
+    margin: 0;
+    font-size: 35px;
+  }
+
+  .titulo-mapa h4 {
+    font-size: 15px;
+    margin: 0;
+  }
+
+  .fondo-mapa-seccionado {
+    width: 100%;
+    top: 0;
+    height: 100vh;
+  }
+  .mapa-blanco-negro {
+    width: 100%;
+  }
+
+  .sector1-img,
+  .sector2-img,
+  .sector3-img,
+  .sector4-img,
+  .sector5-img,
+  .sector6-img,
+  .sector7-img,
+  .sector8-img,
+  .sector9-img,
+  .sector10-img,
+  .sector11-img,
+  .sector12-img,
+  .sector13-img {
+    width: 100%;
+  }
 }

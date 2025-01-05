@@ -1,16 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { UserContext } from '../../userContext.jsx'
+import React, { useState, useEffect } from 'react';
 import Cabecera from "../Cabecera";
 import "../css/Paneles/PanelPerfil.css";
 
-function PanelPertenencias({ handleSelect }) {
-  const { user } = useContext(UserContext);
-  const { email, userType } = user;
+function PanelPerfil({ handleSelect, email }) {
   const [correo, setCorreo] = useState("");
   const [fono, setFono] = useState("");
 
-
-  fetch(`http://localhost:3001/listar_info_perfil/${email}`, {
+  fetch(`http://localhost:3001/info/perfil/${email}`, {
     method: "GET",
     headers: {
       "Content-type": "application/json",
@@ -51,4 +47,4 @@ function PanelPertenencias({ handleSelect }) {
   );
 }
 
-export default PanelPertenencias;
+export default PanelPerfil;

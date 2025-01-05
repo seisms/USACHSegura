@@ -77,53 +77,67 @@ function SeccionedMap() {
         <h1> Escuela de Artes y Oficios </h1>
         <h4>Sector 2</h4>
       </div>
-      <img
-        src={BlancoNegro}
-        alt="Mapa del Campus"
-        className="mapa-blanco-negro"
-      />
-      <div className="sector1-active" onClick={() => handleClicks("1")}></div>
-      <img src={Sector1} alt="Sector1-img" className="sector1-img" />
+      <div className="mapa-seccionado">
+        <img
+          src={BlancoNegro}
+          alt="Mapa del Campus"
+          className="mapa-blanco-negro"
+        />
+        <div className="sector1-active" onClick={() => handleClicks("1")}></div>
+        <img src={Sector1} alt="Sector1-img" className="sector1-img" />
 
-      <div className="sector2-active" onClick={() => handleClicks("2")}></div>
-      <img src={Sector2} alt="Sector2-img" className="sector2-img" />
+        <div className="sector2-active" onClick={() => handleClicks("2")}></div>
+        <img src={Sector2} alt="Sector2-img" className="sector2-img" />
 
-      <div className="sector3-active" onClick={() => handleClicks("3")}></div>
-      <img src={Sector3} alt="Sector3-img" className="sector3-img" />
+        <div className="sector3-active" onClick={() => handleClicks("3")}></div>
+        <img src={Sector3} alt="Sector3-img" className="sector3-img" />
 
-      <div className="sector4-active" onClick={() => handleClicks("4")}></div>
-      <img src={Sector4} alt="Sector4-img" className="sector4-img" />
+        <div className="sector4-active" onClick={() => handleClicks("4")}></div>
+        <img src={Sector4} alt="Sector4-img" className="sector4-img" />
 
-      <div className="sector5-active" onClick={() => handleClicks("5")}></div>
-      <img src={Sector5} alt="Sector5-img" className="sector5-img" />
+        <div className="sector5-active" onClick={() => handleClicks("5")}></div>
+        <img src={Sector5} alt="Sector5-img" className="sector5-img" />
 
-      <div className="sector6-active" onClick={() => handleClicks("6")}></div>
-      <img src={Sector6} alt="Sector6-img" className="sector6-img" />
+        <div className="sector6-active" onClick={() => handleClicks("6")}></div>
+        <img src={Sector6} alt="Sector6-img" className="sector6-img" />
 
-      <div className="sector7-active" onClick={() => handleClicks("7")}></div>
-      <img src={Sector7} alt="Sector7-img" className="sector7-img" />
+        <div className="sector7-active" onClick={() => handleClicks("7")}></div>
+        <img src={Sector7} alt="Sector7-img" className="sector7-img" />
 
-      <div className="sector8-active" onClick={() => handleClicks("8")}></div>
-      <img src={Sector8} alt="Sector8-img" className="sector8-img" />
+        <div className="sector8-active" onClick={() => handleClicks("8")}></div>
+        <img src={Sector8} alt="Sector8-img" className="sector8-img" />
 
-      <div className="sector9-active" onClick={() => handleClicks("9")}></div>
-      <img src={Sector9} alt="Sector9-img" className="sector9-img" />
+        <div className="sector9-active" onClick={() => handleClicks("9")}></div>
+        <img src={Sector9} alt="Sector9-img" className="sector9-img" />
 
-      <div className="sector10-active" onClick={() => handleClicks("10")}></div>
-      <img src={Sector10} alt="Sector10-img" className="sector10-img" />
+        <div
+          className="sector10-active"
+          onClick={() => handleClicks("10")}
+        ></div>
+        <img src={Sector10} alt="Sector10-img" className="sector10-img" />
 
-      <div className="sector11-active" onClick={() => handleClicks("11")}></div>
-      <img src={Sector11} alt="Sector11-img" className="sector11-img" />
+        <div
+          className="sector11-active"
+          onClick={() => handleClicks("11")}
+        ></div>
+        <img src={Sector11} alt="Sector11-img" className="sector11-img" />
 
-      <div className="sector12-active" onClick={() => handleClicks("12")}></div>
-      <div
-        className="sector12sec-active"
-        onClick={() => handleClicks("12")}
-      ></div>
-      <img src={Sector12} alt="Sector12-img" className="sector12-img" />
+        <div
+          className="sector12-active"
+          onClick={() => handleClicks("12")}
+        ></div>
+        <div
+          className="sector12sec-active"
+          onClick={() => handleClicks("12")}
+        ></div>
+        <img src={Sector12} alt="Sector12-img" className="sector12-img" />
 
-      <div className="sector13-active" onClick={() => handleClicks("13")}></div>
-      <img src={Sector13} alt="Sector13-img" className="sector13-img" />
+        <div
+          className="sector13-active"
+          onClick={() => handleClicks("13")}
+        ></div>
+        <img src={Sector13} alt="Sector13-img" className="sector13-img" />
+      </div>
     </div>
   );
 }

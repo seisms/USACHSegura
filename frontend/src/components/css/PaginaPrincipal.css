@@ -93,3 +93,15 @@
   background: rgba(0, 0, 0, 0.7);
   z-index: 999;
 }
+
+@media screen and (max-width: 768px) {
+  .fondo_pagp {
+    display: block;
+  }
+
+  .fondo_mapa {
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
