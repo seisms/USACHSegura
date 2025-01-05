@@ -128,15 +128,15 @@ const listar_reportes = async (sector) => {
 const listar_info_reporte = async (report_id) => {
     try {
         const report = await pool.query("SELECT REP_ID, REP_Correo, REP_Sector, TIN_Tnombre, REP_Fecha, REP_Hora \
-										 FROM REPORTE, TINCIDENTE \
-										 WHERE REP_ID = $1 AND REP_Tipo = TIN_TID", [report_id])
+            FROM REPORTE, TINCIDENTE \
+            WHERE REP_ID = $1 AND REP_Tipo = TIN_TID", [report_id])
         if (report && report.rows.length > 0) {
             const perts = await pool.query("SELECT PER_ID, TPER_Tnombre \
-				                           FROM REPORTE, PERTENENCIA, PUSURPADA, TPERTENENCIA \
-										   WHERE REP_ID = $1 \
-										   AND PU_RID = REP_ID \
-										   AND PER_ID = PU_PID \
-                                           AND PER_Tipo = TPER_TID"
+                FROM REPORTE, PERTENENCIA, PUSURPADA, TPERTENENCIA \
+                WHERE REP_ID = $1 \
+                AND PU_RID = REP_ID \
+                AND PER_ID = PU_PID \
+                AND PER_Tipo = TPER_TID"
                 , [report_id])
             return {
                 reporte: report.rows[0],
