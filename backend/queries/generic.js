@@ -90,8 +90,11 @@ const registrar_nuevo_usuario = async (nvusuario) => {
 		await pool.query("INSERT INTO USUARIO \
 			(US_Correo, US_Fono, US_Contrasenya) \
 			VALUES ($1, $2, $3)", [email, password, phone])
-		await pool.query("INSERT INTO RUSUARIO (RU_Correo, RU_Tipo) \
-			VALUES ($1, $2)", [email, usertype])
+
+        for (const tipo of usertype) {
+            await pool.query("INSERT INTO RUSUARIO (RU_Correo, RU_Tipo) \
+                                Values ($1, $2)", [email, tipo]);
+        }
 		return "OK"
 	} catch (err) {
 		console.error(err)
