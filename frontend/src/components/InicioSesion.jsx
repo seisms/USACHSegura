@@ -10,6 +10,7 @@ export default function InicioSesion() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+	console.log(Cookies.get("username"))
     // Función para manejar el control de acceso
     function control_de_acceso(event) {
         // Evita que el formulario realice su acción predeterminada (recargar la página)

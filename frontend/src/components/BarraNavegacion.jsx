@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./css/BarraNavegacion.css";
 import logo from "../assets/LogoSF.png"; // Importar la imagen desde la carpeta assets
 import Cabecera from "./Cabecera.jsx";
@@ -17,6 +18,13 @@ export default function Navbar() {
 	const [frecuenta, setFrecuenta] = useState([]); //Pasar info a PanelReportes
 	const email = Cookies.get("username")
 	const userType = Cookies.get("usertype")
+	const navigate = useNavigate()
+
+	function cerrar_sesion() {
+		Cookies.remove("username")
+		Cookies.remove("usertype")
+		navigate("/")
+	}
 
 	const handleSelect = (option) => {
 		if (option === "Frecuenta") {
@@ -27,6 +35,8 @@ export default function Navbar() {
 			setIsOpenPerf(!isOpenPerf);
 		} else if (option === "Reportes") {
 			setIsOpenRep(!isOpenRep);
+		} else if (option === "Logout") {
+			cerrar_sesion();
 		}
 	};
 

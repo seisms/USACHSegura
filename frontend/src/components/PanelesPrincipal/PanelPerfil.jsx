@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Cabecera from "../Cabecera";
-import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie"
 import "../css/Paneles/PanelPerfil.css";
 
 function PanelPerfil({ handleSelect, email }) {
 	const [correo, setCorreo] = useState("");
 	const [fono, setFono] = useState("");
 
-	function cerrar_sesion() {
-		Cookies.remove("username")
-		Cookies.remove("usertype")
-	}
 
 	fetch(`http://localhost:3001/info/perfil/${email}`, {
 		method: "GET",
@@ -47,7 +41,7 @@ function PanelPerfil({ handleSelect, email }) {
 			</div>
 			<div className="perfil-little-buttons">
 				<button onClick={() => handleSelect("Perfil")}> Atras </button>
-				<button> Cerrar Sesion </button>
+				<button onClick={() => handleSelect("Logout")}> Cerrar Sesion </button>
 			</div>
 		</div>
 	);
