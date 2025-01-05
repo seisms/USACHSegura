@@ -165,6 +165,7 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
         }
         if (op === 'D') {
             const { id, nombre } = pertusuario;
+            console.log(pertusuario)
             const result = await pool.query(
                 "DELETE FROM PERTENENCIA " +
                 "WHERE PER_ID = $1 RETURNING *", [id]

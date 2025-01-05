@@ -4,9 +4,9 @@ import "../css/Paneles/PanelFrecuenta.css";
 
 export default function PanelFrecuenta({ handleSelect, email, setFrecuenta }) {
     const [frecuentados, setFrecuentados] = useState([]);
-    const [frec_has_changed, setChanged] = useState(true)
     const [rows, setRows] = useState([]);
     const [feedback, setFeedback] = useState(""); // Muestra retroalimentación al usuario
+    const [frec_has_changed, setChanged] = useState(true)
     const [isOpenPopup, setIsOpenPopup] = useState("");
 
     function listar_sectores_frecuentados() {
