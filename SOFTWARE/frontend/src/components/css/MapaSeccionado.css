@@ -4,19 +4,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: scroll;
   position: relative;
 }
 
 .mapa-seccionado {
-  width: 1500px;
-  height: 1000px;
+  width: 1085px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .mapa-blanco-negro {
+  position: absolute;
   z-index: 1;
+  width: 1085px;
 }
 
 .imagen-sectores-infosec {
@@ -95,7 +97,7 @@
   clip-path: polygon(60.65% 25.23%, 67.17% 25.24%, 67.09% 37.77%, 60.45% 37.55%);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1085px) {
   .titulo-mapa h1 {
     margin: 0;
     font-size: 35px;
@@ -106,16 +108,19 @@
     margin: 0;
   }
 
-  .fondo-mapa-seccionado {
-    width: 100%;
-    top: 0;
-    height: 100vh;
-  }
   .mapa-blanco-negro {
-    width: 100%;
+    left: 0;
   }
-
-  .section-active-infosec {
-    width: 100%;
+  
+  .imagen-sectores-infosec {
+    left: 0;
   }
 }
+@media screen and (max-height: 780px) {
+  .mapa-blanco-negro {
+    top: 0;
+  }
+  
+  .imagen-sectores-infosec {
+    top: 0;
+  }}
