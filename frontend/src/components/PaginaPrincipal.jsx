@@ -50,6 +50,8 @@ export default function PagP() {
       <Navbar />
       <CalcularIndiceSeguridad />
       <MapaSeccionado />
+      { /*<MapaSeccionado />*/}
+      <MapaDefault />
       {showReportForm && <div className="overlay"></div>}
       {showReportForm && (
         <FormularioReporte

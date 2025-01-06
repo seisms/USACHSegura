@@ -4,7 +4,7 @@ import sectorImages from "../../assets/MapaU/sectors"; // Archivo que exporta to
 import PanelSector from "../PanelesPrincipal/PanelSector";
 import "../css/MapaSeccionado.css";
 
-function SeccionedMap() {
+export default function SeccionedMap() {
   const [selectedSector, setSelectedSector] = React.useState(0);
   const [sectores, setSectores] = React.useState([]);  
   const sectors = Array.from({ length: 14 }, (_, i) => i + 1); // Crear una lista de sectores [1, 2, ..., 14]
@@ -46,8 +46,7 @@ function SeccionedMap() {
   return (
     <div className="fondo-mapa-seccionado">
       <div className="titulo-mapa">
-        <h1> Escuela de Artes y Oficios </h1>
-        <h4>Sector 2</h4>
+        <h1> Seleccione los sectores </h1>
       </div>
       <div className="mapa-seccionado">
         <img
@@ -92,5 +91,3 @@ function SeccionedMap() {
     </div>
   );
 }
-
-export default SeccionedMap;

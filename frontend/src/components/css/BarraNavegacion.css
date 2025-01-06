@@ -1,4 +1,5 @@
 .navbar {
+  position: absolute;
   width: auto;
   display: flex;
   flex-shrink: 0;
@@ -97,6 +98,15 @@
 .panel_perfil.open,
 .panel_reportes.open {
   width: 380px; /* Ocupará todo el ancho */
+}
+
+.navbar:not(.open) .panel_frecuenta,
+.navbar:not(.open) .panel_pertenencias,
+.navbar:not(.open) .panel_perfil,
+.navbar:not(.open) .panel_reportes {
+  width: 0;
+  visibility: hidden; /* Oculta visualmente los paneles */
+  z-index: -1; /* Coloca los paneles detrás de otros elementos */
 }
 
 /* Estilos responsivos para pantallas pequeñas */

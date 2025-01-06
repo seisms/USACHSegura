@@ -1,0 +1,35 @@
+.fondo-mapa-default {
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.map-default {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: scroll;
+}
+
+.default-sector {
+  position: absolute;
+  z-index: 2;
+  overflow: scroll;
+}
+
+@media screen and (max-height: 787px) {
+  .map-default {
+    top: 10px;
+    overflow: hidden;
+    position: absolute;
+  }
+}
+@media screen and (max-width: 1095px) {
+  .map-default {
+    position: absolute;
+    left: 0;
+  }
+}
+
+@media screen and (max-width: 1095px) {
+}
