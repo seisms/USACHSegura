@@ -56,13 +56,6 @@ function TPertenencia() {
             });
     }
 
-    //const handleImageChange = (e) => {
-    //	setImage(e.target.files[0]);
-    //};
-    //const handleImageChange = (e) => {
-    //	setImage(e.target.files[0]);
-    //};
-
     const renderTabContent = () => {
         switch (selectedTab) {
             case "Agregar":

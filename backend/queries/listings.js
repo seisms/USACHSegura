@@ -31,7 +31,7 @@ const listar_sectores = async () => {
 
 const listar_tusuario = async () => {
     try {
-        const result = await pool.query("SELECT * FROM TUSUARIO;");
+        const result = await pool.query("SELECT * FROM TUSUARIO ORDER BY TU_Tid;");
         if (result && result.rows.length > 0) {
             console.log(result.rows);
             return result.rows;
@@ -47,7 +47,7 @@ const listar_tusuario = async () => {
 //Listado de tipo de pertenencias
 const listar_tpertenencia = async () => {
     try {
-        const result = await pool.query("SELECT * FROM TPERTENENCIA;");
+        const result = await pool.query("SELECT * FROM TPERTENENCIA ORDER BY TPER_TID;");
         if (result && result.rows.length > 0) {
             console.log(result.rows);
             return result.rows;
@@ -82,7 +82,7 @@ const listar_pertenencias = async (email) => {
 // Obtener tipo de incidentes
 const listar_tincidentes = async () => {
     try {
-        const result = await pool.query("SELECT * FROM TINCIDENTE");
+        const result = await pool.query("SELECT * FROM TINCIDENTE ORDER BY TIN_TID;");
         if (result && result.rows.length > 0) {
             return result.rows;
         } else {

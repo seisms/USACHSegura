@@ -56,12 +56,10 @@ function TIncidente() {
             });
     }
 
-    //const handleImageChange = (e) => {
-    //	setImage(e.target.files[0]);
-    //};
-    //const handleImageChange = (e) => {
-    //	setImage(e.target.files[0]);
-    //};
+    useEffect(() => {
+        consultarTIncidente();
+        mantenerTIncidente();
+    },[]);
 
     const renderTabContent = () => {
         switch (selectedTab) {
