@@ -23,7 +23,6 @@ export default function Registro() {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    console.log(data.result)
                     const filtered = data.result.filter(item =>
                         item.tu_tnombre !== "Administrador");
                     setOpTUsuario(filtered || []);
@@ -73,8 +72,6 @@ export default function Registro() {
             phone: formData.telefono,
             usertype: selectedCheckboxes,
         };
-
-        console.log(payload);
 
         // Enviar los datos al backend
         fetch("http://localhost:3001/register", {

@@ -18,8 +18,6 @@ export default function defaultMap() {
       })
       .then((data) => {
         if (data.success) {
-          console.log("el");
-          console.log(data.result);
           setSectores(data.result);
         } else {
           console.error(data.message);

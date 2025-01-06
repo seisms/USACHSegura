@@ -20,7 +20,6 @@ export default function SeccionedMap({}) {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log("result", data.result);
           setSectores(data.result);
         } else {
           console.error(data.message);

@@ -55,7 +55,6 @@ export default function SeccionedMap({ secSelected, setSecSelected }) {
       // Si no está seleccionado, lo agregamos al array
       setSecSelected([...secSelected, sectorName]);
     }
-    console.log("Sectores seleccionados actualmente:", secSelected);
   };
 
   useEffect(() => {
@@ -63,7 +62,6 @@ export default function SeccionedMap({ secSelected, setSecSelected }) {
   }, []);
 
   useEffect(() => {
-    console.log("secSelected ha cambiado:", secSelected);
 
     // Recorremos el array secSelected para marcar las imágenes con la clase 'selected'
     const sectorElements = document.querySelectorAll(".imagen-sectores");
