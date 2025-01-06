@@ -193,6 +193,7 @@ const listar_info_sector = async (sector) => {
                                                  AND ${DATEDIFF} <= 15 \
                                                  AND ${DATEDIFF} >= 0`, [sector]);
 
+        const security = await pool.query("SELECT SEC_Seguridad FROM SECTOR WHERE SEC_Nombre = $1", [sector]);
         const count_recent_reports = recent_reports.rows.length
 
         const rep_tot = await pool.query(`SELECT COUNT(REP_ID) as tot\
@@ -201,7 +202,8 @@ const listar_info_sector = async (sector) => {
         const list = {
             recent_reports: recent_reports.rows,
             total: parseInt(rep_tot.rows[0].tot),
-            recent_count: count_recent_reports
+            recent_count: count_recent_reports,
+            security: parseFloat(security.rows[0].sec_seguridad)
         }
         return list;
     } catch (err) {
