@@ -296,11 +296,59 @@ const borrar_tpertenencia = async (tpertenencia) => {
     }
 }
 
+// BEGIN: Mantener USUARIO
+const mantener_usuario = async (op, usuario) => {
+    if (op === "a") {
+        const result = await reestablecer_usuario(usuario);
+        return result;
+    }
+
+    if (op === "e") {
+        const result = await borrar_usuario(usuario);
+        return result;
+    }
+}
+
+const reestablecer_usuario = async (usuario) => {
+    try {
+        const { Us_correo } = usuario;
+        let result = await pool.query("SELECT * FROM USUARIO \
+            WHERE US_Correo = $1 AND US_Disponible = 'no'", [Us_correo]);
+        if (result && result.rows.length > 0) {
+            await pool.query("UPDATE USUARIO SET US_Disponible = 'si' \
+                WHERE US_Correo = $1", [Us_correo])
+            return `Usuario ${Us_correo} reestablecido con éxito.`
+        } else {
+            return `No hay usuario inactivo ${Us_correo} para reestablecer`
+        }
+    } catch (err) {
+        console.error(err);
+        return err.message;
+    }
+}
+
+const borrar_usuario = async (usuario) => {
+    try {
+        const { Us_correo } = usuario;
+        const result = await pool.query("UPDATE USUARIO SET US_DISPONIBLE = 'no' WHERE US_CORREO = $1 RETURNING *", [Us_correo]);
+        if (result && result.rows.length > 0) {
+            return `Usuario ${Us_correo} desactivado con éxito`;
+        } else {
+            throw new Error(`No se pudo desactivar el usuario ${Us_correo}`);
+        }
+    } catch (err) {
+        console.error(err)
+        return err.message;
+    }
+}
+// END: Mantener USUARIO
+
 // END: Mantención de tablas Básicas.
 
 module.exports = {
     mantener_sector,
     mantener_tusuario,
     mantener_tincidente,
-    mantener_tpertenencia
+    mantener_tpertenencia,
+    mantener_usuario
 }
