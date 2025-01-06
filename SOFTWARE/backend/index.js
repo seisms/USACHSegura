@@ -82,6 +82,28 @@ app.get('/listar/sectores', async (req, res) => {
     }
 })
 
+app.get('/listar/usuarios', async (req, res) => {
+    try {
+        const response = await list.listar_usuarios();
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            });
+        } else {
+            res.status(401).json({
+                success: false,
+                message: "No se pudo listar los usuarios"
+            });
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        });
+    }
+})
+
 app.get('/listar/tusuarios', async (req, res) => {
     try {
         const response = await list.listar_tusuario();
@@ -202,6 +224,24 @@ app.post('/tincidente-maintain/:op', async (req, res) => {
     }
 })
 
+app.post('/usuario-maintain/:op', async (req, res) => {
+    try {
+        const op = req.params.op;
+        const response = await maintain.mantener_usuario(op, req.body);
+        if (response) {
+            res.status(200).json({
+                success: true,
+                result: response
+            });
+        }
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        });
+    }
+})
+
 app.post('/tusuario-maintain/:op', async (req, res) => {
     try {
         const op = req.params.op
@@ -224,10 +264,15 @@ app.post('/tusuario-maintain/:op', async (req, res) => {
 app.post('/login', async (req, res) => {
     try {
         const response = await generic.control_de_acceso(req.body)
-        if (response) {
+        if (response && response !== -1) {
             res.status(200).json({
                 success: true,
                 result: response
+            })
+        } else if (response) {
+            res.status(401).json({
+                success: false,
+                message: "Tu cuenta ha sido desactivada por un administrador."
             })
         } else {
             res.status(401).json({

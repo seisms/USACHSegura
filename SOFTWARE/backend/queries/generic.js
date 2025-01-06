@@ -62,7 +62,11 @@ const agregar_pertencia_reporte = async (list_pusurpada, rid) => {
 const control_de_acceso = async (login) => {
     const { email, password } = login;
     try {
-        let result = await pool.query("SELECT US_Contrasenya FROM USUARIO WHERE US_Correo = $1",
+        let result = await pool.query("SELECT * FROM USUARIO WHERE US_Correo = $1 AND US_Disponible = 'no'", [email])
+        if (result && result.rows.length > 0) {
+            return -1;
+        }
+        result = await pool.query("SELECT US_Contrasenya FROM USUARIO WHERE US_Correo = $1",
             [email]);
 
         if (result.rows.length > 0) {
@@ -80,8 +84,8 @@ const control_de_acceso = async (login) => {
             } else {
                 return null;
             }
-        } else {
         }
+
     } catch (err) {
         console.error('Error al ejecutar la consulta:', err);
     }
