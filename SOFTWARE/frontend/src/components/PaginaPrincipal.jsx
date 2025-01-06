@@ -43,10 +43,6 @@ export default function PagP() {
         return new Date(dateString).toLocaleDateString("es-CL", options);
     };
 
-    const mapSwitch = () => {
-        setIsSelecting(!isSelecting);
-    };
-
     useEffect(() => {
         if (email === undefined) {
             navigate("/");
@@ -55,6 +51,10 @@ export default function PagP() {
             navigate("/adminspacework")
         }
     }, [email, navigate]); //
+
+    const mapSwitch = () => {
+        setIsSelecting(!isSelecting);
+    };
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -89,7 +89,6 @@ export default function PagP() {
                     onReportID={handleReportID}
                 />
             )}
-            <NotificarReporte rep_id={reportID} />
             <button className="report-button" onClick={toggleReportForm}>
                 <img src={Report} alt="Reporte" className="report-icon" />
             </button>
