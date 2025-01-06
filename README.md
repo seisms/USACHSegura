@@ -1,5 +1,5 @@
 # USACH Segura
-USACH Segura is a web-application resulting of a biannual project done by
+USACH Segura is a web-application result of a biannual project done by
 students of the Universidad de Santiago de Chile. It allows students,
 officials and academics of the university to report and visualize
 robberies and similar incidents within the establishment in a
