@@ -7,28 +7,6 @@
   position: relative;
 }
 
-/* Estilo del titulo */
-.titulo-mapa {
-  position: absolute;
-  background-color: gainsboro;
-  top: 50px;
-  z-index: 5;
-  color: #333f48;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.titulo-mapa h1 {
-  margin: 0;
-  font-size: 45px;
-}
-.titulo-mapa h4 {
-  font-size: 25px;
-  margin: 0;
-}
-
 .mapa-seccionado {
   width: 1500px;
   height: 1000px;
