@@ -24,14 +24,10 @@ const NotificarReporte = ({ rep_id }) => {
                 });
 
                 const data = await response.json();
-                console.log('Datos del reporte:', data);
                 const reporte = data?.result?.reporte;
                 const pusurpada = data?.result?.pertenencias_usurpadas;
 
                 if (data.success === true) {
-                    console.log('Datos del reporte:', reporte);
-                    console.log('Pertenencias usurpadas:', pusurpada);
-
                     setReporteInfo(data.result);
                     setRepSector(reporte.rep_sector);
                     setRepTipo(reporte.rep_tipo);
@@ -63,10 +59,8 @@ const NotificarReporte = ({ rep_id }) => {
                 });
 
                 const data = await response.json();
-                console.log('Datos de los usuarios:', data.result);
 
                 if (data.success) {
-                    console.log('Usuarios notificados:', data.result);
                     setUsuariosNotificados(data.result);
                 }
                 else {
