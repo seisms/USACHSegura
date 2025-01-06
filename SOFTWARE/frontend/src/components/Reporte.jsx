@@ -81,7 +81,6 @@ const FormularioReporte = ({ onClose, onSubmit, onReportID }) => {
             const data = await response.json();
 
             if (data.success && data.id) {
-                console.log('Reporte generado con ID:', data.id);
                 return data.id; // Retorna el ID del reporte
             } else {
                 console.error('Error al generar el reporte:', data.message || 'Sin ID');
