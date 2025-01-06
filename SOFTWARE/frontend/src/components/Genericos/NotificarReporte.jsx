@@ -28,8 +28,10 @@ export async function NotificarReporte() {
                     const usuarios_data = await usuarios.json();
                     console.log("Resultado de notificar usuarios: ", usuarios_data);
 
+                    // En este lado se conoce los usuarios que deben ser notificados sobre el reporte
                     if(usuarios_data.success){
                         console.log('Usuarios a notificar: ', usuarios_data.result);
+                        const usuariosANotificar = usuarios_data.result;
                     } else {
                         console.error(`No hay usuarios en el sector ${reporte.rep_sector}`);
                     }

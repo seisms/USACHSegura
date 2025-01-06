@@ -12,46 +12,47 @@ import Report from "../assets/Re.jpg";
 import { use } from "react";
 
 export default function PagP() {
-  const [showReportForm, setShowReportForm] = useState(false);
-  const [submittedReport, setSubmittedReport] = useState(null);
-  const [reportID, setReportID] = useState(0);
-  const navigate = useNavigate();
-  const email = Cookies.get("username");
-  const usertype = Cookies.get("usertype");
-  const [secSelected, setSecSelected] = useState([]);
-  const [isSelecting, setIsSelecting] = useState(false);
+    const [showReportForm, setShowReportForm] = useState(false);
+    const [submittedReport, setSubmittedReport] = useState(null);
+    const [reportID, setReportID] = useState(0);
+    const navigate = useNavigate();
+    const email = Cookies.get("username");
+    const usertype = Cookies.get("usertype");
+    const [secSelected, setSecSelected] = useState([]);
+    const [isSelecting, setIsSelecting] = useState(false);
 
-  const toggleReportForm = () => {
-    setShowReportForm(!showReportForm);
-  };
+    const toggleReportForm = () => {
+        setShowReportForm(!showReportForm);
+    };
 
-  const handleReportSubmit = (reportData) => {
-    setSubmittedReport(reportData);
-    setShowReportForm(false);
-  };
+    const handleReportSubmit = (reportData) => {
+        setSubmittedReport(reportData);
+        setShowReportForm(false);
+    };
 
-  const handleReportID = (id) => {
-    setReportID(id);
-  };
+    const handleReportID = (id) => {
+        setReportID(id);
+    };
 
-  const closeReportPopup = () => {
-    setSubmittedReport(null);
-  };
+    const closeReportPopup = () => {
+        setSubmittedReport(null);
+    };
 
-  const formatDate = (dateString) => {
-    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
-    return new Date(dateString).toLocaleDateString("es-CL", options);
-  };
+    const formatDate = (dateString) => {
+        const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+        return new Date(dateString).toLocaleDateString("es-CL", options);
+    };
 
-  useEffect(() => {
-    if (email === undefined) {
-      navigate("/");
-    }
-    if (usertype === "Administrador") {
-      navigate("/adminspacework");
-    }
-  }, [email, navigate]); //
+    useEffect(() => {
+        if (email === undefined) {
+            navigate("/");
+        }
+        if (usertype === "Administrador") {
+            navigate("/adminspacework");
+        }
+    }, [email, navigate]); //
 
+<<<<<<< HEAD
   const mapSwitch = () => {
     setIsSelecting(!isSelecting);
   };
@@ -71,64 +72,69 @@ export default function PagP() {
         }, 20000);
         return () => clearInterval(interval);
     }, []);
+=======
+    const mapSwitch = () => {
+        setIsSelecting(!isSelecting);
+    };
+>>>>>>> 6576a23ce53e84fef8136a0b446fe06611abe445
 
-  return (
-    <div className="fondo_pagp">
-      <Navbar
-        mapSwitch={mapSwitch}
-        secSelected={secSelected}
-        setSecSelected={setSecSelected}
-      />
-      <CalcularIndiceSeguridad />
+    return (
+        <div className="fondo_pagp">
+            <Navbar
+                mapSwitch={mapSwitch}
+                secSelected={secSelected}
+                setSecSelected={setSecSelected}
+            />
+            <CalcularIndiceSeguridad />
 
-      {isSelecting ? (
-        <MapaFrecuenta
-          secSelected={secSelected}
-          setSecSelected={setSecSelected}
-        />
-      ) : (
-        <MapaDefault />
-      )}
+            {isSelecting ? (
+                <MapaFrecuenta
+                    secSelected={secSelected}
+                    setSecSelected={setSecSelected}
+                />
+            ) : (
+                <MapaDefault />
+            )}
 
-      {showReportForm && <div className="overlay"></div>}
-      {showReportForm && (
-        <FormularioReporte
-          onClose={toggleReportForm}
-          onSubmit={handleReportSubmit}
-          onReportID={handleReportID}
-        />
-      )}
-      <NotificarReporte rep_id={reportID} />
-      <button className="report-button" onClick={toggleReportForm}>
-        <img src={Report} alt="Reporte" className="report-icon" />
-      </button>
-      {submittedReport && (
-        <div className="report-popup">
-          <button className="close-popup" onClick={closeReportPopup}>
-            X
-          </button>
-          <h2>Reporte Generado</h2>
-          <p>
-            <strong>Tipo De Incidente:</strong>{" "}
-            {submittedReport.tipo || "Ninguno"}
-          </p>
-          <p>
-            <strong>Pertenencia Perdida:</strong>{" "}
-            {submittedReport.perts.join(", ") || "Ninguna"}
-          </p>
-          <p>
-            <strong>Sector Del Incidente:</strong>{" "}
-            {submittedReport.sector || "Ninguno"}
-          </p>
-          <p>
-            <strong>Fecha:</strong>{" "}
-            {formatDate(submittedReport.fecha) || "No especificada"}
-          </p>
-          <p>
-            <strong>Hora:</strong> {submittedReport.hora || "No especificada"}
-          </p>
+            {showReportForm && <div className="overlay"></div>}
+            {showReportForm && (
+                <FormularioReporte
+                    onClose={toggleReportForm}
+                    onSubmit={handleReportSubmit}
+                    onReportID={handleReportID}
+                />
+            )}
+            <NotificarReporte rep_id={reportID} />
+            <button className="report-button" onClick={toggleReportForm}>
+                <img src={Report} alt="Reporte" className="report-icon" />
+            </button>
+            {submittedReport && (
+                <div className="report-popup">
+                    <button className="close-popup" onClick={closeReportPopup}>
+                        X
+                    </button>
+                    <h2>Reporte Generado</h2>
+                    <p>
+                        <strong>Tipo De Incidente:</strong>{" "}
+                        {submittedReport.tipo || "Ninguno"}
+                    </p>
+                    <p>
+                        <strong>Pertenencia Perdida:</strong>{" "}
+                        {submittedReport.perts.join(", ") || "Ninguna"}
+                    </p>
+                    <p>
+                        <strong>Sector Del Incidente:</strong>{" "}
+                        {submittedReport.sector || "Ninguno"}
+                    </p>
+                    <p>
+                        <strong>Fecha:</strong>{" "}
+                        {formatDate(submittedReport.fecha) || "No especificada"}
+                    </p>
+                    <p>
+                        <strong>Hora:</strong> {submittedReport.hora || "No especificada"}
+                    </p>
+                </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 }
