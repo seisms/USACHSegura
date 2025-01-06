@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./BarraNavegacion";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import MapaDefault from "./mapasEAO/MapaDefault";
+//import CalcularIndiceSeguridad from "./Genericos/IndiceSeguridad";
 import { CalcularSeguridad } from "./Genericos/IndiceSeguridad";
 import { NotificarReporte } from "./Genericos/NotificarReporte";
 import MapaFrecuenta from "./mapasEAO/MapaFrecuenta";
+import MapaSeccionado from "./mapasEAO/MapaSeccionado";
 import FormularioReporte from "./Reporte";
 import "./css/PaginaPrincipal.css";
 import Report from "../assets/Re.jpg";
@@ -72,14 +73,8 @@ export default function PagP() {
                 setSecSelected={setSecSelected}
             />
 
-            {isSelecting ? (
-                <MapaFrecuenta
-                    secSelected={secSelected}
-                    setSecSelected={setSecSelected}
-                />
-            ) : (
-                <MapaDefault />
-            )}
+            {  isSelecting ? ( <MapaFrecuenta secSelected={secSelected} setSecSelected={setSecSelected} />
+            ) : ( < MapaSeccionado /> )  }
 
             {showReportForm && <div className="overlay"></div>}
             {showReportForm && (

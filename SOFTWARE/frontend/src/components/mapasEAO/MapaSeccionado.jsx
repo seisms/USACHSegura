@@ -5,23 +5,22 @@ import PanelSector from "../PanelesPrincipal/PanelSector";
 import "../css/MapaSeccionado.css";
 
 export default function SeccionedMap({}) {
-  const [selectedSector, setSelectedSector] = React.useState(0);
-  const [sectores, setSectores] = React.useState([]);  
-  const sectors = Array.from({ length: 14 }, (_, i) => i + 1); // Crear una lista de sectores [1, 2, ..., 14]
+  const [selectedSector, setSelectedSector] = React.useState(null);
+  const [isOpenDetalle, setIsOpenDetalle] = React.useState(false);
+  const [sectores, setSectores] = React.useState([]);
+  const sectors = Array.from({ length: 14 }, (_, i) => i + 1);
 
   function getSectores() {
-    fetch("http://localhost:3001/listar/sectores",
-      {  
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-        },
-      })  
-      .then((response) => {
-        return response.json();
-      })
+    fetch("http://localhost:3001/listar/sectores", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          console.log("result", data.result);
           setSectores(data.result);
         } else {
           console.error(data.message);
@@ -30,22 +29,24 @@ export default function SeccionedMap({}) {
   }
 
   const handleClick = (sector) => {
-    alert(`Sector ${sector} \nSeguridad ${sectores[sector-1].sec_seguridad}`); // Aquí puedes reemplazarlo por acciones específicas
-    if(sector <= sectores.length){
-      console.log(sectores[sector - 1]);
-      setSelectedSector(sectores[sector - 1]);
-    }
+    setSelectedSector(sector);
+    setIsOpenDetalle(true);
   };
-  
+
+  // Buscar el nombre del sector a partir del número seleccionado
+  const getSectorName = () => {
+    const sectorObj = sectores.find((item) => item.sec_path === selectedSector);
+    return sectorObj ? sectorObj.sec_nombre : "Sector desconocido";
+  };
+
   useEffect(() => {
     getSectores();
-    
   }, []);
 
   return (
     <div className="fondo-mapa-seccionado">
       <div className="titulo-mapa">
-        <h1> Seleccione los sectores </h1>
+        <h1>Seleccione los sectores</h1>
       </div>
       <div className="mapa-seccionado">
         <img
@@ -55,38 +56,44 @@ export default function SeccionedMap({}) {
         />
         {sectors.map((sector) => (
           <React.Fragment key={sector}>
-            {/* Condicional para el sector 11 */}
             {sector === 11 ? (
               <>
                 <div
-                  className="section-active"
+                  className="section-active-infosec"
                   id={`sector${sector}-active`}
                   onClick={() => handleClick(sector)}
                 ></div>
                 <div
-                  className="section-active"
+                  className="section-active-infosec"
                   id={`sector${sector}sec-active`}
                   onClick={() => handleClick(sector)}
                 ></div>
               </>
             ) : (
               <div
-                className="section-active"
+                className="section-active-infosec"
                 id={`sector${sector}-active`}
                 onClick={() => handleClick(sector)}
               ></div>
             )}
             <img
               src={sectorImages[`Sector${sector}`]}
-              alt={`Sector${sector}-img`}
-              id={`sector${sector}-img`}
-              className="imagen-sectores"
+              alt={`Sector${sector}-img-infosec`}
+              id={`sector${sector}-img-infosec`}
+              className="imagen-sectores-infosec"
             />
           </React.Fragment>
         ))}
       </div>
-      {/* Aquí puedes agregar el panel de información del sector */}
-      {selectedSector !== 0 && (<PanelSector sector={selectedSector}/>)}
+      {/* Popup Detalle Sector */}
+      {isOpenDetalle && (
+        <div className="pert-form-popup open">
+          <div className="popup-content">
+            <PanelSector sector={getSectorName()} />
+            <button id="close-popup-info-sector" onClick={() => setIsOpenDetalle(false)}> Cerrar </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -70,3 +70,134 @@
   color: #ffffff; /* Cambia el color del texto */
   border: 2px solid #ff9800; /* Resalta el borde */
 }
+
+
+.info-sector {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-info-sector {
+  width: 100%;
+}
+
+.info-sector-general,
+.info-sector-detalles {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
+.info-sector-general th,
+.info-sector-general td,
+.info-sector-detalles th,
+.info-sector-detalles td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.info-sector-general th,
+.info-sector-detalles th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: left;
+}
+
+.info-sector-detalles {
+  margin-top: 10px;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.info-sector-general,
+.info-sector-detalles th {
+  color: #333f48;
+}
+
+.info-sector p {
+  font-size: 18px;
+  color: #666;
+  text-align: center;
+}
+
+/* Estilos existentes */
+.contenido-frecuenta {
+  width: 100%;
+  height: 100%;
+}
+
+.lista-frecuentados {
+  width: 100%;
+}
+
+.lista-frecuentados p {
+  color: #009688;
+  font-size: 19px;
+  text-align: center;
+}
+
+.lista-frecuentados ul {
+  background-color: #00a499;
+  list-style: none;
+  border: 2px solid #333f48;
+  border-radius: 10px;
+  padding: 0;
+  margin: 10px;
+}
+
+.lista-frecuentados ul li {
+  font-size: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.lista-frecuentados ul li:hover {
+  background-color: #009688;
+}
+
+.frecuenta-popup {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: auto;
+  z-index: 10000;
+  display: none;
+}
+
+.frecuenta-popup.open {
+  display: block;
+}
+
+.checkbox-item {
+  display: none;
+}
+
+.seleccion-frecuenta {
+  color: #333f48;
+}
+
+.frecuenta-popup button {
+  background-color: #00a499;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px 15px;
+  width: 250px;
+  margin-bottom: 20px;
+}
+
+.lista-frecuentados ul li.seleccionada {
+  background-color: #ffa726;
+  color: #ffffff;
+  border: 2px solid #ff9800;
+}
