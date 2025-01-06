@@ -43,19 +43,10 @@ export default function PagP() {
         return new Date(dateString).toLocaleDateString("es-CL", options);
     };
 
-    useEffect(() => {
-        if (email === undefined) {
-            navigate("/");
-        }
-        if (usertype === "Administrador") {
-            navigate("/adminspacework");
-        }
-    }, [email, navigate]); //
+    const mapSwitch = () => {
+        setIsSelecting(!isSelecting);
+    };
 
-<<<<<<< HEAD
-  const mapSwitch = () => {
-    setIsSelecting(!isSelecting);
-  };
     useEffect(() => {
         if (email === undefined) {
             navigate("/");
@@ -72,11 +63,6 @@ export default function PagP() {
         }, 20000);
         return () => clearInterval(interval);
     }, []);
-=======
-    const mapSwitch = () => {
-        setIsSelecting(!isSelecting);
-    };
->>>>>>> 6576a23ce53e84fef8136a0b446fe06611abe445
 
     return (
         <div className="fondo_pagp">
@@ -85,7 +71,6 @@ export default function PagP() {
                 secSelected={secSelected}
                 setSecSelected={setSecSelected}
             />
-            <CalcularIndiceSeguridad />
 
             {isSelecting ? (
                 <MapaFrecuenta
