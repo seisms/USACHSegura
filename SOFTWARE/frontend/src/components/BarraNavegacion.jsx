@@ -9,7 +9,7 @@ import PanelFrecuenta from "./PanelesPrincipal/PanelFrecuenta.jsx";
 import Cookies from "js-cookie"
 import PanelReportes from "./PanelesPrincipal/PanelReportes.jsx";
 
-export default function Navbar({mapSwitch, secSelected, setSecSelected}) {
+export default function Navbar({ mapSwitch, secSelected, setSecSelected }) {
     const [isOpenMain, setIsOpenMain] = useState(false);
     const [isOpenPert, setIsOpenPert] = useState(false);
     const [isOpenPerf, setIsOpenPerf] = useState(false);
@@ -53,9 +53,9 @@ export default function Navbar({mapSwitch, secSelected, setSecSelected}) {
                         handleSelect={handleSelect}
                         email={email}
                         setFrecuenta={setFrecuenta}
-                        mapSwitch = {mapSwitch}
-                        setSecSelected = {setSecSelected}
-                        secSelected = {secSelected}
+                        mapSwitch={mapSwitch}
+                        setSecSelected={setSecSelected}
+                        secSelected={secSelected}
                     />
                 </div>
                 <div className={`panel_pertenencias ${isOpenPert ? "open" : ""}`}>
@@ -70,7 +70,7 @@ export default function Navbar({mapSwitch, secSelected, setSecSelected}) {
                 <h1 className="titulo">Usach Segura</h1>
                 <ul className="opcionesss">
                     <li onClick={() => handleSelect("Frecuenta")}>
-                        Lugares Frecuentados
+                        Sectores Frecuentados
                     </li>
                     <li onClick={() => handleSelect("Pertenencias")}>Pertenencias</li>
                     <li onClick={() => handleSelect("Perfil")}>Perfil</li>
