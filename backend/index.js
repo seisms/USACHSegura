@@ -456,6 +456,31 @@ app.get('/info/reporte/:rid', async (req, res) => {
             })
         }
     } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: "Error interno del servidor"
+        })
+    }
+})
+
+app.get('/listar/reportes_a_notificar', async (req, res) => {
+    try {
+        const response = await list.listar_reportes_a_notificar();
+        if (response) {
+            console.log(response);
+            res.status(200).json({
+                success: true,
+                result: response
+            })
+        } else if(response == []) {
+            res.status(404).json({
+                success: true,
+                result: response
+            })
+        }
+    } catch (err) {
+        console.error(err);
         res.status(500).json({
             success: false,
             message: "Error interno del servidor"
