@@ -21,13 +21,15 @@ const mantener_sector = async (op, sector) => {
 
 const crear_sector = async (sector) => {
     const { name, image } = sector;
+    const imageBuffer = Buffer.from(image, 'base64');
+
     try {
         let result = await pool.query("SELECT * FROM SECTOR WHERE SEC_Nombre = $1", [name])
 
         if (result && result.rows.length > 0) {
             result = await pool.query("UPDATE SECTOR SET SEC_Disponible = 'si' WHERE SEC_NOMBRE = $1 RETURNING *", [name])
         } else {
-            result = await pool.query("INSERT INTO SECTOR VALUES ($1, $2, 1, 15, 'si') RETURNING *", [name, image]);
+            result = await pool.query("INSERT INTO SECTOR VALUES ($1, $2, 1, 15, 'si') RETURNING *", [name, imageBuffer]);
         }
 
         if (result && result.rows.length > 0) {
@@ -44,8 +46,9 @@ const crear_sector = async (sector) => {
 
 const modifySector = async (sector) => {
     const { name, image } = sector;
+    const imageBuffer = Buffer.from(image, 'base64');
     try {
-        const result = await pool.query("UPDATE SECTOR SET SEC_Img = $1 WHERE SEC_Nombre = $2 RETURNING *", [image, name]);
+        const result = await pool.query("UPDATE SECTOR SET SEC_Img = $1 WHERE SEC_Nombre = $2 RETURNING *", [imageBuffer, name]);
         if (result && result.rows.length > 0) {
             return `Sector modificado con éxito`;
         } else {

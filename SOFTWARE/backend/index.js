@@ -172,7 +172,7 @@ app.get('/listar/tincidentes', async (req, res) => {
 
 app.post('/sector-maintain/:op', async (req, res) => {
     try {
-        const op = req.params.op
+        const op = req.params.op;
         const response = await maintain.mantener_sector(op, req.body)
         if (response) {
             res.status(200).json({
