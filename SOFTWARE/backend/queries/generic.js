@@ -26,15 +26,18 @@ const generar_reporte = async (body) => {
 const registrar_reporte = async (reporte) => {
     if (typeof reporte === "string") {
         reporte = JSON.parse(reporte);
-    }
-    const { email, type, sector, date, hour } = reporte;
-    try {
-        const result = await pool.query("INSERT INTO REPORTE (REP_Correo, REP_Sector, REP_Tipo, REP_Fecha, REP_Hora) VALUES ($1, $2, $3, $4, $5) RETURNING REP_ID",
-            [email, sector, type, date, hour]);
-        return result.rows[0].rep_id;
-    } catch (err) {
-        console.error('Error al ejecutar la consulta:', err);
-        return -1;
+        try {
+            const { email, type, sector } = reporte;
+            const date = await pool.query("SELECT (NOW() at TIME ZONE 'Chile/Continental')::date as date");
+            const time = await pool.query("SELECT NOW()::time \
+                WITH time zone AT TIME ZONE 'Chile/Continental' as time");
+            const result = await pool.query("INSERT INTO REPORTE (REP_Correo, REP_Sector, REP_Tipo, REP_Fecha, REP_Hora) VALUES ($1, $2, $3, $4, $5) RETURNING REP_ID",
+                [email, sector, type, date.rows[0].date, time.rows[0].time]);
+            return result.rows[0].rep_id;
+        } catch (err) {
+            console.error('Error al ejecutar la consulta:', err);
+            return -1;
+        }
     }
 }
 
