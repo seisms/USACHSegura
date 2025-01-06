@@ -2,7 +2,11 @@ const pool = require('./credentials.js')
 
 const listar_sectores_frecuentados = async (email) => {
     try {
-        const result = await pool.query("SELECT FREC_Sector FROM FRECUENTA WHERE FREC_Correo = $1", [email]);
+        const result = await pool.query("SELECT FREC_Sector \
+            FROM FRECUENTA, SECTOR \
+            WHERE FREC_Correo = $1 \
+            AND FREC_Sector = SEC_Nombre \
+            AND SEC_Disponible = 'si'", [email]);
         if (result && result.rows.length > 0) {
             return result.rows;
         } else {
@@ -16,13 +20,15 @@ const listar_sectores_frecuentados = async (email) => {
 //Listado tablas basicas
 const listar_sectores = async () => {
     try {
-        const query = await pool.query("SELECT * FROM SECTOR ORDER BY SEC_Id;");
+        const query = await pool.query("SELECT * FROM SECTOR \
+            WHERE SEC_DISPONIBLE = 'si' \
+            ORDER BY SEC_Path;");
         const result = query.rows.map((sector) => ({
             ...sector,
             sec_img: sector.sec_img ? Buffer.from(sector.sec_img).toString('base64') : null
         }));
 
-        console.log("mostrando resultados: ",result);
+        console.log("mostrando resultados: ", result);
         if (result && result.length > 0) {
             return result;
         } else {
@@ -36,7 +42,9 @@ const listar_sectores = async () => {
 
 const listar_tusuario = async () => {
     try {
-        const result = await pool.query("SELECT * FROM TUSUARIO ORDER BY TU_Tid;");
+        const result = await pool.query("SELECT * FROM TUSUARIO \
+            WHERE TU_DISPONIBLE = 'si' \
+            ORDER BY TU_Tid;");
         if (result && result.rows.length > 0) {
             console.log(result.rows);
             return result.rows;
@@ -52,7 +60,9 @@ const listar_tusuario = async () => {
 //Listado de tipo de pertenencias
 const listar_tpertenencia = async () => {
     try {
-        const result = await pool.query("SELECT * FROM TPERTENENCIA ORDER BY TPER_TID;");
+        const result = await pool.query("SELECT * FROM TPERTENENCIA \
+            WHERE TPER_DISPONIBLE = 'si' \
+            ORDER BY TPER_TID;");
         if (result && result.rows.length > 0) {
             console.log(result.rows);
             return result.rows;
@@ -73,6 +83,7 @@ const listar_pertenencias = async (email) => {
         const result = await pool.query("SELECT PER_ID, PER_Nombre, PER_Correo, \
 			TPER_TNombre, PER_Img \
 			FROM PERTENENCIA, TPERTENENCIA WHERE PER_Correo = $1 \
+            AND PER_DISPONIBLE = 'si' \
 			AND PER_Tipo = TPER_TID", [email]);
         if (result && result.rows.length > 0) {
             return result.rows;
@@ -87,7 +98,9 @@ const listar_pertenencias = async (email) => {
 // Obtener tipo de incidentes
 const listar_tincidentes = async () => {
     try {
-        const result = await pool.query("SELECT * FROM TINCIDENTE ORDER BY TIN_TID;");
+        const result = await pool.query("SELECT * FROM TINCIDENTE \
+            WHERE TIN_DISPONIBLE = 'si' \
+            ORDER BY TIN_TID;");
         if (result && result.rows.length > 0) {
             return result.rows;
         } else {
@@ -101,11 +114,13 @@ const listar_tincidentes = async () => {
 
 const listar_reportes = async (sector) => {
     try {
-        let query = "SELECT REP_ID, REP_Correo, " +
-            "REP_Sector, TIN_Tnombre REP_Tipo, " +
-            "REP_Fecha, REP_Hora " +
-            "FROM REPORTE, TINCIDENTE " +
-            "WHERE REP_Tipo = TIN_TID";
+        let query = "SELECT REP_ID, REP_Correo, \
+            REP_Sector, TIN_Tnombre REP_Tipo, \
+            REP_Fecha, REP_Hora \
+            FROM REPORTE, TINCIDENTE, SECTOR \
+            WHERE REP_Tipo = TIN_TID \
+            AND SEC_Nombre = REP_Sector \
+            AND SEC_Disponible = 'si'";
 
         let params = []
 
@@ -174,7 +189,7 @@ const listar_info_sector = async (sector) => {
         const recent_reports = await pool.query(`SELECT TIN_TNombre, REP_Fecha, REP_Hora \
                                                  FROM REPORTE, SECTOR, TINCIDENTe \
                                                  WHERE REP_Sector = $1 \
-                                                 AND REP_Sector = SEC_Nombre AND TIN_TID = REP_Tipo\
+                                                 AND REP_Sector = SEC_Nombre AND TIN_TID = REP_Tipo \
                                                  AND ${DATEDIFF} <= 15 \
                                                  AND ${DATEDIFF} >= 0`, [sector]);
 
@@ -196,7 +211,8 @@ const listar_info_sector = async (sector) => {
 
 const listar_usuario_por_sector = async (sector) => {
     try {
-        const lusector = await pool.query("SELECT FREC_Correo FROM FRECUENTA WHERE FREC_Sector = $1", [sector]);
+        const lusector = await pool.query("SELECT FREC_Correo FROM FRECUENTA, SECTOR \
+            WHERE FREC_Sector = $1 AND SEC_NOMBRE = FREC_SECTOR AND SEC_DISPONIBLE = 'si'", [sector]);
         if (lusector && lusector.rows.length > 0) {
             console.log('Usuarios que frecuentas el sector: ', lusector.rows);
             return lusector.rows;

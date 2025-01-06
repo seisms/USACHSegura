@@ -22,12 +22,20 @@ const mantener_sector = async (op, sector) => {
 const crear_sector = async (sector) => {
     const { name, image } = sector;
     try {
-        const result = await pool.query("INSERT INTO SECTOR VALUES ($1, $2, 1) RETURNING *", [name, image]);
+        let result = await pool.query("SELECT * FROM SECTOR WHERE SEC_Nombre = $1", [name])
+
+        if (result && result.rows.length > 0) {
+            result = await pool.query("UPDATE SECTOR SET SEC_Disponible = 'si' WHERE SEC_NOMBRE = $1 RETURNING *", [name])
+        } else {
+            result = await pool.query("INSERT INTO SECTOR VALUES ($1, $2, 1, 15, 'si') RETURNING *", [name, image]);
+        }
+
         if (result && result.rows.length > 0) {
             return `Sector agregado con éxito`;
         } else {
             throw new Error(`No se pudo agregar sector ${name}`);
         }
+
     } catch (err) {
         console.error(err);
         return err.message;
@@ -53,7 +61,7 @@ const modifySector = async (sector) => {
 const borrar_sector = async (sector) => {
     const { name } = sector;
     try {
-        const result = await pool.query("DELETE FROM SECTOR WHERE SEC_Nombre = $1 RETURNING *", [name]);
+        const result = await pool.query("UPDATE SECTOR SET SEC_Disponible = 'no' WHERE SEC_Nombre = $1 RETURNING *", [name]);
         if (result && result.rows.length > 0) {
             return `Sector eliminado con éxito`;
         } else {
@@ -86,11 +94,19 @@ const mantener_tusuario = async (op, tusuario) => {
 const crear_tusuario = async (tusuario) => {
     const { Tu_tnombre } = tusuario;
     try {
-        const result = await pool.query("INSERT INTO TUSUARIO (tu_tnombre) VALUES ($1) RETURNING *", [Tu_tnombre]);
+
+        let result = await pool.query("SELECT * FROM TUSUARIO WHERE TU_TNOMBRE = $1", [Tu_tnombre])
+
+        if (result && result.rows.length > 0) {
+            result = await pool.query("UPDATE TUSUARIO SET TU_DISPONIBLE = 'si' WHERE TU_TNOMBRE = $1 RETURNING *", [Tu_tnombre]);
+        } else {
+            result = await pool.query("INSERT INTO TUSUARIO (tu_tnombre) VALUES ($1, 'si') RETURNING *", [Tu_tnombre]);
+        }
+
         if (result && result.rows.length > 0) {
             return `Tipo de usuario agregado con éxito`;
         } else {
-			throw new Error(`No se pudo agregar el tipo de usuario: ${Tu_tnombre}`);
+            throw new Error(`No se pudo agregar el tipo de usuario: ${Tu_tnombre}`);
         }
     } catch (err) {
         console.error(err);
@@ -105,8 +121,8 @@ const modificar_tusuario = async (tusuario) => {
         if (result && result.rows.length > 0) {
             return `Tipo de usuario modificado con éxito`;
         } else {
-			console.log("here!");
-			throw new Error(`No se pudo modificar el tipo de usuario: ${Tu_tid}`);
+            console.log("here!");
+            throw new Error(`No se pudo modificar el tipo de usuario: ${Tu_tid}`);
             console.log("here!");
             throw new Error(`No se pudo modificar sector ${Tu_tid}`);
         }
@@ -119,15 +135,15 @@ const modificar_tusuario = async (tusuario) => {
 const borrar_tusuario = async (tusuario) => {
     const { Tu_tid, Tu_tnombre } = tusuario;
     try {
-        const result = await pool.query("DELETE FROM TUSUARIO WHERE tu_tid = $1 RETURNING *", [Tu_tid]);
+        const result = await pool.query("UPDATE TUSUARIO SET TU_DISPONIBLE = 'no' WHERE tu_tid = $1 RETURNING *", [Tu_tid]);
         if (result && result.rows.length > 0) {
             return `Tipo de usuario eliminado con éxito`;
         } else {
-			throw new Error(`No se pudo eliminar el tipo de usuario: ${Tu_tid}`);
+            throw new Error(`No se pudo eliminar el tipo de usuario: ${Tu_tid}`);
         }
     } catch (err) {
         console.error(err);
-		return err.message;
+        return err.message;
     }
 }
 
@@ -154,12 +170,20 @@ const mantener_tincidente = async (op, tincidente) => {
 const crear_tincidente = async (tincidente) => {
     const { Tin_tid, Tin_tnombre } = tincidente;
     try {
-        const result = await pool.query("INSERT INTO TINCIDENTE (tin_tnombre) VALUES ($1) RETURNING *", [Tin_tnombre]);
+        let result = await pool.query("SELECT * FROM TINCIDENTE WHERE TIN_TID = $1", [Tin_tid]);
+
+        if (result && result.rows.length > 0) {
+            result = await pool.query("UPDATE TINCIDENTE SET TIN_DISPONIBLE = 'si' WHERE TIN_TID = $1 RETURNING *", [Tin_tid]);
+        } else {
+            result = await pool.query("INSERT INTO TINCIDENTE (tin_tnombre) VALUES ($1) RETURNING *", [Tin_tnombre]);
+        }
+
         if (result && result.rows.length > 0) {
             return `Tipo de incidente agregado con éxito`;
         } else {
             throw new Error(`No se pudo agregar el tipo de incidente ${Tin_tnombre}`);
         }
+
     } catch (err) {
         console.error(err);
         return err.message;
@@ -169,7 +193,7 @@ const crear_tincidente = async (tincidente) => {
 const modificar_tincidente = async (tincidente) => {
     const { Tin_tid, Tin_tnombre } = tincidente;
     try {
-        const result = await pool.query("UPDATE TINCIDENTE SET tin_tnombre = $1 WHERE tin_tid = $2 RETURNING *", [Tin_tnombre, Tin_tid]);
+        const result = await pool.query("UPDATE TINCIDENTE SET TIN_TNOMBRE = $1 WHERE TIN_TID = $2 RETURNING *", [Tin_tnombre, Tin_tid]);
         if (result && result.rows.length > 0) {
             return `Tipo de incidente modificado con éxito`;
         } else {
@@ -185,7 +209,7 @@ const modificar_tincidente = async (tincidente) => {
 const borrar_tincidente = async (tincidente) => {
     const { Tin_tid, Tin_tnombre } = tincidente;
     try {
-        const result = await pool.query("DELETE FROM TINCIDENTE WHERE tin_tid = $1 RETURNING *", [Tin_tid]);
+        const result = await pool.query("UPDATE TINCIDENTE SET TIN_DISPONIBLE = 'no' WHERE TIN_TID = $1 RETURNING *", [Tin_tid]);
         if (result && result.rows.length > 0) {
             return `Tipo de incidente eliminado con éxito`;
         } else {
@@ -220,12 +244,21 @@ const mantener_tpertenencia = async (op, tpertenencia) => {
 const crear_tpertenencia = async (tpertenencia) => {
     const { Tper_tid, Tper_tnombre } = tpertenencia;
     try {
-        const result = await pool.query("INSERT INTO TPERTENENCIA (tper_tnombre) VALUES ($1) RETURNING *", [Tper_tnombre]);
+
+        let result = await pool.query("SELECT * FROM TPERTENENCIA WHERE TPER_TID = $1", [Tper_tid]);
+
+        if (result && result.rows.length > 0) {
+            result = await pool.query("UPDATE TPERTENENCIA SET TPER_DISPONIBLE = 'si' WHERE TPER_TID = $1 RETURNING *", [Tper_tid]);
+        } else {
+            result = await pool.query("INSERT INTO TPERTENENCIA (tper_tnombre) VALUES ($1) RETURNING *", [Tper_tnombre]);
+        }
+
         if (result && result.rows.length > 0) {
             return `Tipo de pertenencia agregado con éxito`;
         } else {
             throw new Error(`No se pudo agregar el tipo de pertenencia ${Tper_tnombre}`);
         }
+
     } catch (err) {
         console.error(err);
         return err.message;
@@ -235,7 +268,7 @@ const crear_tpertenencia = async (tpertenencia) => {
 const modificar_tpertenencia = async (tpertenencia) => {
     const { Tper_tid, Tper_tnombre } = tpertenencia;
     try {
-        const result = await pool.query("UPDATE TPERTENENCIA SET tper_tnombre = $1 WHERE tper_tid = $2 RETURNING *", [Tper_tnombre, Tper_tid]);
+        const result = await pool.query("UPDATE TPERTENENCIA SET TPER_TNOMBRE = $1 WHERE TPER_TID = $2 RETURNING *", [Tper_tnombre, Tper_tid]);
         if (result && result.rows.length > 0) {
             return `Tipo de pertenencia modificado con éxito`;
         } else {
@@ -251,7 +284,7 @@ const modificar_tpertenencia = async (tpertenencia) => {
 const borrar_tpertenencia = async (tpertenencia) => {
     const { Tper_tid, Tper_tnombre } = tpertenencia;
     try {
-        const result = await pool.query("DELETE FROM TPERTENENCIA WHERE tper_tid = $1 RETURNING *", [Tper_tid]);
+        const result = await pool.query("UPDATE TPERTENENCIA SET TPER_DISPONIBLE = 'no' WHERE TPER_TID = $1 RETURNING *", [Tper_tid]);
         if (result && result.rows.length > 0) {
             return `Tipo de pertenencia eliminado con éxito`;
         } else {

@@ -26,15 +26,18 @@ const generar_reporte = async (body) => {
 const registrar_reporte = async (reporte) => {
     if (typeof reporte === "string") {
         reporte = JSON.parse(reporte);
-    }
-    const { email, type, sector, date, hour } = reporte;
-    try {
-        const result = await pool.query("INSERT INTO REPORTE (REP_Correo, REP_Sector, REP_Tipo, REP_Fecha, REP_Hora) VALUES ($1, $2, $3, $4, $5) RETURNING REP_ID",
-            [email, sector, type, date, hour]);
-        return result.rows[0].rep_id;
-    } catch (err) {
-        console.error('Error al ejecutar la consulta:', err);
-        return -1;
+        try {
+            const { email, type, sector } = reporte;
+            const date = await pool.query("SELECT (NOW() at TIME ZONE 'Chile/Continental')::date as date");
+            const time = await pool.query("SELECT NOW()::time \
+                WITH time zone AT TIME ZONE 'Chile/Continental' as time");
+            const result = await pool.query("INSERT INTO REPORTE (REP_Correo, REP_Sector, REP_Tipo, REP_Fecha, REP_Hora) VALUES ($1, $2, $3, $4, $5) RETURNING REP_ID",
+                [email, sector, type, date.rows[0].date, time.rows[0].time]);
+            return result.rows[0].rep_id;
+        } catch (err) {
+            console.error('Error al ejecutar la consulta:', err);
+            return -1;
+        }
     }
 }
 
@@ -86,11 +89,19 @@ const control_de_acceso = async (login) => {
 
 const registrar_nuevo_usuario = async (nvusuario) => {
     const { email, password, phone, usertype } = nvusuario;
-    console.log(`usertype: ${usertype}`)
     try {
+        const result = await pool.query("SELECT * FROM USUARIO \
+            WHERE US_Correo = $1 \
+            AND US_Disponible = 'no'",
+            [email])
+        if (result && result.rows.length > 0) {
+            throw new Error("El usuario que intenta registrar \
+                ya existe y fué inhabilitado por un administrador.")
+        }
+
         await pool.query("INSERT INTO USUARIO \
-			(US_Correo, US_Fono, US_Contrasenya) \
-			VALUES ($1, $2, $3)", [email, phone, password])
+			(US_Correo, US_Fono, US_Contrasenya, US_Disponible) \
+			VALUES ($1, $2, $3, 'si')", [email, phone, password])
 
         for (const tipo of usertype) {
             console.log(`tipo ${tipo}, email: ${email}`)
@@ -141,11 +152,19 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
     try {
         if (op === 'C') {
             const { correo, tipo, img, nombre } = pertusuario;
-            const result = await pool.query("INSERT INTO PERTENENCIA " +
-                "(PER_Correo, PER_Tipo, PER_Img, PER_Nombre) " +
-                "VALUES ($1, $2, $3, $4) RETURNING *",
-                [correo, tipo, img, nombre]);
-            console.log("Pertenencia creada", result.rows[0]);
+            const result = await pool.query("SELECT PER_ID FROM PERTENENCIA \
+                WHERE PER_Correo = $1 AND PER_Nombre = $2 \
+                AND PER_Tipo = $3 AND PER_Disponible = 'no'", [correo, nombre, tipo])
+            if (result && result.rows.length > 0) {
+                await pool.query("UPDATE PERTENENCIA \
+                    SET PER_Disponible = 'si' \
+                    WHERE PER_ID = $1", [result.rows[0].per_id]);
+            } else {
+                await pool.query("INSERT INTO PERTENENCIA " +
+                    "(PER_Correo, PER_Tipo, PER_Img, PER_Nombre, PER_DISPONIBLE) " +
+                    "VALUES ($1, $2, $3, $4, 'si') RETURNING *",
+                    [correo, tipo, img, nombre]);
+            }
             return `Pertenencia ${nombre} creada`;
         }
         if (op === 'M') {
@@ -157,7 +176,6 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
                 "WHERE PER_ID = $4 RETURNING *", [nombre, tipo, img, id]
             );
             if (result && result.rows.length > 0) {
-                console.log("Pertenencia actualizada:", result.rows[0]);
                 return `Pertenencia ${nombre} actualizada`;
             } else {
                 throw new Error(`Fallo actualizar pertenencia ${id}`)
@@ -165,10 +183,10 @@ const resgistrar_pertenencia = async (pertusuario, op) => {
         }
         if (op === 'D') {
             const { id, nombre } = pertusuario;
-            console.log(pertusuario)
             const result = await pool.query(
-                "DELETE FROM PERTENENCIA " +
-                "WHERE PER_ID = $1 RETURNING *", [id]
+                "UPDATE  PERTENENCIA \
+                SET PER_DISPONIBLE = 'no' \
+                WHERE PER_ID = $1 RETURNING *", [id]
             );
             if (result && result.rows.length > 0) {
                 return `Pertenencia ${nombre} eliminada`;
