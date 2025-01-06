@@ -1,31 +1,26 @@
 import React, { useContext, useState, useEffect } from 'react';
 
-export default function CalcularIndiceSeguridad() {
-    const [indiceSeguridad, setIndiceSeguridad] = useState(null);
+export async function CalcularSeguridad() {
+  try {
+    const response = await fetch("http://localhost:3001/calcular-indice", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
 
-    function Calcular_indice_seguridad() {
-        //Funcion para mostrar las filas
-        fetch("http://localhost:3001/calcular-indice", {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json",
-          },
-        })
-          .then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            if (data.success) {
-              console.log(data.result);
-          }})
-          .catch((error) => {
-            console.error(error);
-          });
-      }
-    
-
-    useEffect(() => {
-        Calcular_indice_seguridad();
-    }, []);
+    const data = await response.json();
+    if (data.success) {
+      console.log(data.result);
+      return data.result; // Devuelve el índice de seguridad
+    } else {
+      console.error(data.message);
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching índice de seguridad:", error);
+    return null;
+  }
 }
+
 

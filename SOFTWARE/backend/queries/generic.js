@@ -253,8 +253,6 @@ const calcular_indice_seguridad = async () => {
 
         for (const sector of lista_sectores.rows) {
             const rsector = await pool.query("SELECT COUNT(rep_id) FROM REPORTE WHERE REP_Sector = $1", [sector.sec_nombre]);
-            console.log(sector.sec_nombre, rsector.rows[0].count);
-            console.log("Indice de seguridad:", 1 - rsector.rows[0].count / total.rows[0].count);
 
             if (rsector.rows[0].count >= 0) {
                 result = await pool.query("UPDATE SECTOR SET sec_seguridad = 1 - (($1 * 1.0) / $2) WHERE sec_nombre = $3", [rsector.rows[0].count, total.rows[0].count, sector.sec_nombre]);

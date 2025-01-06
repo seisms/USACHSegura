@@ -3,12 +3,13 @@ import Navbar from "./BarraNavegacion";
 import { useNavigate } from "react-router-dom"
 import Cookies from "js-cookie"
 import MapaDefault from "./mapasEAO/MapaDefault";
-import CalcularIndiceSeguridad from "./Genericos/IndiceSeguridad";
+import { CalcularSeguridad } from "./Genericos/IndiceSeguridad";
+import { NotificarReporte } from "./Genericos/NotificarReporte";
 import MapaSeccionado from "./mapasEAO/MapaSeccionado";
 import FormularioReporte from "./Reporte";
 import "./css/PaginaPrincipal.css";
 import Report from "../assets/Re.jpg";
-import NotificarReporte from "./Genericos/NotificarReporte";
+import { use } from "react";
 
 export default function PagP() {
     const [showReportForm, setShowReportForm] = useState(false);
@@ -49,10 +50,17 @@ export default function PagP() {
         }
     }, [email, navigate]); //
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            NotificarReporte();
+            CalcularSeguridad();
+        }, 20000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="fondo_pagp">
             <Navbar />
-            <CalcularIndiceSeguridad />
             <MapaSeccionado />
             { /*<MapaSeccionado />*/}
             <MapaDefault />
@@ -64,7 +72,6 @@ export default function PagP() {
                     onReportID={handleReportID}
                 />
             )}
-            <NotificarReporte rep_id={reportID} />
             <button className="report-button" onClick={toggleReportForm}>
                 <img src={Report} alt="Reporte" className="report-icon" />
             </button>
