@@ -16,6 +16,7 @@ export default function PagP() {
   const [reportID, setReportID] = useState(0);
   const navigate = useNavigate();
   const email = Cookies.get("username");
+  const usertype = Cookies.get("usertype");
   const [secSelected, setSecSelected] = useState([]);
   const [isSelecting, setIsSelecting] = useState(false);
 
@@ -45,18 +46,32 @@ export default function PagP() {
     if (email === undefined) {
       navigate("/");
     }
+    if (usertype === "Administrador") {
+      navigate("/adminspacework");
+    }
   }, [email, navigate]); //
 
   const mapSwitch = () => {
     setIsSelecting(!isSelecting);
-  }
+  };
 
   return (
     <div className="fondo_pagp">
-      <Navbar mapSwitch = {mapSwitch} secSelected = {secSelected} setSecSelected = {setSecSelected} />
+      <Navbar
+        mapSwitch={mapSwitch}
+        secSelected={secSelected}
+        setSecSelected={setSecSelected}
+      />
       <CalcularIndiceSeguridad />
 
-      {isSelecting ? <MapaFrecuenta secSelected = {secSelected} setSecSelected = {setSecSelected} /> : <MapaDefault />}
+      {isSelecting ? (
+        <MapaFrecuenta
+          secSelected={secSelected}
+          setSecSelected={setSecSelected}
+        />
+      ) : (
+        <MapaDefault />
+      )}
 
       {showReportForm && <div className="overlay"></div>}
       {showReportForm && (

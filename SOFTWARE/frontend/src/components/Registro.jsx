@@ -23,7 +23,10 @@ export default function Registro() {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                    setOpTUsuario(data.result || []);
+                    console.log(data.result)
+                    const filtered = data.result.filter(item =>
+                        item.tu_tnombre !== "Administrador");
+                    setOpTUsuario(filtered || []);
                 } else {
                     setFeedback("No hay tipos de usuario  para listar");
                 }
