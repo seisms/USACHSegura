@@ -45,6 +45,6 @@ To set up the frontend, navigate to the relevant directory in `./SOFTWARE/fronte
 To set up the backend, navigate to the relevant directory in `./SOFTWARE/backend/`, then run
 `./npm install` to resolve the project's dependencies.
 
-# Running the intance.
+# Running the instance.
 Once everything is set up, run `node index.js` in the backend directory, and `npm run dev` in the frontend directory.
 You can then visit the URL that will appear in the frontend CLI to utilize the application.
