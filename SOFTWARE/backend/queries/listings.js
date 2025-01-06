@@ -237,6 +237,25 @@ const listar_usuarios = async () => {
     }
 }
 
+const listar_reportes_a_notificar = async () => {
+    try {
+        const SECOND_DIFF = "EXTRACT(EPOCH FROM (NOW() - (REP_Fecha + REP_Hora::interval)))"
+        const result = await pool.query(`SELECT REP_ID, REP_Sector, TIN_Tnombre, REP_Fecha, REP_Hora \
+                                            FROM REPORTE, TINCIDENTE \
+                                                WHERE REP_Tipo = TIN_Tid \
+                                                AND ${SECOND_DIFF} <= 20 \
+                                                AND ${SECOND_DIFF} >= 0 \
+                                                ORDER BY REP_Fecha, REP_Hora DESC`);
+        if (result && result.rows.length > 0) {
+            return result.rows;
+        } else {
+            return [];
+        }
+    } catch (err) {
+        console.error("Error al listar reportes a notificar", err);
+    }
+}
+
 module.exports = {
     listar_sectores,
     listar_tusuario,
@@ -244,6 +263,7 @@ module.exports = {
     listar_pertenencias,
     listar_usuario_por_sector,
     listar_sectores_frecuentados,
+    listar_reportes_a_notificar,
     listar_reportes,
     listar_tpertenencia,
     listar_info_perfil,
