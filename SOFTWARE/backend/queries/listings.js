@@ -88,7 +88,7 @@ const listar_pertenencias = async (email) => {
         if (result && result.rows.length > 0) {
             return result.rows;
         } else {
-            console.error("No hay pertenencias/No existe el usuario", email);
+			return [];
         }
     } catch (err) {
         console.error("error");
@@ -186,7 +186,7 @@ const listar_info_perfil = async (correo) => {
 const listar_info_sector = async (sector) => {
     try {
         const DATEDIFF = "EXTRACT(DAY FROM NOW() - REP_Fecha)"
-        const recent_reports = await pool.query(`SELECT TIN_TNombre, REP_Fecha, REP_Hora \
+        const recent_reports = await pool.query(`SELECT REP_ID, TIN_TNombre, REP_Fecha, REP_Hora \
                                                  FROM REPORTE, SECTOR, TINCIDENTe \
                                                  WHERE REP_Sector = $1 \
                                                  AND REP_Sector = SEC_Nombre AND TIN_TID = REP_Tipo \

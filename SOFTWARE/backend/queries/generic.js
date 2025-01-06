@@ -249,6 +249,7 @@ const registrar_lugar_frecuentado = async (frecuentado, op) => {
 const calcular_indice_seguridad = async () => {
     try {
         const DATEDIFF = "EXTRACT(DAY FROM NOW() - REP_Fecha)"
+		let security;
         const total = await pool.query(`SELECT COUNT(*) FROM REPORTE \
                                         WHERE ${DATEDIFF} <= 15 \
                                         AND ${DATEDIFF} >= 0`);
@@ -260,7 +261,12 @@ const calcular_indice_seguridad = async () => {
                                             AND ${DATEDIFF} >= 0`, [sector.sec_nombre]);
 
             if (rsector.rows[0].count >= 0) {
-                result = await pool.query("UPDATE SECTOR SET sec_seguridad = 1 - (($1 * 1.0) / $2) WHERE sec_nombre = $3", [rsector.rows[0].count, total.rows[0].count, sector.sec_nombre]);
+				if (total.rows[0].count <= 0) {
+					security = 1
+				} else {
+					security = total.rows[0].count
+				}
+                result = await pool.query("UPDATE SECTOR SET sec_seguridad = 1 - (($1 * 1.0) / $2) WHERE sec_nombre = $3", [rsector.rows[0].count, security, sector.sec_nombre]);
             }
             else if (rsector.rows[0].count === 0) {
                 result = await pool.query("UPDATE SECTOR SET sec_seguridad = 1 WHERE sec_nombre = $1", [sector.sec_nombre]);

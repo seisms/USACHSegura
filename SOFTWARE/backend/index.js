@@ -337,16 +337,15 @@ app.get('/listar/pertenencias/:email', async (req, res) => {
     try {
         const email = req.params.email
         const response = await list.listar_pertenencias(email);
-        if (response) {
+        if (response && response !== []) {
             res.status(200).json({
                 success: true,
                 result: response
             })
         } else {
-            console.error(`No se pudieron listar las pertenencias de ${email}`)
-            res.status(401).json({
-                success: false,
-                message: "No se pudo listar las pertenencias."
+            res.status(404).json({
+                success: true,
+                message: response
             })
         }
     } catch (err) {
