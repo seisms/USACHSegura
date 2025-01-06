@@ -27,6 +27,7 @@ const crear_sector = async (sector) => {
         if (result && result.rows.length > 0) {
             result = await pool.query("UPDATE SECTOR SET SEC_Disponible = 'si' WHERE SEC_NOMBRE = $1 RETURNING *", [name])
         } else {
+            console.log(image)
             result = await pool.query("INSERT INTO SECTOR VALUES ($1, $2, 1, 15, 'si') RETURNING *", [name, image]);
         }
 
