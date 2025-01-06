@@ -110,13 +110,6 @@ export default function PagP() {
                         <strong>Sector Del Incidente:</strong>{" "}
                         {submittedReport.sector || "Ninguno"}
                     </p>
-                    <p>
-                        <strong>Fecha:</strong>{" "}
-                        {formatDate(submittedReport.fecha) || "No especificada"}
-                    </p>
-                    <p>
-                        <strong>Hora:</strong> {submittedReport.hora || "No especificada"}
-                    </p>
                 </div>
             )}
         </div>
