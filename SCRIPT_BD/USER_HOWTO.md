@@ -14,7 +14,7 @@ most UNIX-like OS's by running:
 
 This will spawn a shell as the *postgres* user. In this shell, run
 
-    `psql`
+    psql
 
 to enter the PostgreSQL CLI environment and continue to the next part.
 
