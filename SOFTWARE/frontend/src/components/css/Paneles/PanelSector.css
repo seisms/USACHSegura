@@ -1,0 +1,44 @@
+.popup-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#close-popup-info-sector {
+  position: relative;
+  width: 100px;
+  margin: 10px ;
+}
+
+.tabla-info-sector {
+  width: 100%;
+  margin: 10px 0;
+  font-size: 20px;
+}
+
+.tabla-info-sector h3 {
+  color: #00a499;
+  text-align: center;
+}
+
+.info-sector {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333f48;;
+}
+
+.info-sector h1{
+  color: #00a499;
+  font-size: 35px;
+  margin: 10px 0;
+}
+
+.info-sector h2{
+  color: #00a499;
+  font-size: 25px;
+  margin: 0;
+}
+

@@ -19,11 +19,12 @@
   z-index: 1;
 }
 
-.imagen-sectores {
+.imagen-sectores-infosec {
   position: absolute;
+  z-index: 2;
 }
 
-.section-active {
+.section-active-infosec {
   position: absolute;
   top: 0;
   left: 0;
@@ -33,83 +34,65 @@
   z-index: 3;
 }
 
-#sector1-active {
+#sector1-active-infosec {
   clip-path: polygon(69.66% 42.43%, 55.7% 42.12%, 55.62% 37.13%, 72.17% 37.64%, 72.13% 52.44%, 55.54% 52.55%, 55.52% 47.21%, 69.75% 47.77%);
   /* Ajusta según la forma de tu dibujo */
 }
 
-#sector2-active {
+#sector2-active-infosec {
   clip-path: polygon(69.2% 52.58%, 72.02% 52.38%, 72.04% 64.93%, 69.22% 64.92%);
 }
 
-#sector3-active {
+#sector3-active-infosec {
   clip-path: polygon(71.75% 47.3%, 74.75% 47.09%, 74.81% 65.55%, 71.98% 65.22%);
 }
 
-#sector4-active {
+#sector4-active-infosec {
   clip-path: polygon(67.25% 25.43%, 75.38% 25.44%, 75.3% 37.66%, 67.3% 37.55%);
 }
 
-#sector5-active {
+#sector5-active-infosec {
   clip-path: polygon(55.8% 25.02%, 60.59% 25.13%, 60.4% 37.55%, 55.76% 37.55%);
 }
 
-#sector6-active {
+#sector6-active-infosec {
   clip-path: polygon( 47.07% 25.43%, 55.67% 25.44%, 55.48% 46.25%, 52.13% 46.56%, 52.3% 34.72%, 46.93% 34.52%);
 }
 
-#sector7-active {
+#sector7-active-infosec {
   clip-path: polygon(47.01% 52.69%, 52.32% 53%, 52.4% 46.35%, 55.62% 46.45%, 55.37% 64.57%, 39.35% 64.78%, 40.88% 42.54%, 47.22% 42.38%);
 }
 
-#sector8-active {
+#sector8-active-infosec {
   clip-path: polygon(69.14% 65.12%, 55.19% 64.61%, 55.42% 52.67%, 69.32% 52.06%);
 }
 
-#sector9-active {
+#sector9-active-infosec {
   clip-path: polygon(39.70% 43.15%, 27.72% 44.62%, 27.24% 25.32%, 40.27% 25.43%);
 }
 
-#sector10-active {
+#sector10-active-infosec {
   clip-path: polygon(39.09% 64.29%, 28.69% 69.59%, 27.82% 44.80%, 40.05% 44.91%)
 }
 
-#sector11-active {
+#sector11-active-infosec {
   clip-path: polygon(69.9% 47.7%, 55.51% 47.53%, 55.5% 42.62%, 69.86% 42.94%);
 }
 
-#sector11sec-active {
+#sector11sec-active-infosec {
   clip-path: polygon(75.28% 46.87%, 72% 47.32%, 72.21% 37.74%, 75.41% 37.87%);
 }
 
-#sector12-active {
+#sector12-active-infosec {
   clip-path: polygon(52.01% 53.1%, 47.28% 53.23%, 47.22% 34.74%, 52.28% 35.07%);
 }
 
-#sector13-active {
+#sector13-active-infosec {
   clip-path: polygon(46.85% 42.22%, 40.77% 42.14%, 41.07% 25.41%, 47.28% 25.22%);
 }
 
-#sector14-active {
+#sector14-active-infosec {
   clip-path: polygon(60.65% 25.23%, 67.17% 25.24%, 67.09% 37.77%, 60.45% 37.55%);
-}
-
-#sector1-active:hover ~ #sector1-img,
-#sector2-active:hover ~ #sector2-img,
-#sector3-active:hover ~ #sector3-img,
-#sector4-active:hover ~ #sector4-img,
-#sector5-active:hover ~ #sector5-img,
-#sector6-active:hover ~ #sector6-img,
-#sector7-active:hover ~ #sector7-img,
-#sector8-active:hover ~ #sector8-img,
-#sector9-active:hover ~ #sector9-img,
-#sector10-active:hover ~ #sector10-img,
-#sector11-active:hover ~ #sector11-img,
-#sector11sec-active:hover ~ #sector11-img,
-#sector12-active:hover ~ #sector12-img,
-#sector13-active:hover ~ #sector13-img,
-#sector14-active:hover ~ #sector14-img {
-  z-index: 2;
 }
 
 @media screen and (max-width: 768px) {
@@ -132,7 +115,7 @@
     width: 100%;
   }
 
-  .section-active {
+  .section-active-infosec {
     width: 100%;
   }
 }
