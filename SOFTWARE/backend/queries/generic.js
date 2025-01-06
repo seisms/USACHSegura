@@ -29,8 +29,7 @@ const registrar_reporte = async (reporte) => {
         try {
             const { email, type, sector } = reporte;
             const date = await pool.query("SELECT (NOW() at TIME ZONE 'Chile/Continental')::date as date");
-            const time = await pool.query("SELECT NOW()::time \
-                WITH time zone AT TIME ZONE 'Chile/Continental' as time");
+            const time = await pool.query("SELECT (NOW() AT TIME ZONE 'Chile/Continental')::time(0) as time");
             const result = await pool.query("INSERT INTO REPORTE (REP_Correo, REP_Sector, REP_Tipo, REP_Fecha, REP_Hora) VALUES ($1, $2, $3, $4, $5) RETURNING REP_ID",
                 [email, sector, type, date.rows[0].date, time.rows[0].time]);
             return result.rows[0].rep_id;

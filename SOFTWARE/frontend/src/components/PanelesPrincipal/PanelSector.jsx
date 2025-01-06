@@ -103,6 +103,7 @@ function PanelSector({ sector }) {
                                 {detalleReporte[report.rep_id] && (
                                     <div className="reporte-detalles">
                                         <table className="tabla-detalles">
+											{console.log(detalleReporte[report.rep_id])}
                                             <tbody>
                                                 <tr>
                                                     <th>Correo:</th>
@@ -120,6 +121,14 @@ function PanelSector({ sector }) {
                                                     <th>Hora:</th>
                                                     <td>{detalleReporte[report.rep_id].reporte.rep_hora}</td>
                                                 </tr>
+												<tr>
+													<th>Pertenencias usurpadas: </th>
+													<td>{
+														detalleReporte[report.rep_id].pertenencias_usurpadas
+														.map(pert => pert.tper_tnombre.split('/')[0])
+														.join(', ')
+													}</td>
+												</tr>
                                             </tbody>
                                         </table>
                                     </div>
