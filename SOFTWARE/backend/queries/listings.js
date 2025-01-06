@@ -16,13 +16,13 @@ const listar_sectores_frecuentados = async (email) => {
 //Listado tablas basicas
 const listar_sectores = async () => {
     try {
-        const query = await pool.query("SELECT * FROM SECTOR ORDER BY SEC_Id;");
+        const query = await pool.query("SELECT * FROM SECTOR ORDER BY SEC_Path;");
         const result = query.rows.map((sector) => ({
             ...sector,
             sec_img: sector.sec_img ? Buffer.from(sector.sec_img).toString('base64') : null
         }));
 
-        console.log("mostrando resultados: ",result);
+        console.log("mostrando resultados: ", result);
         if (result && result.length > 0) {
             return result;
         } else {
