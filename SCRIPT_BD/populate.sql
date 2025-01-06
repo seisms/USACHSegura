@@ -2,46 +2,46 @@
 /*Poblamiento de USACH Segura*/
 -------------------------------------
 
-insert into TUSUARIO (tu_tnombre)
-values('Administrador');
+insert into TUSUARIO (tu_tnombre, tu_disponible)
+values('Administrador', 'si');
 
-insert into TUSUARIO (tu_tnombre)
-values('Estudiante');
+insert into TUSUARIO (tu_tnombre, tu_disponible)
+values('Estudiante', 'si');
 
-insert into TUSUARIO (tu_tnombre)
-values('Funcionario');
+insert into TUSUARIO (tu_tnombre, tu_disponible)
+values('Funcionario', 'si');
 
-insert into TUSUARIO (tu_tnombre)
-values('Académico');
-
-
-insert into TPERTENENCIA (tper_tnombre)
-values ('Celular/Tablet');
-
-insert into TPERTENENCIA (tper_tnombre)
-values ('Laptop');
-
-insert into TPERTENENCIA (tper_tnombre)
-values ('Mochila/Bolso');
-
-insert into TPERTENENCIA (tper_tnombre)
-values ('Billetera');
-
-insert into TPERTENENCIA (tper_tnombre)
-values ('Objeto de Valor');
+insert into TUSUARIO (tu_tnombre, tu_disponible)
+values('Académico', 'si');
 
 
-insert into TINCIDENTE (tin_tnombre)
-values ('Asalto');
+insert into TPERTENENCIA (tper_tnombre, tper_disponible)
+values ('Celular/Tablet', 'si');
 
-insert into TINCIDENTE (tin_tnombre)
-values ('Robo');
+insert into TPERTENENCIA (tper_tnombre, tper_disponible)
+values ('Laptop', 'si');
 
-insert into TINCIDENTE (tin_tnombre)
-values ('Hurto');
+insert into TPERTENENCIA (tper_tnombre, tper_disponible)
+values ('Mochila/Bolso', 'si');
 
-insert into TINCIDENTE (tin_tnombre)
-values ('Lanzazo');
+insert into TPERTENENCIA (tper_tnombre, tper_disponible)
+values ('Billetera', 'si');
+
+insert into TPERTENENCIA (tper_tnombre, tper_disponible)
+values ('Objeto de Valor', 'si');
+
+
+insert into TINCIDENTE (tin_tnombre, tin_disponible)
+values ('Asalto', 'si');
+
+insert into TINCIDENTE (tin_tnombre, tin_disponible)
+values ('Robo', 'si');
+
+insert into TINCIDENTE (tin_tnombre, tin_disponible)
+values ('Hurto', 'si');
+
+insert into TINCIDENTE (tin_tnombre, tin_disponible)
+values ('Lanzazo', 'si');
 
 
 insert into SECTOR
@@ -75,17 +75,17 @@ values ('Casino EAO', NULL, 1, 14, 'si');
 
 
 insert into USUARIO
-values('daniel.ojeda.v@usach.cl','+56911223344','segura2024');
+values('daniel.ojeda.v@usach.cl','+56911223344','segura2024', 'si');
 insert into USUARIO
-values('diego.cuevas.a@usach.cl','+56922334455','LinuxEnjoyer123');
+values('diego.cuevas.a@usach.cl','+56922334455','LinuxEnjoyer123', 'si');
 insert into USUARIO
-values('vicente.torres@usach.cl','+56933445566','Hamburger');
+values('vicente.torres@usach.cl','+56933445566','Hamburger', 'si');
 insert into USUARIO
-values('aldair.machagua@usach.cl','+56944556677','Nose1234');
+values('aldair.machagua@usach.cl','+56944556677','Nose1234', 'si');
 insert into USUARIO
-values('guillermo.pereira@usach.cl','+56955667788','hoynopescow');
+values('guillermo.pereira@usach.cl','+56955667788','hoynopescow', 'si');
 insert into USUARIO
-values('rodrigo.abarzua@usach.cl','+56966778899','cryptographic2025');
+values('rodrigo.abarzua@usach.cl','+56966778899','cryptographic2025', 'si');
 
 
 insert into RUSUARIO
@@ -126,24 +126,24 @@ insert into FRECUENTA
 values('rodrigo.abarzua@usach.cl','Departamento de Ingenieria Mecánica');
 
 
-insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre)
-values('rodrigo.abarzua@usach.cl', 1, 'micelular.jpg', 'Celular de profe');
-insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre)
-values('rodrigo.abarzua@usach.cl', 4, 'capture123.jpg', 'Mi billetera');
-insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre)
-values('rodrigo.abarzua@usach.cl', 5, 'foto123.jpg', 'Mi reloj');
+insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre, per_disponible)
+values('rodrigo.abarzua@usach.cl', 1, 'micelular.jpg', 'Celular de profe', 'si');
+insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre, per_disponible)
+values('rodrigo.abarzua@usach.cl', 4, 'capture123.jpg', 'Mi billetera', 'si');
+insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre, per_disponible)
+values('rodrigo.abarzua@usach.cl', 5, 'foto123.jpg', 'Mi reloj', 'si');
 
-insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre)
-values('aldair.machagua@usach.cl', 1, 'celular.jpg', 'Celular');
-insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre)
-values('aldair.machagua@usach.cl', 2, 'latop.jpg', 'Laptop U');
-insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre)
-values('aldair.machagua@usach.cl', 3, 'mochila.jpg', 'Mochila usach');
+insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre, per_disponible)
+values('aldair.machagua@usach.cl', 1, 'celular.jpg', 'Celular', 'si');
+insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre, per_disponible)
+values('aldair.machagua@usach.cl', 2, 'latop.jpg', 'Laptop U', 'si');
+insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre, per_disponible)
+values('aldair.machagua@usach.cl', 3, 'mochila.jpg', 'Mochila usach', 'si');
 
-insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre)
-values('guillermo.pereira@usach.cl', 1, 'celular.png', 'Mi celu');
-insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre)
-values('guillermo.pereira@usach.cl', 3, 'foto001.jpg', 'mochilita');
+insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre, per_disponible)
+values('guillermo.pereira@usach.cl', 1, 'celular.png', 'Mi celu', 'si');
+insert into PERTENENCIA (per_correo, per_tipo, per_img, per_nombre, per_disponible)
+values('guillermo.pereira@usach.cl', 3, 'foto001.jpg', 'mochilita', 'si');
 
 
 insert into REPORTE (rep_correo, rep_sector, rep_tipo, rep_fecha, rep_hora)
