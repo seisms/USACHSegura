@@ -16,10 +16,15 @@ const listar_sectores_frecuentados = async (email) => {
 //Listado tablas basicas
 const listar_sectores = async () => {
     try {
-        const result = await pool.query("SELECT * FROM SECTOR;");
-        if (result && result.rows.length > 0) {
-            console.log(result.rows);
-            return result.rows;
+        const query = await pool.query("SELECT * FROM SECTOR ORDER BY SEC_Id;");
+        const result = query.rows.map((sector) => ({
+            ...sector,
+            sec_img: sector.sec_img ? Buffer.from(sector.sec_img).toString('base64') : null
+        }));
+
+        console.log("mostrando resultados: ",result);
+        if (result && result.length > 0) {
+            return result;
         } else {
             return `No hay sectores para listar`;
         }

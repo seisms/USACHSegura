@@ -31,7 +31,7 @@ function SeccionedMap() {
   }
 
   const handleClick = (sector) => {
-    alert(`Sector ${sector}`); // Aquí puedes reemplazarlo por acciones específicas
+    alert(`Sector ${sector} \nSeguridad ${sectores[sector-1].sec_seguridad}`); // Aquí puedes reemplazarlo por acciones específicas
     if(sector <= sectores.length){
       console.log(sectores[sector - 1]);
       setSelectedSector(sectores[sector - 1]);
@@ -40,6 +40,7 @@ function SeccionedMap() {
   
   useEffect(() => {
     getSectores();
+    
   }, []);
 
   return (

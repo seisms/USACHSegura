@@ -3,6 +3,7 @@ import Navbar from "./BarraNavegacion";
 import {useNavigate} from "react-router-dom"
 import Cookies from "js-cookie"
 import MapaDefault from "./mapasEAO/MapaDefault";
+import CalcularIndiceSeguridad from "./Genericos/IndiceSeguridad";
 import MapaSeccionado from "./mapasEAO/MapaSeccionado";
 import FormularioReporte from "./Reporte";
 import "./css/PaginaPrincipal.css";
@@ -47,6 +48,7 @@ export default function PagP() {
   return (
     <div className="fondo_pagp">
       <Navbar />
+      <CalcularIndiceSeguridad />
       <MapaSeccionado />
       {showReportForm && <div className="overlay"></div>}
       {showReportForm && (

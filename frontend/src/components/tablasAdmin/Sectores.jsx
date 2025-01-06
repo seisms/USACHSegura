@@ -150,21 +150,27 @@ function Sectores() {
           <table>
             <thead>
               <tr>
-                {Object.keys(rows[0]).map((col) => (
-                  <th key={col}>{col}</th>
-                ))}
+                <th>Nombre</th>
+                <th>Imagen</th>
+                <th>Seguridad</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((row, index) => (
                 <tr key={index}>
-                  {Object.keys(row).map((key, idx) => (
-                    <td key={idx}>
-                      {typeof row[key] === "object"
-                        ? JSON.stringify(row[key]) // Mostrar objetos anidados como string
-                        : row[key]}
-                    </td>
-                  ))}
+                  <td>{row.sec_nombre}</td>
+                  <td>
+                    {row.sec_img ? (
+                      <img
+                        src={`data:image/png;base64,${row.sec_img}`}
+                        alt={row.sec_nombre}
+                        style={{ width: "100px", height: "100px" }} // Ajusta el tamaño según sea necesario
+                      />
+                    ) : (
+                      "Sin imagen"
+                    )}
+                  </td>
+                  <td>{row.sec_seguridad}</td>
                 </tr>
               ))}
             </tbody>
