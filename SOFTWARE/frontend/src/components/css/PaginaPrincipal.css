@@ -73,21 +73,28 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 400px;
-  background-color: #1c1c1c;
-  color: #fff;
+  width: 450px;
+  background-color: #fff;
+  color: #333f48;
   padding: 20px;
+  border: 2px solid #00877d;
   border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
   z-index: 1000;
-  text-align: left;
 }
 
 /* Título de la ventana emergente */
 .report-popup h2 {
   text-align: center;
-  margin-bottom: 15px;
+  margin: 5px;
+  color: #00877d;
+  font-size: 30px;
+}
+
+/* Detalles del reporte */
+.report-popup p {
+  font-size: 20px;
+  margin: 10px 0;
 }
 
 /* Botón para cerrar la ventana emergente */
@@ -95,22 +102,18 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  background: none;
+  background: #ff5c5c;
   border: none;
   color: #fff;
+  padding: 5px 15px;
   font-size: 20px;
   cursor: pointer;
 }
 
 .close-popup:hover {
-  color: #ff5c5c;
+  background-color: red;
 }
 
-/* Detalles del reporte */
-.report-popup p {
-  font-size: 14px;
-  margin: 10px 0;
-}
 
 /* Contenedor de fondo para desactivar el resto del contenido mientras la ventana está activa */
 .backdrop {

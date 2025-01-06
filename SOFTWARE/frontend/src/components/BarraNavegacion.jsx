@@ -9,7 +9,7 @@ import PanelFrecuenta from "./PanelesPrincipal/PanelFrecuenta.jsx";
 import Cookies from "js-cookie"
 import PanelReportes from "./PanelesPrincipal/PanelReportes.jsx";
 
-export default function Navbar() {
+export default function Navbar({mapSwitch, secSelected, setSecSelected}) {
     const [isOpenMain, setIsOpenMain] = useState(false);
     const [isOpenPert, setIsOpenPert] = useState(false);
     const [isOpenPerf, setIsOpenPerf] = useState(false);
@@ -53,6 +53,9 @@ export default function Navbar() {
                         handleSelect={handleSelect}
                         email={email}
                         setFrecuenta={setFrecuenta}
+                        mapSwitch = {mapSwitch}
+                        setSecSelected = {setSecSelected}
+                        secSelected = {secSelected}
                     />
                 </div>
                 <div className={`panel_pertenencias ${isOpenPert ? "open" : ""}`}>

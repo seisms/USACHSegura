@@ -36,32 +36,37 @@
 
 .frecuenta-popup {
   position: fixed;
-  top: 50%;
+  bottom: 30px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
   width: auto;
-  background-color: #ffffff;
   z-index: 10000;
   display: none;
-  border: 2px solid #009688;
 }
 
 .frecuenta-popup.open {
   display: block;
 }
 
+.checkbox-item {
+  display: none;
+}
+
 .seleccion-frecuenta {
   color: #333f48;
+}
+
+.frecuenta-popup button {
+  background-color: #00a499;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px 15px;
+  width: 250px;
+  margin-bottom: 20px;
 }
 
 .lista-frecuentados ul li.seleccionada {
   background-color: #ffa726; /* Color de fondo para elementos seleccionados */
   color: #ffffff; /* Cambia el color del texto */
   border: 2px solid #ff9800; /* Resalta el borde */
-}
-
-.selected {
-  background-color: #ff5722; /* Un color para indicar la selección */
-  border: 2px solid #d32f2f; /* Un borde para resaltar la selección */
-  color: white; /* Texto blanco */
 }
